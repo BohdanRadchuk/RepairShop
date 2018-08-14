@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page isELIgnored="false" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+<%@ include file="page/util/init.jsp"%>
+<%--
+
+
+<c:set var="language" value="${not empty param.language ? param.language : not empty sessionScope.language ?
+        sessionScope.language : pageContext.request.locale}" scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="bundle"/>
+--%>
 <html lang="${language}">
 
 <head>
@@ -16,13 +16,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
-<form>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="lang.en"/></option>
-        <option value="ua" ${language == 'ua' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
-
-    </select>
-</form>
+<jsp:include page="/page/header_unreg.jsp"/>
 
 <div class="container">
     <div class="row centered-form">

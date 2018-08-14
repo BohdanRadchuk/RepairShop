@@ -7,6 +7,6 @@ public class Login implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         System.out.println("login here");
-        return "registration.jsp";
+        return "/registration.jsp";
     }
 }
