@@ -10,7 +10,6 @@
 <html lang="${language}">
 
 <head>
-    <meta charset="utf-8">
     <title>HomePage</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
