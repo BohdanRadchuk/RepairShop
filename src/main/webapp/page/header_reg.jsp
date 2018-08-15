@@ -2,7 +2,8 @@
 
 <html>
 <head>
-    <link href="..//css/header_unreg_style.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <link href="../css/header_unreg_style.css" rel="stylesheet" type="text/css">
     <title>header</title>
 </head>
 <body>
