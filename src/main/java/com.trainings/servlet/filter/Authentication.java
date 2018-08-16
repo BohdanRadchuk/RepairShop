@@ -18,6 +18,22 @@ public class Authentication implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+/*
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String path = request.getRequestURI();
+        if(path.contains("add-student")) {//TODO: rewrite add user roles
+            if ((teacher = (Teacher) ((HttpServletRequest) servletRequest).getSession().getAttribute("teacher")) != null) {
+                filterChain.doFilter(servletRequest,servletResponse);
+            }else{
+                servletResponse.getWriter().append("AccessDenied");
+                return;
+            }
+        }else{
+            filterChain.doFilter(servletRequest,servletResponse);
+        }
+*/
+
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);

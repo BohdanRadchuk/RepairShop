@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @author Bohdan Radchuk
  */
-@WebServlet(urlPatterns = {"/home", "/login", "/logout", "/registration", "/registration_confirm"})
+@WebServlet(urlPatterns = {"/home", "/login", "/login_confirm", "/logout", "/registration", "/registration_confirm"})
 public class Servlet extends HttpServlet {
 
     private Map<String, ServletCommand> command = new HashMap<>();
@@ -35,8 +35,6 @@ public class Servlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        HttpSession session = req.getSession ();
-        System.out.println(session.getAttribute("language"));
         handleServlet(req, resp);
     }
 
