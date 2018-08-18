@@ -21,33 +21,38 @@ CREATE TABLE `service`(
 PRIMARY KEY (`id_service`)
 );
 
-CREATE TABLE `warehouse`(
-`id_detail` INT NOT NULL AUTO_INCREMENT,
-`name` VARCHAR(128) NOT NULL,
-`quantity` INT NOT NULL,
-PRIMARY KEY (`id_detail`)
-);
-
-CREATE TABLE `contract`(
-`id_contract` INT NOT NULL AUTO_INCREMENT,
-`id_user` INT NOT NULL,
-`status` ENUM ('UNCHECKED', 'REJECTED', 'CONFIRMED', 'IN_WORK', 'DONE'),
+CREATE TABLE `request`(
+`id_request` INT NOT NULL AUTO_INCREMENT,
 `id_service` INT NOT NULL,
-`price` INT,
-`id_manager` INT,
-`id_master` INT,
-`comment` VARCHAR (1000),
-FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE,
-FOREIGN KEY (`id_manager`) REFERENCES `user`(`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE,
-FOREIGN KEY (`id_master`) REFERENCES `user`(`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE,
+`price` DECIMAL,
 FOREIGN KEY (`id_service`) REFERENCES `service`(`id_service`) ON DELETE RESTRICT ON UPDATE CASCADE,
-PRIMARY KEY (`id_contract`)
+PRIMARY KEY (`id_request`)
 );
 
-CREATE TABLE `service_contract`(
-`id_service` INT,
-`id_contract` INT,
-FOREIGN KEY (`id_service`) REFERENCES `service`(`id_service`) ON DELETE RESTRICT ON UPDATE CASCADE,
-FOREIGN KEY (`id_contract`) REFERENCES `contract` (`id_contract`) ON DELETE RESTRICT ON UPDATE CASCADE,
-PRIMARY KEY (`id_service`, `id_contract`)
+CREATE TABLE `status`(
+`id_status` INT NOT NULL AUTO_INCREMENT,
+`status` ENUM ('UNCHECKED', 'REJECTED', 'CONFIRMED', 'IN_WORK', 'DONE') NOT NULL,
+`date` DATETIME NOT NULL,
+`id_request` INT NOT NULL,
+`id_user` INT NOT NULL,
+FOREIGN KEY (`id_request`) REFERENCES `request`(`id_request`) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY (`id_status`)
 );
+
+CREATE TABLE `comment`(
+`id_comment` INT NOT NULL AUTO_INCREMENT,
+`id_user` INT NOT NULL,
+`commentary` VARCHAR (1000),
+FOREIGN KEY (`id_user`) REFERENCES `user`(`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY (`id_comment`)
+);
+
+CREATE TABLE `comment_request`(
+`id_comment` INT,
+`id_request` INT,
+FOREIGN KEY (`id_comment`) REFERENCES `comment`(`id_comment`) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (`id_request`) REFERENCES `request` (`id_request`) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY (`id_comment`, `id_request`)
+);
+

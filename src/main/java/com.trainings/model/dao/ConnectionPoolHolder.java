@@ -14,22 +14,14 @@ import java.util.Properties;
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
 
-
     public static DataSource getDataSource(){
-
         if (dataSource == null){
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-
-
-
                     Properties property = new Properties();
-
                     try {
-
                         property.load( new FileInputStream("src/main/resources/connection_info.properties"));
-
                         ds.setDriverClassName(property.getProperty("db.driver"));
                         ds.setUrl(property.getProperty("db.host"));
                         ds.setUsername(property.getProperty("db.login"));
@@ -42,8 +34,6 @@ public class ConnectionPoolHolder {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
                     dataSource = ds;
                 }
             }

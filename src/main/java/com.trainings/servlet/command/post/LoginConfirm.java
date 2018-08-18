@@ -25,16 +25,15 @@ public class LoginConfirm implements ServletCommand {
         String password = req.getParameter("password");
 
 
-        System.out.println(email + "email");
+        System.out.println(email + "email" + password + "password");
         try ( Connection connection = ConnectionPoolHolder.getDataSource().getConnection()){
             System.out.println(connection.isClosed());
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
         //check in db
 
-        return "";
+        return "/home.jsp";
     }
 }

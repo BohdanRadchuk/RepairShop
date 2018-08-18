@@ -9,8 +9,8 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
-<jsp:include page="/page/header_reg.jsp"/>
 
+<jsp:include page="/page/header_unreg.jsp"/>
 
 <div class="container">
     <div class="row centered-form">
@@ -26,16 +26,12 @@
                             <input type="email" name="email" id="email" class="form-control input-sm"
                                    placeholder="Email Address">
                         </div>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <input type="password" name="password" id="password" class="form-control input-sm"
-                                           placeholder="Password">
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" class="form-control input-sm"
+                                   placeholder="Password">
                         </div>
-                        <input type="submit" value="Register" class="btn btn-info btn-block">
-                        <a href="/home" class="btn btn-info btn-block">Back</a>
+                        <input type="submit" value="<fmt:message key="login"/>" class="btn btn-info btn-block">
+                        <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>
                     </form>
                 </div>
             </div>

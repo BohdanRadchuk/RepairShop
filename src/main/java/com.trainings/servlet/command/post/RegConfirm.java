@@ -18,8 +18,8 @@ public class RegConfirm implements ServletCommand {
         String password_confirmation = req.getParameter("password_confirmation");
 
         User user = new User();
-        user.setFirstName(name);
-        user.setLastName(surname);
+        user.setName(name);
+        user.setSurname(surname);
         user.setEmail(email);
         user.setPassword(password);
         user.setRole(Role.USER);

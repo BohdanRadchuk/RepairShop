@@ -39,6 +39,9 @@ public class Authentication implements Filter {
         HttpSession session = req.getSession(false);
         String loginURI = req.getContextPath() + "/login";
 
+
+
+
         if (session != null && session.getAttribute("user") != null ||
                 req.getRequestURI().equals(loginURI)) {
             chain.doFilter(req, resp);

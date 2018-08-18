@@ -1,11 +1,12 @@
 package com.trainings.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GenericDAO<E,K> {
-    void create (E entity);
-    E findById(K id);
+    boolean create (E entity);
+    Optional<E> findById(K id);
     List<E> findAll();
-    void update(E entity);
-    void delete(K id);
+    boolean update(E entity);
+    boolean delete(K id);
 }

@@ -20,12 +20,10 @@
                 <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login"/></a></li>
                 <li>
                     <form>
-                        <select id="language" name="language" onchange="submit()">
-                            <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message
-                                    key="lang.en"/></option>
-                            <option value="ua" ${language == 'ua' ? 'selected' : ''}><fmt:message
-                                    key="lang.ua"/></option>
-                        </select>
+                        <input name="language" type="image" value="en"
+                        ${language=='en' ? 'selected' : '' } src = "../image/flag_en.png" style="height: 24px; width: 32px;">
+                        <input name="language" type="image" value="ua"
+                        ${language=='ua' ? 'selected' : '' } src = "../image/flag_ua.png" style="height: 24px; width: 32px;">
                     </form>
                 </li>
             </ul>
