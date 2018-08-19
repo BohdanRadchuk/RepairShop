@@ -51,7 +51,7 @@ public class Servlet extends HttpServlet {
         if (page.contains("redirect")) {
             resp.sendRedirect(page.replace("redirect:", "/"));
         } else {
-            System.out.println("else handle" + page);
+            System.out.println("else handleServlet" + page);
             req.getRequestDispatcher("page" + page).forward(req, resp);
         }
     }

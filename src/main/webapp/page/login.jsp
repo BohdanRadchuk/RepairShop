@@ -12,6 +12,7 @@
 
 <jsp:include page="/page/header_unreg.jsp"/>
 
+
 <div class="container">
     <div class="row centered-form">
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
@@ -33,6 +34,16 @@
                         <input type="submit" value="<fmt:message key="login"/>" class="btn btn-info btn-block">
                         <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>
                     </form>
+                    <c:out value="${errorMessage}"></c:out>
+                    <c:if test="${param.err != null}">
+                        <c:if test="${param.err == 'email'}">
+                        хреновый имейл
+                        </c:if>
+                        <c:if test="${param.err == 'pass'}">
+                            хреновый pass
+                        </c:if>
+                    </c:if>
+
                 </div>
             </div>
         </div>

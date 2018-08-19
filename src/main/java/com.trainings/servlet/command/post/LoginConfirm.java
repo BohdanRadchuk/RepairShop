@@ -13,27 +13,43 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class LoginConfirm implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         DaoFactory daoFactory = DaoFactory.getInstance();
         UserDao dao = daoFactory.createUserDao();
-        User user = dao.findById(1);
+
+
+        Optional<User> user = dao.findById(1);
         System.out.println(user + " user in servlet");
+
+
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
 
-        System.out.println(email + "email" + password + "password");
-        try ( Connection connection = ConnectionPoolHolder.getDataSource().getConnection()){
-            System.out.println(connection.isClosed());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        //check in db
+        if (email!=null && password!=null){
 
-        return "/home.jsp";
+            User userf;
+            try {
+                userf = dao.findByEmail(email).orElseThrow(NoSuchUserException::new);
+            } catch (NoSuchUserException e) {
+                System.out.println("catch find by email in servlet here");
+                req.setAttribute("error", "No such email registered");
+                return "redirect:login?err=email";
+            }
+
+            if (userf.getPassword().equals(password)) {
+                System.out.println(userf.getRole());
+                return "redirect:" + userf.getRole().homePage();
+            }else {
+                req.setAttribute("error", "wrong password");
+                return "redirect:login?err=pass";
+            }
+        }else return "redirect:login?err=empty";
+
     }
 }

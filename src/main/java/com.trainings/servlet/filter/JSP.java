@@ -15,6 +15,7 @@ public class JSP implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        System.err.println("filter .jsp in work!");
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         resp.sendRedirect("/home");
     }

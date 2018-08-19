@@ -7,6 +7,6 @@ public class Home implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         System.out.println("home here");
-        return "/index.jsp";
+        return "/home.jsp";
     }
 }

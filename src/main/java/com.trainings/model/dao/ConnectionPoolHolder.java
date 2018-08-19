@@ -1,6 +1,7 @@
 package com.trainings.model.dao;
 
 
+import com.trainings.model.dao.impl.JDBCUserDao;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
@@ -51,11 +52,11 @@ public class ConnectionPoolHolder {
     }
 
     public static void main(String[] args) throws SQLException {
-
-
-
-        Connection connection = dataSource.getConnection();
-
+        UserDao daoFactory = DaoFactory.getInstance().createUserDao();
+        System.out.println(daoFactory.findById(1));
+        /*
+        JDBCUserDao j = new JDBCUserDao(dataSource.getConnection());
+        System.out.println(j.findById(1));*/
     }
 
 }
