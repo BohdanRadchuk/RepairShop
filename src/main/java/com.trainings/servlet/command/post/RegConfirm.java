@@ -17,15 +17,17 @@ public class RegConfirm implements ServletCommand {
         String password = req.getParameter("password");
         String password_confirmation = req.getParameter("password_confirmation");
 
-        User user = new User();
-        user.setName(name);
-        user.setSurname(surname);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setRole(Role.USER);
+        User user = new User.UserBuilder()
+
+                .name(name)
+                .surname(surname)
+                .email(email)
+                .password(password)
+                .role(Role.USER)
+                .build();
         System.out.println(user);
         System.out.println(name + surname + email + password + password_confirmation);
 
-        return "/home.jsp";
+        return "redirect:home";
     }
 }

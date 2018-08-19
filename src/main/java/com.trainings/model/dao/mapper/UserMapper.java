@@ -10,14 +10,22 @@ import java.util.Map;
 public class UserMapper implements ObjectMapper<User> {
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
-        User user = new User();
-        user.setId(rs.getInt("id_user"));
-        user.setName(rs.getString("name"));
-        user.setSurname(rs.getString("surname"));
-        user.setEmail(rs.getString("email"));
-        user.setPassword(rs.getString("password"));
-        user.setRole(Role.valueOf(rs.getString("role")));
-        return user;
+        int id = rs.getInt("id_user");
+        String name = rs.getString("name");
+        String surname = rs.getString("surname");
+        String email =  rs.getString("email");
+        String password = rs.getString("password");
+        Role role = Role.valueOf(rs.getString("role"));
+
+
+        return new User.UserBuilder()
+                .userId(id)
+                .name(name)
+                .surname(surname)
+                .email(email)
+                .password(password)
+                .role(role)
+                .build();
     }
 
     @Override

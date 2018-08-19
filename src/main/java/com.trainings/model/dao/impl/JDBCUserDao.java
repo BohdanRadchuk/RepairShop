@@ -21,12 +21,12 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public boolean create(User entity) {
+    public boolean create(final User entity) {
         return true;
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(final Integer id) {
         Optional<User> user = Optional.empty();
 
         try (PreparedStatement ps = createFindByUniqueParamPrepareStatement(id);
@@ -61,12 +61,12 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public boolean update(User entity) {
+    public boolean update(final User entity) {
         return true;
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(final Integer id) {
         return true;
     }
 
@@ -86,7 +86,7 @@ public class JDBCUserDao implements UserDao {
     }
 
 
-    private PreparedStatement createFindByUniqueParamPrepareStatement(Integer id) throws SQLException {
+    private PreparedStatement createFindByUniqueParamPrepareStatement(final Integer id) throws SQLException {
         final String sqlQuery = "SELECT * FROM watch_repair.user WHERE id_user=?;";
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setInt(1, id);
