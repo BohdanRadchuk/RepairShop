@@ -34,13 +34,16 @@
                         <input type="submit" value="<fmt:message key="login"/>" class="btn btn-info btn-block">
                         <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>
                     </form>
-                    <c:out value="${errorMessage}"></c:out>
+
                     <c:if test="${param.err != null}">
                         <c:if test="${param.err == 'email'}">
-                        хреновый имейл
+                            <fmt:message key="err_email"/>
                         </c:if>
                         <c:if test="${param.err == 'pass'}">
-                            хреновый pass
+                            <fmt:message key="err_pass"/>
+                        </c:if>
+                        <c:if test="${param.err == 'logout'}">
+                            <fmt:message key="err_logout"/>
                         </c:if>
                     </c:if>
 

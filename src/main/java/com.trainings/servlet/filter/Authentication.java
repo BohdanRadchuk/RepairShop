@@ -1,11 +1,14 @@
 package com.trainings.servlet.filter;
 
+import com.trainings.model.entity.Role;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 
 @WebFilter(filterName = "authentication")
 public class Authentication implements Filter {
@@ -34,19 +37,36 @@ public class Authentication implements Filter {
 */
 
 
+
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        String loginURI = req.getContextPath() + "/login";
 
 
+        if (session != null && session.getAttribute("userEmail") != null &&
+                session.getAttribute("role") !=null) {
+
+            Role role = (Role)session.getAttribute("role");
+
+            System.err.println("AUTHENTICATION SERVLENT IN WORK Role = " + session.getAttribute("role")
+                    + " email = "  + session.getAttribute("userEmail"));
+            System.out.println(role.name().toLowerCase() + " ROLe " + req.getRequestURI() + " - REUQEST URI");
+
+            //Role role1 = Role.USER;
+            String reqUri = req.getRequestURI();
+            System.out.println(role.homePage()  + " - role home page " + reqUri + " -req uri");
+            System.out.println(role.homePage().equals(reqUri));
+
+            if (role.homePage().equals(reqUri) || Arrays.asList(role.allowedPages()).contains(reqUri)){
+                System.out.println("CONTAIN !!!!!");
+                chain.doFilter(req, resp);
+            }
+            else resp.sendRedirect(role.homePage());
 
 
-        if (session != null && session.getAttribute("user") != null ||
-                req.getRequestURI().equals(loginURI)) {
-            chain.doFilter(req, resp);
         } else {
-            resp.sendRedirect(loginURI);
+            resp.sendRedirect("/login");
         }
     }
 

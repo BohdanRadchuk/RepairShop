@@ -7,6 +7,11 @@
     <title>header</title>
 </head>
 <body>
+
+<c:forEach items="${sessionScope.userEmail} " var="item"  >
+    ${item}
+</c:forEach>
+<c:out value="${sessionScope.role}"></c:out>
 <div class="menu">
     <div class="container-fluid">
         <div class="navbar-header">

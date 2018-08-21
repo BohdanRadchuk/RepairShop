@@ -22,6 +22,12 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public boolean create(final User entity) {
+        try (PreparedStatement ps = createNewUserPrepareStatement(entity)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
@@ -41,32 +47,40 @@ public class JDBCUserDao implements UserDao {
     }
 
 
-
-
     @Override
     public List<User> findAll() {
         final String sqlQuery = "SELECT * FROM watch_repair.user;";
         List<User> users = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sqlQuery);
              ResultSet rs = ps.executeQuery()) {
-
-
             while (rs.next()) {
                 users.add(userMapper.extractFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return users;
     }
 
     @Override
     public boolean update(final User entity) {
+        try (PreparedStatement ps = createUpdateUserPrepareStatement(entity)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
     @Override
     public boolean delete(final Integer id) {
+        try (PreparedStatement ps = createDeleteUserPrepareStatement(id)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
@@ -100,5 +114,38 @@ public class JDBCUserDao implements UserDao {
         return ps;
     }
 
+    private PreparedStatement createNewUserPrepareStatement(final User user) throws SQLException {
+        String sqlQuery = "INSERT INTO `user` (`name`, `surname`, `email`, `password`, `role`) " +
+                "VALUES (?, ?, ?, ?, ?);";
+
+        PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        ps.setString(1, user.getName());
+        ps.setString(2, user.getSurname());
+        ps.setString(3, user.getEmail());
+        ps.setString(4, user.getPassword());
+        ps.setString(5, user.getRole().name());
+        return ps;
+    }
+
+
+    private PreparedStatement createUpdateUserPrepareStatement(final User user) throws SQLException {
+        String sqlQuery = "  UPDATE `user` SET `name`=?, `surname` = ?," +
+                "`email` =?, `password` =?, `role` =? WHERE id_user = ?;";
+        PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        ps.setString(1, user.getName());
+        ps.setString(2, user.getSurname());
+        ps.setString(3, user.getEmail());
+        ps.setString(4, user.getPassword());
+        ps.setString(5, user.getRole().name());
+        ps.setInt(6, user.getId());
+        return ps;
+    }
+
+    private PreparedStatement createDeleteUserPrepareStatement(int id) throws SQLException {
+        String sqlQuery = "DELETE FROM `user` WHERE id_user = ?;";
+        PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        ps.setInt(1, id);
+        return ps;
+    }
 
 }

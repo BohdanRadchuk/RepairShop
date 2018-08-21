@@ -1,7 +1,7 @@
 package com.trainings.model.dao;
 
-
-import com.trainings.model.dao.impl.JDBCUserDao;
+import com.trainings.model.entity.Role;
+import com.trainings.model.entity.User;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
@@ -53,7 +53,27 @@ public class ConnectionPoolHolder {
 
     public static void main(String[] args) throws SQLException {
         UserDao daoFactory = DaoFactory.getInstance().createUserDao();
-        System.out.println(daoFactory.findById(1));
+        /*System.out.println(daoFactory.findById(1));
+        System.out.println(daoFactory.findAll());
+        System.out.println(daoFactory.create(new User.UserBuilder()
+                .name("name")
+                .surname("surname")
+                .email("email3")
+                .password("password")
+                .role(Role.USER)
+                .build()));
+
+        */System.out.println(daoFactory.update(new User.UserBuilder()
+                .userId(9)
+                .name("name2")
+                .surname("surname2")
+                .email("email@2")
+                .password("password2")
+                .role(Role.ADMIN)
+                .build()));
+        System.out.println(daoFactory.findByEmail("email@2"));
+        System.out.println(daoFactory.delete(9));
+        System.out.println(daoFactory.findAll());
         /*
         JDBCUserDao j = new JDBCUserDao(dataSource.getConnection());
         System.out.println(j.findById(1));*/
