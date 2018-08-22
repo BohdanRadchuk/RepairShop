@@ -10,12 +10,12 @@
 <div class="menu">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a href="/in/${sessionScope.role}"><fmt:message key="repair_shop"/></a>
+            <a href="/home"><fmt:message key="repair_shop"/></a>
         </div>
 
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> <fmt:message key="logout"/></a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> <fmt:message key="logout"/></a></li>
                 <li>
                     <form>
                         <input name="language" type="image" value="en"

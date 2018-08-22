@@ -10,7 +10,8 @@ public class Logout implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         ServletUtil util = new ServletUtil();
+        System.out.println("logout here");
         util.deleteUserFromContextAndSession(req);
-        return "/home.jsp";
+        return "redirect:home";
     }
 }

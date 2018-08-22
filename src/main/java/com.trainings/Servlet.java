@@ -1,5 +1,6 @@
 package com.trainings;
 
+import com.trainings.constant.Url;
 import com.trainings.servlet.command.*;
 import com.trainings.servlet.command.get.Login;
 import com.trainings.servlet.command.get.Registration;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,25 +24,24 @@ import java.util.Map;
 /**
  * @author Bohdan Radchuk
  */
-@WebServlet(urlPatterns = {"/home", "/login", "/login_confirm", "/logout", "/registration", "/registration_confirm",
-"/in/user"})
+@WebServlet(urlPatterns = {Url.HOME, Url.LOGIN, Url.LOGIN_CONFIRM, Url.LOGOUT, Url.REGISTRATION,
+        Url.REGISTRATION_CONFIRM, Url.USER_HOME})
 public class Servlet extends HttpServlet {
 
     private Map<String, ServletCommand> command = new HashMap<>();
 
     public void init(ServletConfig config) {
         config.getServletContext()
-                .setAttribute("logged_email", new HashSet<String>());
+                .setAttribute("logged_email", new HashMap<String, HttpSession>());
 
 
-        command.put("/home", new Home());
-        command.put("/registration_confirm", new RegConfirm());
-        command.put("/registration", new Registration());
-        command.put("/login", new Login());
-        command.put("/login_confirm", new LoginConfirm());
-        command.put("login/commit", new LoginConfirm());
-        command.put("/logout", new Logout());
-        command.put("/in/user", new UserMenu());
+        command.put(Url.HOME, new Home());
+        command.put(Url.REGISTRATION_CONFIRM, new RegConfirm());
+        command.put(Url.REGISTRATION, new Registration());
+        command.put(Url.LOGIN, new Login());
+        command.put(Url.LOGIN_CONFIRM, new LoginConfirm());
+        command.put(Url.LOGOUT, new Logout());
+        command.put(Url.USER_HOME, new UserMenu());
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -53,15 +54,14 @@ public class Servlet extends HttpServlet {
 
     private void handleServlet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String path = req.getRequestURI();
-        System.out.println(" path " + path);
-        ServletCommand servletCommand = command.getOrDefault(path, (r, q) -> "/index.jsp");
-        System.out.println(" servlet command " + servletCommand );
+        ServletCommand servletCommand = command.getOrDefault(path, (r, q) -> Url.HOME);
         String page = servletCommand.execute(req, resp);
-        if (page.contains("redirect")) {
-            resp.sendRedirect(page.replace("redirect:", ""));
+        if (page.contains(Url.REDIRECT)) {
+            System.out.println("redirect here to " + path);
+            resp.sendRedirect(page.replace(Url.REDIRECT, ""));
         } else {
-            System.out.println("else handleServlet" + page);
-            req.getRequestDispatcher("page" + page).forward(req, resp);
+            System.out.println("else handleServlet forward /page" + page);
+            req.getRequestDispatcher(Url.PAGE + page).forward(req, resp);
         }
     }
 }

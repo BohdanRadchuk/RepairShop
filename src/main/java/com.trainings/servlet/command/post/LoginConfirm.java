@@ -41,10 +41,9 @@ public class LoginConfirm implements ServletCommand {
 
         if (!servletUtil.checkUserLogged(req, email)) {
             System.out.println(user.getRole());
-            servletUtil.setUserRole(req, user.getRole(), user.getEmail());
+            servletUtil.setUserEmailAndRole(req, user.getRole(), user.getEmail());
 
-            return "redirect:" + user.getRole().homePage();         //successful login
-
+            return "redirect:" + user.getRole().homePage() ;         //successful login
         }else {
             return "redirect:/login?err=logout";
         }

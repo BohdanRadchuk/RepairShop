@@ -28,16 +28,16 @@
 
 body{
     /* Safari 4-5, Chrome 1-9 */
-    background: -webkit-gradient(radial,0% 50%, 0, 50% 50%, 460, from(#1a82f7), to(#2F2727));
+    background: -webkit-gradient(radial,0% 50%, 0, 50% 50%, 460, from(#7bf77b), to(#316b31));
 
     /* Safari 5.1+, Chrome 10+ */
-    background: -webkit-radial-gradient(circle, #1a82f7, #2F2727);
+    background: -webkit-radial-gradient(circle, #7bf77b, #316b31);
 
     /* Firefox 3.6+ */
-    background: -moz-radial-gradient(circle, #1a82f7, #2F2727);
+    background: -moz-radial-gradient(circle, #7bf77b, #316b31);
 
     /* IE 10 */
-    background: -ms-radial-gradient(circle, #1a82f7, #2F2727);
+    background: -ms-radial-gradient(circle, #7bf77b, #316b31);
     height:600px;
 }
 

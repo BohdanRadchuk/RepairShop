@@ -24,10 +24,7 @@
             <a href="registration" class="button btn-info"><fmt:message key="register"/></a>
             <table class="centered-form">
                 <th> <li class="breadcrumb-item active" aria-current="page"></li>№</th>
-                <th>услуга</th>
-                <th>цена</th>
-
-                <th>button select</th>
+                <th>WELCOME TO WATCH REPAIR</th>
             </table>
             <h2>Hello World!</h2>
         </div></div></div>

@@ -10,7 +10,7 @@ public class UserMenu implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         System.out.println("USER MENU HERE");
-        return "in/user/user.jsp";
+        return "/in/user.jsp";
 
     }
 }

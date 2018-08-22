@@ -21,6 +21,10 @@ public class RegConfirm implements ServletCommand {
         String password = req.getParameter("password");
         String password_confirmation = req.getParameter("password_confirmation");
 
+        //TODO check email
+
+
+
         User user = new User.UserBuilder()
                 .name(name)
                 .surname(surname)

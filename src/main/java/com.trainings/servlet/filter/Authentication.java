@@ -1,6 +1,7 @@
 package com.trainings.servlet.filter;
 
 import com.trainings.model.entity.Role;
+import com.trainings.servlet.command.ServletUtil;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -37,37 +38,33 @@ public class Authentication implements Filter {
 */
 
 
-
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
+        ServletUtil servletUtil = new ServletUtil();
 
+        Role role = servletUtil.getSessionRole(req);
+        String email = servletUtil.getSessionEmail(req);
 
-        if (session != null && session.getAttribute("userEmail") != null &&
-                session.getAttribute("role") !=null) {
+        System.out.println((session != null) +"- sess "  + (email != null) + " - email " + (role != null) + "-role");
 
-            Role role = (Role)session.getAttribute("role");
+        if (session != null && email != null && role != null) {
 
-            System.err.println("AUTHENTICATION SERVLENT IN WORK Role = " + session.getAttribute("role")
-                    + " email = "  + session.getAttribute("userEmail"));
-            System.out.println(role.name().toLowerCase() + " ROLe " + req.getRequestURI() + " - REUQEST URI");
+            System.err.println("AUTHENTICATION SERVLENT IN WORK Role = " + role
+                    + " email = " + email);
+//        System.out.println(role.name().toLowerCase() + " ROLe " + req.getRequestURI() + " - REUQEST URI");
 
-            //Role role1 = Role.USER;
             String reqUri = req.getRequestURI();
-            System.out.println(role.homePage()  + " - role home page " + reqUri + " -req uri");
-            System.out.println(role.homePage().equals(reqUri));
-
-            if (role.homePage().equals(reqUri) || Arrays.asList(role.allowedPages()).contains(reqUri)){
+            if (role.homePage().equals(reqUri) || Arrays.asList(role.allowedPages()).contains(reqUri)) {
                 System.out.println("CONTAIN !!!!!");
                 chain.doFilter(req, resp);
+            } else {
+                resp.sendRedirect(role.homePage());
             }
-            else resp.sendRedirect(role.homePage());
-
-
         } else {
             resp.sendRedirect("/login");
         }
+
     }
 
     @Override

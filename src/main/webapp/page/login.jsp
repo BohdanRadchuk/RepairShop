@@ -1,6 +1,4 @@
 <%@ include file="util/init.jsp" %>
-
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -9,10 +7,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
-
 <jsp:include page="/page/header_unreg.jsp"/>
-
-
 <div class="container">
     <div class="row centered-form">
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
@@ -44,9 +39,11 @@
                         </c:if>
                         <c:if test="${param.err == 'logout'}">
                             <fmt:message key="err_logout"/>
+                            <a href="/logout"><fmt:message key="logout"/></a>
+                            <fmt:message key="or_go"/>
+                            <a href="/home" <fmt:message key="homepage"/>
                         </c:if>
                     </c:if>
-
                 </div>
             </div>
         </div>
