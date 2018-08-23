@@ -1,5 +1,6 @@
 package com.trainings.model.dao;
 
+import com.trainings.constant.ConnectionProperty;
 import com.trainings.model.entity.Role;
 import com.trainings.model.entity.User;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -22,14 +23,15 @@ public class ConnectionPoolHolder {
                     BasicDataSource ds = new BasicDataSource();
                     Properties property = new Properties();
                     try {
-                        property.load( new FileInputStream("src/main/resources/connection_info.properties"));
-                        ds.setDriverClassName(property.getProperty("db.driver"));
-                        ds.setUrl(property.getProperty("db.host"));
-                        ds.setUsername(property.getProperty("db.login"));
-                        ds.setPassword(property.getProperty("db.password"));
-                        ds.setMinIdle(Integer.parseInt(property.getProperty("db.minIdle")));
-                        ds.setMaxIdle(Integer.parseInt(property.getProperty("db.maxIdle")));
-                        ds.setMaxOpenPreparedStatements(Integer.parseInt(property.getProperty("db.maxStatement")));
+                        property.load( new FileInputStream(ConnectionProperty.PROPERTY_PATH));
+                        ds.setDriverClassName(property.getProperty(ConnectionProperty.DRIVER));
+                        ds.setUrl(property.getProperty(ConnectionProperty.HOST));
+                        ds.setUsername(property.getProperty(ConnectionProperty.LOGIN));
+                        ds.setPassword(property.getProperty(ConnectionProperty.PASSWORD));
+                        ds.setMinIdle(Integer.parseInt(property.getProperty(ConnectionProperty.MIN_IDLE)));
+                        ds.setMaxIdle(Integer.parseInt(property.getProperty(ConnectionProperty.MAX_IDLE)));
+                        ds.setMaxOpenPreparedStatements(Integer.parseInt(property
+                                .getProperty(ConnectionProperty.MAX_STATEMENT)));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -43,13 +45,13 @@ public class ConnectionPoolHolder {
         return dataSource;
 
     }
-    private Connection getConnection(){
+   /* private Connection getConnection(){
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public static void main(String[] args) throws SQLException {
         UserDao daoFactory = DaoFactory.getInstance().createUserDao();

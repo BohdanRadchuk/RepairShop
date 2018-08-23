@@ -1,13 +1,11 @@
 package com.trainings.model.dao.impl;
 
+import com.trainings.constant.SqlQuery;
 import com.trainings.model.dao.UserDao;
 import com.trainings.model.dao.mapper.UserMapper;
 import com.trainings.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,10 +47,10 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        final String sqlQuery = "SELECT * FROM watch_repair.user;";
+        final String sqlQuery = SqlQuery.USER_GET_ALL;
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(sqlQuery);
-             ResultSet rs = ps.executeQuery()) {
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(sqlQuery)) {
             while (rs.next()) {
                 users.add(userMapper.extractFromResultSet(rs));
             }
@@ -100,23 +98,22 @@ public class JDBCUserDao implements UserDao {
     }
 
 
-    private PreparedStatement findByUniqueParamPrepareStatement(final int id) throws SQLException {
-        final String sqlQuery = "SELECT * FROM watch_repair.user WHERE id_user=?;";
+    private PreparedStatement findByUniqueParamPrepareStatement(int id) throws SQLException {
+        final String sqlQuery = SqlQuery.USER_GET_BY_ID;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        ps.setLong(1, id);
+        ps.setInt(1, id);
         return ps;
     }
 
     private PreparedStatement findByUniqueParamPrepareStatement(String email) throws SQLException {
-        final String sqlQuery = "SELECT * FROM watch_repair.user WHERE email=?;";
+        final String sqlQuery = SqlQuery.USER_GET_BY_EMAIL;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setString(1, email);
         return ps;
     }
 
     private PreparedStatement newUserPrepareStatement(final User user) throws SQLException {
-        String sqlQuery = "INSERT INTO `user` (`name`, `surname`, `email`, `password`, `role`) " +
-                "VALUES (?, ?, ?, ?, ?);";
+        String sqlQuery = SqlQuery.USER_CREATE;
 
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setString(1, user.getName());
@@ -129,22 +126,21 @@ public class JDBCUserDao implements UserDao {
 
 
     private PreparedStatement updateUserPrepareStatement(final User user) throws SQLException {
-        String sqlQuery = "  UPDATE `user` SET `name`=?, `surname` = ?," +
-                "`email` =?, `password` =?, `role` =? WHERE id_user = ?;";
+        String sqlQuery = SqlQuery.USER_UPDATE;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setString(1, user.getName());
         ps.setString(2, user.getSurname());
         ps.setString(3, user.getEmail());
         ps.setString(4, user.getPassword());
         ps.setString(5, user.getRole().name());
-        ps.setLong(6, user.getId());
+        ps.setInt(6, user.getId());
         return ps;
     }
 
     private PreparedStatement deleteUserPrepareStatement(int id) throws SQLException {
-        String sqlQuery = "DELETE FROM `user` WHERE id_user = ?;";
+        String sqlQuery = SqlQuery.USER_DELETE_BY_ID;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        ps.setLong(1, id);
+        ps.setInt(1, id);
         return ps;
     }
 
