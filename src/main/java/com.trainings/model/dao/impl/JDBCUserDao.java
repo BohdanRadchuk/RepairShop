@@ -22,7 +22,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public boolean create(final User entity) {
-        try (PreparedStatement ps = createNewUserPrepareStatement(entity)) {
+        try (PreparedStatement ps = newUserPrepareStatement(entity)) {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,7 +35,7 @@ public class JDBCUserDao implements UserDao {
     public Optional<User> findById(final Integer id) {
         Optional<User> user = Optional.empty();
 
-        try (PreparedStatement ps = createFindByUniqueParamPrepareStatement(id);
+        try (PreparedStatement ps = findByUniqueParamPrepareStatement(id);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 user = Optional.ofNullable(userMapper.extractFromResultSet(rs));
@@ -64,7 +64,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public boolean update(final User entity) {
-        try (PreparedStatement ps = createUpdateUserPrepareStatement(entity)) {
+        try (PreparedStatement ps = updateUserPrepareStatement(entity)) {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public boolean delete(final Integer id) {
-        try (PreparedStatement ps = createDeleteUserPrepareStatement(id)) {
+        try (PreparedStatement ps = deleteUserPrepareStatement(id)) {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,7 +88,7 @@ public class JDBCUserDao implements UserDao {
     public Optional<User> findByEmail(String email) {
         Optional<User> user = Optional.empty();
 
-        try (PreparedStatement ps = createFindByUniqueParamPrepareStatement(email);
+        try (PreparedStatement ps = findByUniqueParamPrepareStatement(email);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 user = Optional.ofNullable(userMapper.extractFromResultSet(rs));
@@ -100,21 +100,21 @@ public class JDBCUserDao implements UserDao {
     }
 
 
-    private PreparedStatement createFindByUniqueParamPrepareStatement(final Integer id) throws SQLException {
+    private PreparedStatement findByUniqueParamPrepareStatement(final int id) throws SQLException {
         final String sqlQuery = "SELECT * FROM watch_repair.user WHERE id_user=?;";
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        ps.setInt(1, id);
+        ps.setLong(1, id);
         return ps;
     }
 
-    private PreparedStatement createFindByUniqueParamPrepareStatement(String email) throws SQLException {
+    private PreparedStatement findByUniqueParamPrepareStatement(String email) throws SQLException {
         final String sqlQuery = "SELECT * FROM watch_repair.user WHERE email=?;";
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setString(1, email);
         return ps;
     }
 
-    private PreparedStatement createNewUserPrepareStatement(final User user) throws SQLException {
+    private PreparedStatement newUserPrepareStatement(final User user) throws SQLException {
         String sqlQuery = "INSERT INTO `user` (`name`, `surname`, `email`, `password`, `role`) " +
                 "VALUES (?, ?, ?, ?, ?);";
 
@@ -128,7 +128,7 @@ public class JDBCUserDao implements UserDao {
     }
 
 
-    private PreparedStatement createUpdateUserPrepareStatement(final User user) throws SQLException {
+    private PreparedStatement updateUserPrepareStatement(final User user) throws SQLException {
         String sqlQuery = "  UPDATE `user` SET `name`=?, `surname` = ?," +
                 "`email` =?, `password` =?, `role` =? WHERE id_user = ?;";
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
@@ -137,14 +137,14 @@ public class JDBCUserDao implements UserDao {
         ps.setString(3, user.getEmail());
         ps.setString(4, user.getPassword());
         ps.setString(5, user.getRole().name());
-        ps.setInt(6, user.getId());
+        ps.setLong(6, user.getId());
         return ps;
     }
 
-    private PreparedStatement createDeleteUserPrepareStatement(int id) throws SQLException {
+    private PreparedStatement deleteUserPrepareStatement(int id) throws SQLException {
         String sqlQuery = "DELETE FROM `user` WHERE id_user = ?;";
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        ps.setInt(1, id);
+        ps.setLong(1, id);
         return ps;
     }
 
