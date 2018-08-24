@@ -60,6 +60,7 @@ public class ServletUtil {
     }
 
     private void deleteUserFromContext(HttpSession session, String email) {
+        System.out.println(email + "delete context");
         HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) session.getServletContext().
                 getAttribute("logged_email");
         if (logged.containsKey(email)) {

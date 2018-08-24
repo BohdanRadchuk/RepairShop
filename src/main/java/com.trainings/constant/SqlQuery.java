@@ -11,5 +11,7 @@ public interface SqlQuery {
     String USER_DELETE_BY_ID = "DELETE FROM watch_repair.user WHERE id_user = ?;";
     String SERVICE_CREATE = "INSERT INTO watch_repair.service(type_en, type_ua, price) VALUES (?, ?, ?)";
     String SERVICE_GET_BY_ID = "SELECT * FROM watch_repair.service";
+    String SERVICE_UPDATE = "UPDATE watch_repair.service SET type_en=?, type_ua=?, price=? WHERE id_service=?;";
+
 
 }

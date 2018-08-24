@@ -1,11 +1,11 @@
 package com.trainings.model.entity;
 
 public class User {
-    private final int id;
-    private final String name;
-    private final String surname;
-    private final String email;
-    private final String password;
+    private int id;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
     private final Role role;
 
     private User(int id, String name, String surname, String email, String password, Role role) {

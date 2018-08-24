@@ -47,7 +47,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        final String sqlQuery = SqlQuery.USER_GET_ALL;
+        String sqlQuery = SqlQuery.USER_GET_ALL;
         List<User> users = new ArrayList<>();
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sqlQuery)) {
@@ -99,14 +99,14 @@ public class JDBCUserDao implements UserDao {
 
 
     private PreparedStatement findByUniqueParamPrepareStatement(int id) throws SQLException {
-        final String sqlQuery = SqlQuery.USER_GET_BY_ID;
+        String sqlQuery = SqlQuery.USER_GET_BY_ID;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setInt(1, id);
         return ps;
     }
 
     private PreparedStatement findByUniqueParamPrepareStatement(String email) throws SQLException {
-        final String sqlQuery = SqlQuery.USER_GET_BY_EMAIL;
+        String sqlQuery = SqlQuery.USER_GET_BY_EMAIL;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setString(1, email);
         return ps;

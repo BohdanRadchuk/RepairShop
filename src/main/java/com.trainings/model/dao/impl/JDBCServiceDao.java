@@ -5,10 +5,8 @@ import com.trainings.model.dao.ServiceDao;
 import com.trainings.model.dao.mapper.ServiceMapper;
 import com.trainings.model.entity.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +28,7 @@ public class JDBCServiceDao implements ServiceDao {
             return false;
         }
         return true;
-
     }
-
 
     @Override
     public Optional<Service> findById(final Integer id) {
@@ -59,23 +55,48 @@ public class JDBCServiceDao implements ServiceDao {
 
     @Override
     public List<Service> findAll() {
-        return null;
+        String sqlQuery = SqlQuery.USER_GET_ALL;
+        List<Service> services = new ArrayList<>();
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(sqlQuery)) {
+            while (rs.next()) {
+                services.add(serviceMapper.extractFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return services;
     }
 
     @Override
     public boolean update(Service service) {
-        return false;
+        try (PreparedStatement ps = updateServicePrepareStatement(service)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private PreparedStatement updateServicePrepareStatement(Service service) throws SQLException {
+        String sqlQuery = SqlQuery.SERVICE_UPDATE;
+        PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        ps.setString(1, service.getNameEn());
+        ps.setString(2, service.getNameUa());
+        ps.setBigDecimal(3, service.getPrice());
+        ps.setInt(4, service.getIdService());
+        return ps;
     }
 
     @Override
     public boolean delete(Integer id) {
+
         return false;
     }
 
     private PreparedStatement newServicePrepareStatement(Service service) throws SQLException {
-
             String sqlQuery = SqlQuery.SERVICE_CREATE;
-
             PreparedStatement ps = connection.prepareStatement(sqlQuery);
             ps.setString(1, service.getNameEn());
             ps.setString(2, service.getNameUa());

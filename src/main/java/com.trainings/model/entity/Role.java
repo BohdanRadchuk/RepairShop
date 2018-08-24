@@ -11,8 +11,8 @@ public enum Role {
     MASTER("home", new String[]{"asd", "asd"}),
     ADMIN("home", new String[]{"asd", "asd"});
 
-    private final String homePage;
-    private final String[] allowedPages;
+    private String homePage;
+    private     String[] allowedPages;
 
     Role(String homePage, String[] allowedPages) {
         this.allowedPages = allowedPages;

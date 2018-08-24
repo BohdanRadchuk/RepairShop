@@ -18,7 +18,7 @@ public class HouseServlet extends HttpServlet {
     private static final String HOUSE_DEVICES = "HouseDevices";
     private static final String TOTAL_ENERGY = "totalEnergy";
     private static final String HOUSE_JSP = "house.jsp";
-    public static final String REDIRECT_URL = "/house";
+    private static final String REDIRECT_URL = "/house";
     private static final String POWER_CHECKBOX_NAME = "switchOption";
 
 
