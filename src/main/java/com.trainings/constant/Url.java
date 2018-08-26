@@ -10,7 +10,7 @@ public interface Url {
 //    String  = "";
 //    String  = "";
 
-    String USER_HOME = "/in/user";
+    String USER_HOME = "/in/user/menu";
     String CREATE_ORDER = "/in/user/neworder";
     String PAGE = "/page";
     String REDIRECT = "redirect:";

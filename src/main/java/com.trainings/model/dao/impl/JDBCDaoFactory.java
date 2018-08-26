@@ -2,7 +2,7 @@ package com.trainings.model.dao.impl;
 
 import com.trainings.model.dao.ConnectionPoolHolder;
 import com.trainings.model.dao.DaoFactory;
-import com.trainings.model.dao.ServiceDao;
+import com.trainings.model.dao.ServeDao;
 import com.trainings.model.dao.UserDao;
 
 
@@ -20,8 +20,8 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public ServiceDao createServiceDao() {
-        return new JDBCServiceDao(getConnection());
+    public ServeDao createServeDao() {
+        return new JDBCServeDao(getConnection());
     }
 
     private Connection getConnection(){

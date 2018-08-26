@@ -5,23 +5,24 @@ import com.trainings.model.entity.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class ServletUtil {
 
     public boolean checkUserLogged(HttpServletRequest req, String email) {
         HttpSession session = req.getSession();
-
+        boolean asd = false;
         @SuppressWarnings("unchecked")
         HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) session.getServletContext()
                 .getAttribute("logged_email");
-        if (logged.containsKey(email) || getSessionEmail(req) != null) {
-            return true;
-        } else {
-            logged.put(email, session);
-            req.getSession().getServletContext().setAttribute("logged_email", logged);
-            return false;
+        if (logged.containsKey(email)) {
+            deleteUserFromContextAndSession(req);
+            asd = true;
         }
+        logged.put(email, session);
+        req.getSession().getServletContext().setAttribute("logged_email", logged);
+
+        return asd;
+
     }
 
     public void setUserEmailAndRole(HttpServletRequest req, Role role, String email) {
@@ -60,9 +61,13 @@ public class ServletUtil {
     }
 
     private void deleteUserFromContext(HttpSession session, String email) {
-        System.out.println(email + "delete context");
+        System.out.println(email + " delete context");
+
         HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) session.getServletContext().
                 getAttribute("logged_email");
+        System.out.println("context before invalidate session " + logged);
+        System.out.println("sesion before invalidate" + session);
+
         if (logged.containsKey(email)) {
             logged.get(email).invalidate();
             logged.remove(email);

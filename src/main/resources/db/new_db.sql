@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`service` (
   `id_service` INT(11) NOT NULL AUTO_INCREMENT,
   `type_en` VARCHAR(256) NOT NULL,
   `type_ua` VARCHAR(256) NOT NULL,
+  `description_en` VARCHAR(2000) NOT NULL,
+  `description_ua` VARCHAR(2000) NOT NULL,
   `price` DECIMAL NOT NULL,
   PRIMARY KEY (`id_service`)
 )
@@ -23,19 +25,19 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`service` (
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `watch_repair`.`order` (
-  `id_request` INT(11) NOT NULL,
+  `id_order` INT(11) NOT NULL,
   `id_user` INT(11) NOT NULL,
   `id_service` INT(11) NOT NULL,
-  `status` ENUM('UNCHECKED', 'REJECTED', 'CONFIRMED', 'IN_WORK', 'DONE') NULL DEFAULT NULL,
+  `status` ENUM('NEW', 'REFUSE', 'CONFIRM', 'IN_WORK', 'DONE') NULL DEFAULT NULL,
   `price` DECIMAL NULL DEFAULT NULL,
   `id_manager` INT(11) NULL DEFAULT NULL,
   `consideration_date` DATETIME NULL DEFAULT NULL,
-  `reject_reason` VARCHAR(256) NULL DEFAULT NULL,
+  `refuse_reason` VARCHAR(256) NULL DEFAULT NULL,
   `id_master` INT(11) NULL DEFAULT NULL,
   `in_work_date` DATETIME NULL DEFAULT NULL,
   `done_date` DATETIME NULL DEFAULT NULL,
 
-  PRIMARY KEY (`id_request`),
+  PRIMARY KEY (`id_order`),
   INDEX `id_user` (`id_user` ASC),
   INDEX `id_manager` (`id_manager` ASC),
   INDEX `id_master` (`id_master` ASC),
@@ -60,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`order` (
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `watch_repair`.`comment` (
-  `commentary` VARCHAR(1000) NOT NULL,
+  `commentary` VARCHAR(2500) NOT NULL,
   `id_request` INT(11) NOT NULL,
   PRIMARY KEY (`id_request`),
   CONSTRAINT `fk_comment_order1`
@@ -75,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`order_archive` (
   `id_archive_order` INT(11) NOT NULL,
   `id_user` INT(11) NOT NULL,
   `id_service` INT(11) NOT NULL,
-  `status` ENUM('REJECTED', 'DONE') NOT NULL,
+  `status` ENUM('REFUSE', 'DONE') NOT NULL,
   `price` DECIMAL NULL DEFAULT NULL,
   `id_worker` INT(11) NULL DEFAULT NULL,
   `done_date` DATETIME NULL DEFAULT NULL,

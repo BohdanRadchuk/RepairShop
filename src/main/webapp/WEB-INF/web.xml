@@ -23,7 +23,6 @@
         <url-pattern>/in/*</url-pattern>
     </filter-mapping>
 
-
     <error-page>
         <location>/page/util/error_page.jsp</location>
     </error-page>

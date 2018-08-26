@@ -46,25 +46,32 @@ public class Authentication implements Filter {
         Role role = servletUtil.getSessionRole(req);
         String email = servletUtil.getSessionEmail(req);
 
-        System.out.println((session != null) +"- sess "  + (email != null) + " - email " + (role != null) + "-role");
+        String reqUri = req.getRequestURI();
 
-        if (session != null && email != null && role != null) {
+        System.out.println("filter" + (session != null) +"- sess "  + (email != null) + " - email " + (role != null) + "-role");
+/*
+        if (!reqUri.contains("/in/")){
+            System.out.println("filter doesnt contain /in/* ");
+            chain.doFilter(req, resp);
+        }
+        else {*/
+            if (session != null && email != null && role != null) {
 
-            System.err.println("AUTHENTICATION SERVLENT IN WORK Role = " + role
-                    + " email = " + email);
+                System.err.println("AUTHENTICATION SERVLENT IN WORK Role = " + role
+                        + " email = " + email);
 //        System.out.println(role.name().toLowerCase() + " ROLe " + req.getRequestURI() + " - REUQEST URI");
 
-            String reqUri = req.getRequestURI();
-            if (role.homePage().equals(reqUri) || Arrays.asList(role.allowedPages()).contains(reqUri)) {
-                System.out.println("CONTAIN !!!!!");
-                chain.doFilter(req, resp);
-            } else {
-                resp.sendRedirect(role.homePage());
-            }
-        } else {
-            resp.sendRedirect("/login");
-        }
 
+                if (role.homePage().equals(reqUri) || Arrays.asList(role.allowedPages()).contains(reqUri)) {
+                    System.out.println("CONTAIN !!!!!");
+                    chain.doFilter(req, resp);
+                } else {
+                    resp.sendRedirect(role.homePage());
+                }
+            } else {
+                resp.sendRedirect("/login");
+            }
+        //}
     }
 
     @Override

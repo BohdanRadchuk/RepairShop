@@ -2,6 +2,7 @@ package com.trainings;
 
 import com.trainings.constant.Url;
 import com.trainings.servlet.command.*;
+import com.trainings.servlet.command.get.CreateOrder;
 import com.trainings.servlet.command.get.Login;
 import com.trainings.servlet.command.get.Registration;
 import com.trainings.servlet.command.get.UserMenu;
@@ -25,7 +26,7 @@ import java.util.Map;
  * @author Bohdan Radchuk
  */
 @WebServlet(urlPatterns = {Url.HOME, Url.LOGIN, Url.LOGIN_CONFIRM, Url.LOGOUT, Url.REGISTRATION,
-        Url.REGISTRATION_CONFIRM, Url.USER_HOME})
+        Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.CREATE_ORDER})
 public class Servlet extends HttpServlet {
 
     private Map<String, ServletCommand> command = new HashMap<>();
@@ -42,6 +43,7 @@ public class Servlet extends HttpServlet {
         command.put(Url.LOGIN_CONFIRM, new LoginConfirm());
         command.put(Url.LOGOUT, new Logout());
         command.put(Url.USER_HOME, new UserMenu());
+        command.put(Url.CREATE_ORDER, new CreateOrder());
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

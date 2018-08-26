@@ -1,9 +1,9 @@
 package com.trainings.servlet.command.post;
 
 
-import com.trainings.model.dao.DaoFactory;
-import com.trainings.model.dao.UserDao;
 import com.trainings.model.entity.User;
+import com.trainings.model.service.UserService;
+import com.trainings.model.service.impl.UserServiceImpl;
 import com.trainings.servlet.command.ServletCommand;
 import com.trainings.servlet.command.ServletUtil;
 
@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginConfirm implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        UserDao dao = daoFactory.createUserDao();
 
+        UserService service = new UserServiceImpl();
         ServletUtil servletUtil = new ServletUtil();
 
         String email = req.getParameter("email");
@@ -27,26 +26,31 @@ public class LoginConfirm implements ServletCommand {
             return "redirect:/login?err=empty";
         }
 
+
         final User user;
         try {
-            user = dao.findByEmail(email).orElseThrow(NoSuchUserException::new);
-        } catch (NoSuchUserException e) {
+            user = service.findUserByEmail(email).orElseThrow(NoSuchRecordException::new);
+        } catch (NoSuchRecordException e) {
             System.out.println("catch find by email in servlet here");
             return "redirect:/login?err=email";
         }
-
+//        System.out.println( password + " password equal " + user.getPassword() + BCrypt.checkpw(password, user.getPassword()) );
+        //if (!BCrypt.checkpw(password, user.getPassword())){
         if (!user.getPassword().equals(password)) {
             return "redirect:/login?err=pass";
         }
 
-        if (!servletUtil.checkUserLogged(req, email)) {
-            System.out.println(user.getRole());
-            servletUtil.setUserEmailAndRole(req, user.getRole(), user.getEmail());
+        servletUtil.setUserEmailAndRole(req, user.getRole(), user.getEmail());
 
-            return "redirect:" + user.getRole().homePage() ;         //successful login
-        }else {
-            return "redirect:/login?err=logout";
+        String successLoginUrl = "redirect:" + user.getRole().homePage();
+        if (servletUtil.checkUserLogged(req, email)) {
+            successLoginUrl+="?logged=true";
         }
+
+        return successLoginUrl;         //successful login
+        /*}else {
+            return "redirect:/login?err=logout";
+        }*/
 
     }
 }

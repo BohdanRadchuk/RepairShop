@@ -1,5 +1,12 @@
 package com.trainings.servlet.command.get;
 
+import com.trainings.constant.Url;
+import com.trainings.model.dao.ServeDao;
+import com.trainings.model.dao.impl.JDBCDaoFactory;
+import com.trainings.model.entity.Serve;
+import com.trainings.model.service.ServeService;
+import com.trainings.model.service.Service;
+import com.trainings.model.service.impl.ServeServiceImpl;
 import com.trainings.servlet.command.ServletCommand;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +17,10 @@ public class UserMenu implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         System.out.println("USER MENU HERE");
-        return "/in/user.jsp";
+        ServeService service = new ServeServiceImpl();
+
+        req.setAttribute("services", service.getAllServs() );
+        return Url.USER_HOME;
 
     }
 }
