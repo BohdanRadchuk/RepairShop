@@ -4,6 +4,7 @@ package com.trainings.servlet.command.post;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
+import com.trainings.servlet.NoSuchRecordException;
 import com.trainings.servlet.command.ServletCommand;
 import com.trainings.servlet.command.ServletUtil;
 

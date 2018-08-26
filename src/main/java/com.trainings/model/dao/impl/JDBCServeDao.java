@@ -84,7 +84,7 @@ public class JDBCServeDao implements ServeDao {
     }
 
     private PreparedStatement findByIDPrepareStatement(int id) throws SQLException {
-        final String sqlQuery = SqlQuery.SERVICE_GET_BY_ID;
+        String sqlQuery = SqlQuery.SERVICE_GET_BY_ID;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setInt(1, id);
         return ps;
@@ -93,28 +93,28 @@ public class JDBCServeDao implements ServeDao {
     private PreparedStatement newServicePrepareStatement(Serve service) throws SQLException {
         String sqlQuery = SqlQuery.SERVICE_CREATE;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        ps.setString(1, service.getTypeEn());
-        ps.setString(2, service.getTypeUa());
-        ps.setString(3, service.getDescriptionEn());
-        ps.setString(4, service.getDescriptionUa());
-        ps.setBigDecimal(5, service.getPrice());
+        prepareStatementSetServiceWithoutId(service, ps);
         return ps;
     }
 
     private PreparedStatement updateServicePrepareStatement(Serve service) throws SQLException {
         String sqlQuery = SqlQuery.SERVICE_UPDATE;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        prepareStatementSetServiceWithoutId(service, ps);
+        ps.setInt(6, service.getIdServe());
+        return ps;
+    }
+
+    private void prepareStatementSetServiceWithoutId(Serve service, PreparedStatement ps) throws SQLException {
         ps.setString(1, service.getTypeEn());
         ps.setString(2, service.getTypeUa());
         ps.setString(3, service.getDescriptionEn());
         ps.setString(4, service.getDescriptionUa());
         ps.setBigDecimal(5, service.getPrice());
-        ps.setInt(6, service.getIdServe());
-        return ps;
     }
 
     private PreparedStatement deleteServicePrepareStatement(int id) throws SQLException {
-        final String sqlQuery = SqlQuery.SERVICE_DELETE_BY_ID;
+        String sqlQuery = SqlQuery.SERVICE_DELETE_BY_ID;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setInt(1, id);
         return ps;

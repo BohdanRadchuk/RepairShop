@@ -11,7 +11,11 @@ public interface Url {
 //    String  = "";
 
     String USER_HOME = "/in/user/menu";
-    String CREATE_ORDER = "/in/user/neworder";
+    String USER_NEW_ORDER = "/in/user/new_order";
+    String USER_NEW_ORDER_CONFIRM = "/in/user/new_order_confirm" ;
+
+    String JSP = ".jsp";
     String PAGE = "/page";
     String REDIRECT = "redirect:";
+
 }

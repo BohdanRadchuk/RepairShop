@@ -1,5 +1,6 @@
 package com.trainings.servlet.command;
 
+import com.trainings.constant.Url;
 import com.trainings.model.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ public class Home implements ServletCommand {
         if (role != null) {
             return "redirect:" + role.homePage();
         } else {
-            return "/home.jsp";
+            return Url.HOME + Url.JSP;
         }
     }
 }

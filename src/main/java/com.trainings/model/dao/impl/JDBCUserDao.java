@@ -116,11 +116,7 @@ public class JDBCUserDao implements UserDao {
         String sqlQuery = SqlQuery.USER_CREATE;
 
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        ps.setString(1, user.getName());
-        ps.setString(2, user.getSurname());
-        ps.setString(3, user.getEmail());
-        ps.setString(4, user.getPassword());
-        ps.setString(5, user.getRole().name());
+        setUserWithoutId(user, ps);
         return ps;
     }
 
@@ -128,13 +124,17 @@ public class JDBCUserDao implements UserDao {
     private PreparedStatement updateUserPrepareStatement(final User user) throws SQLException {
         String sqlQuery = SqlQuery.USER_UPDATE;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        setUserWithoutId(user, ps);
+        ps.setInt(6, user.getId());
+        return ps;
+    }
+
+    private void setUserWithoutId(User user, PreparedStatement ps) throws SQLException {
         ps.setString(1, user.getName());
         ps.setString(2, user.getSurname());
         ps.setString(3, user.getEmail());
         ps.setString(4, user.getPassword());
         ps.setString(5, user.getRole().name());
-        ps.setInt(6, user.getId());
-        return ps;
     }
 
     private PreparedStatement deleteUserPrepareStatement(int id) throws SQLException {

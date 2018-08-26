@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`service` (
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `watch_repair`.`order` (
-  `id_order` INT(11) NOT NULL,
+  `id_order` INT(11) NOT NULL AUTO_INCREMENT,
   `id_user` INT(11) NOT NULL,
   `id_service` INT(11) NOT NULL,
-  `status` ENUM('NEW', 'REFUSE', 'CONFIRM', 'IN_WORK', 'DONE') NULL DEFAULT NULL,
+  `status` ENUM('NEW', 'REFUSE', 'CONFIRM', 'IN_WORK', 'DONE') NOT NULL,
   `price` DECIMAL NULL DEFAULT NULL,
   `id_manager` INT(11) NULL DEFAULT NULL,
   `consideration_date` DATETIME NULL DEFAULT NULL,
@@ -63,24 +63,24 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`order` (
 
 CREATE TABLE IF NOT EXISTS `watch_repair`.`comment` (
   `commentary` VARCHAR(2500) NOT NULL,
-  `id_request` INT(11) NOT NULL,
-  PRIMARY KEY (`id_request`),
+  `id_order` INT(11) NOT NULL,
+  PRIMARY KEY (`id_order`),
   CONSTRAINT `fk_comment_order1`
-  FOREIGN KEY (`id_request`)
-  REFERENCES `watch_repair`.`order` (`id_request`)
+  FOREIGN KEY (`id_order`)
+  REFERENCES `watch_repair`.`order` (`id_order`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `watch_repair`.`order_archive` (
-  `id_archive_order` INT(11) NOT NULL,
+  `id_archive_order` INT(11) NOT NULL AUTO_INCREMENT,
   `id_user` INT(11) NOT NULL,
   `id_service` INT(11) NOT NULL,
   `status` ENUM('REFUSE', 'DONE') NOT NULL,
-  `price` DECIMAL NULL DEFAULT NULL,
-  `id_worker` INT(11) NULL DEFAULT NULL,
-  `done_date` DATETIME NULL DEFAULT NULL,
+  `price` DECIMAL NOT NULL,
+  `id_worker` INT(11) NOT NULL,
+  `done_date` DATETIME NOT NULL,
   PRIMARY KEY (`id_archive_order`),
   INDEX `id_user` (`id_user` ASC),
   INDEX `id_manager` (`id_worker` ASC),

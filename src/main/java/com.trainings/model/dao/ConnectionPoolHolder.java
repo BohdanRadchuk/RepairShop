@@ -1,7 +1,9 @@
 package com.trainings.model.dao;
 
 import com.trainings.constant.ConnectionProperty;
+import com.trainings.model.entity.Order;
 import com.trainings.model.entity.Role;
+import com.trainings.model.entity.Status;
 import com.trainings.model.entity.User;
 import org.apache.commons.dbcp.BasicDataSource;
 
@@ -11,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 public class ConnectionPoolHolder {
@@ -53,8 +56,8 @@ public class ConnectionPoolHolder {
     }*/
 
     public static void main(String[] args) throws SQLException {
-        UserDao daoFactory = DaoFactory.getInstance().createUserDao();
-        /*System.out.println(daoFactory.findById(1));
+        /*UserDao daoFactory = DaoFactory.getInstance().createUserDao();
+        System.out.println(daoFactory.findById(1));
         System.out.println(daoFactory.findAll());
         System.out.println(daoFactory.create(new User.UserBuilder()
                 .name("name")
@@ -64,7 +67,7 @@ public class ConnectionPoolHolder {
                 .role(Role.USER)
                 .build()));
 
-        */System.out.println(daoFactory.update(new User.UserBuilder()
+        System.out.println(daoFactory.update(new User.UserBuilder()
                 .userId(9)
                 .name("name2")
                 .surname("surname2")
@@ -74,10 +77,16 @@ public class ConnectionPoolHolder {
                 .build()));
         System.out.println(daoFactory.findByEmail("email@2"));
         System.out.println(daoFactory.delete(9));
-        System.out.println(daoFactory.findAll());
+        System.out.println(daoFactory.findAll());*/
         /*
         JDBCUserDao j = new JDBCUserDao(dataSource.getConnection());
         System.out.println(j.findById(1));*/
+
+        OrderDao dao = DaoFactory.getInstance().createOrderDao();
+        System.out.println(dao.findById(1));
+        Order o = new Order(3, 1, Status.DONE);
+        o.setDoneDate(LocalDateTime.now());
+        dao.create(o);
     }
 
 }

@@ -17,4 +17,10 @@ public interface SqlQuery {
     String SERVICE_UPDATE = "UPDATE watch_repair.service SET type_en=?, type_ua=?, " +
             "description_en=?, description_ua=?, price=? WHERE id_service=?;";
     String SERVICE_DELETE_BY_ID = "DELETE FROM watch_repair.service WHERE id_service=?;";
+
+    String ORDER_CREATE = "INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, " +
+            "consideration_date, refuse_reason, id_master, in_work_date, done_date) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    String ORDER_GET_BY_ID = "SELECT * FROM watch_repair.`order` WHERE id_order=?";
+    String ORDER_GET_ALL = "SELECT * FROM watch_repair.`order`;";
 }

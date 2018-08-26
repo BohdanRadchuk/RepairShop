@@ -32,13 +32,11 @@
         <div class="container">
             <tr>
                 <td>
-                    <form method="post" action="/in/user/neworder">
-                        <input type="hidden" id="orderId" name="orderId" value="${serve.idServe}">
+                    <form method="post" action="/in/user/new_order">
+                        <input type="hidden" id="serveId" name="serveId" value="${serve.idServe}">
                         <c:if test="${language=='en'}">
-
                         <input type="submit" value="${serve.typeEn}">
                         </c:if>
-
                         <c:if test="${language=='ua'}">
                         <input type="submit" value="${serve.typeUa}">
                         </c:if>

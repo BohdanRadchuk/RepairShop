@@ -1,9 +1,6 @@
 package com.trainings.model.dao.impl;
 
-import com.trainings.model.dao.ConnectionPoolHolder;
-import com.trainings.model.dao.DaoFactory;
-import com.trainings.model.dao.ServeDao;
-import com.trainings.model.dao.UserDao;
+import com.trainings.model.dao.*;
 
 
 import javax.sql.DataSource;
@@ -22,6 +19,11 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public ServeDao createServeDao() {
         return new JDBCServeDao(getConnection());
+    }
+
+    @Override
+    public OrderDao createOrderDao() {
+        return new JDBCOrderDao(getConnection());
     }
 
     private Connection getConnection(){

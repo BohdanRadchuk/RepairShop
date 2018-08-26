@@ -32,8 +32,8 @@
                     <c:if test="${language=='ua'}">
                         ${service_description.descriptionUa}
                     </c:if>
-                    <form method="post" action="/in/user/neworder_confirm">
-                        <input type="hidden" id="orderId" name="orderId" value="${serve.idServe}">
+                    <form method="post" action="/in/user/new_order_confirm">
+                        <input type="hidden" id="serveId" name="serveId" value="${service_description.idServe}">
                         <input type="submit" value="<fmt:message key="send_order"/>">
                     </form>
 

@@ -1,14 +1,10 @@
-package com.trainings;
+package com.trainings.servlet;
 
 import com.trainings.constant.Url;
-import com.trainings.servlet.command.*;
-import com.trainings.servlet.command.get.CreateOrder;
-import com.trainings.servlet.command.get.Login;
-import com.trainings.servlet.command.get.Registration;
-import com.trainings.servlet.command.get.UserMenu;
-import com.trainings.servlet.command.post.LoginConfirm;
-import com.trainings.servlet.command.post.Logout;
-import com.trainings.servlet.command.post.RegConfirm;
+import com.trainings.servlet.command.Home;
+import com.trainings.servlet.command.ServletCommand;
+import com.trainings.servlet.command.get.*;
+import com.trainings.servlet.command.post.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,14 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
  * @author Bohdan Radchuk
  */
 @WebServlet(urlPatterns = {Url.HOME, Url.LOGIN, Url.LOGIN_CONFIRM, Url.LOGOUT, Url.REGISTRATION,
-        Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.CREATE_ORDER})
+        Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM})
 public class Servlet extends HttpServlet {
 
     private Map<String, ServletCommand> command = new HashMap<>();
@@ -43,7 +38,8 @@ public class Servlet extends HttpServlet {
         command.put(Url.LOGIN_CONFIRM, new LoginConfirm());
         command.put(Url.LOGOUT, new Logout());
         command.put(Url.USER_HOME, new UserMenu());
-        command.put(Url.CREATE_ORDER, new CreateOrder());
+        command.put(Url.USER_NEW_ORDER, new CreateOrder());
+        command.put(Url.USER_NEW_ORDER_CONFIRM, new OrderConfirm());
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

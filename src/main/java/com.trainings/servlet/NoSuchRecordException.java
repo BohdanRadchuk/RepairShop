@@ -1,4 +1,4 @@
-package com.trainings.servlet.command.post;
+package com.trainings.servlet;
 
 public class NoSuchRecordException extends Exception{
 }

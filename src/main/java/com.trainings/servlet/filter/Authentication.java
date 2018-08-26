@@ -1,5 +1,6 @@
 package com.trainings.servlet.filter;
 
+import com.trainings.constant.Url;
 import com.trainings.model.entity.Role;
 import com.trainings.servlet.command.ServletUtil;
 
@@ -69,7 +70,7 @@ public class Authentication implements Filter {
                     resp.sendRedirect(role.homePage());
                 }
             } else {
-                resp.sendRedirect("/login");
+                resp.sendRedirect(Url.LOGIN);
             }
         //}
     }
