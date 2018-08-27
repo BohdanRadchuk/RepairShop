@@ -3,9 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link href=<%--"D:/java/EPAM/HomeWorks/RepairShop/src/main/webapp/css/header_style.css"--%>
-
-                  "../../css/header_style.css" rel="stylesheet" type="text/css">
+    <link href="../../css/header_style.css" rel="stylesheet" type="text/css">
     <title>header</title>
 </head>
 <body>
@@ -22,13 +20,13 @@
         <div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> <fmt:message key="logout"/></a></li>
-                <li>
-                  <%--  <form>
-                        <input name="language" type="image" value="en"
-                        ${language=='en' ? 'selected' : '' } src = "../../image/flag_en.png" style="height: 24px; width: 32px;">
-                        <input name="language" type="image" value="ua"
-                        ${language=='ua' ? 'selected' : '' } src = "../../image/flag_ua.png" style="height: 24px; width: 32px;">
-                    </form>--%>
+                <%--  <li>
+                <form>
+                       <input name="language" type="image" value="en"
+                       ${language=='en' ? 'selected' : '' } src = "../../image/flag_en.png" style="height: 24px; width: 32px;">
+                       <input name="language" type="image" value="ua"
+                       ${language=='ua' ? 'selected' : '' } src = "../../image/flag_ua.png" style="height: 24px; width: 32px;">
+                   </form>--%>
                     <%--
                     <form>
                         <select id="language" name="language" onchange="submit()">
@@ -37,8 +35,8 @@
                             <option value="ua" ${language == 'ua' ? 'selected' : ''}><fmt:message
                                     key="lang.ua"/></option>
                         </select>
-                    </form>--%>
-                </li>
+                    </form>
+                </li>--%>
             </ul>
         </div>
     </div>

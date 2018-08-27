@@ -37,12 +37,6 @@
                         <c:if test="${param.err == 'pass'}">
                             <fmt:message key="err_pass"/>
                         </c:if>
-                        <c:if test="${param.err == 'logout'}">
-                            <fmt:message key="err_logout"/>
-                            <a href="/logout"><fmt:message key="logout"/></a>
-                            <fmt:message key="or_go"/>
-                            <a href="/home" <fmt:message key="homepage"/>
-                        </c:if>
                     </c:if>
                 </div>
             </div>

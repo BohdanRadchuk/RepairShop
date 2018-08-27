@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`order` (
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `watch_repair`.`comment` (
-  `commentary` VARCHAR(2500) NOT NULL,
   `id_order` INT(11) NOT NULL,
+  `commentary` VARCHAR(2500) NOT NULL,
   PRIMARY KEY (`id_order`),
   CONSTRAINT `fk_comment_order1`
   FOREIGN KEY (`id_order`)

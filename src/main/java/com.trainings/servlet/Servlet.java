@@ -1,7 +1,7 @@
 package com.trainings.servlet;
 
 import com.trainings.constant.Url;
-import com.trainings.servlet.command.Home;
+import com.trainings.servlet.command.get.Home;
 import com.trainings.servlet.command.ServletCommand;
 import com.trainings.servlet.command.get.*;
 import com.trainings.servlet.command.post.*;
@@ -21,7 +21,8 @@ import java.util.Map;
  * @author Bohdan Radchuk
  */
 @WebServlet(urlPatterns = {Url.HOME, Url.LOGIN, Url.LOGIN_CONFIRM, Url.LOGOUT, Url.REGISTRATION,
-        Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM})
+        Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM, Url.USERS_ORDERS,
+        Url.USER_SEND_COMMENT, Url.MANAGER_HOME})
 public class Servlet extends HttpServlet {
 
     private Map<String, ServletCommand> command = new HashMap<>();
@@ -40,6 +41,9 @@ public class Servlet extends HttpServlet {
         command.put(Url.USER_HOME, new UserMenu());
         command.put(Url.USER_NEW_ORDER, new CreateOrder());
         command.put(Url.USER_NEW_ORDER_CONFIRM, new OrderConfirm());
+        command.put(Url.USERS_ORDERS, new UsersOrders());
+        command.put(Url.USER_SEND_COMMENT, new UserSendComment());
+        command.put(Url.MANAGER_HOME, new ManagerMenu());
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

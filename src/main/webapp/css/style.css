@@ -28,16 +28,16 @@
 
 body{
     /* Safari 4-5, Chrome 1-9 */
-    background: -webkit-gradient(radial,0% 50%, 0, 50% 50%, 460, from(#7bf77b), to(#316b31));
+    background: -webkit-gradient(radial,0% 50%, 0, 50% 50%, 460, from(#acced8), to(#8c8d90));
 
     /* Safari 5.1+, Chrome 10+ */
-    background: -webkit-radial-gradient(circle, #7bf77b, #316b31);
+    background: -webkit-radial-gradient(circle, #acced8, #8c8d90);
 
     /* Firefox 3.6+ */
-    background: -moz-radial-gradient(circle, #7bf77b, #316b31);
+    background: -moz-radial-gradient(circle, #acced8, #8c8d90);
 
     /* IE 10 */
-    background: -ms-radial-gradient(circle, #7bf77b, #316b31);
+    background: -ms-radial-gradient(circle, #acced8, #8c8d90);
     height:600px;
 }
 
@@ -55,3 +55,6 @@ label.label-floatlabel {
     color: #46b8da;
     font-size: 11px;
 }
+
+
+

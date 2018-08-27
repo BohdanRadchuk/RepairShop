@@ -1,10 +1,7 @@
 package com.trainings.servlet.command.post;
 
-import com.trainings.model.dao.DaoFactory;
-import com.trainings.model.dao.UserDao;
 import com.trainings.model.entity.Role;
 import com.trainings.model.entity.User;
-import com.trainings.model.service.Service;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
 import com.trainings.servlet.command.ServletCommand;
@@ -36,7 +33,7 @@ public class RegConfirm implements ServletCommand {
                     .role(Role.USER)
                     .build();
 
-            service.insertNewUser(user);
+            service.createNewUser(user);
 
             System.out.println(user);
             System.out.println(name + surname + email + password + password_confirmation);

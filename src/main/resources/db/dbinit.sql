@@ -12,6 +12,9 @@ VALUES ('Battery replacement', 'Заміна батарейки','Selection and 
 INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, consideration_date, id_master, in_work_date, done_date)
 VALUES (5, 2, 'DONE', 60, 2,'2018-08-22 10:12:13', 1, '2018-08-24 09:15:22', '2018-08-24 11:30:22');
 
+INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, consideration_date, id_master, in_work_date, done_date)
+VALUES (5, 1, 'DONE', 55, 4,'2018-08-23 14:24:11', 1, '2018-08-25 10:45:52', '2018-08-26 17:54:31');
+
 INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, consideration_date, id_master, in_work_date)
 VALUES (5, 1, 'IN_WORK', 45, 2,'2018-08-24 10:12:13', 1, '2018-08-26 11:44:13');
 
@@ -23,3 +26,5 @@ VALUES (3, 1, 'REFUSE', 4, '2018-08-25 15:33:21', 'all masters are busy at the m
 
 INSERT INTO watch_repair.order (id_user, id_service, status)
 VALUES (3, 1, 'NEW');
+
+INSERT INTO `watch_repair`.`comment` (`id_order`, `commentary`) VALUES (1, 'good work');

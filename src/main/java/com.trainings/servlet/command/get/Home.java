@@ -1,7 +1,8 @@
-package com.trainings.servlet.command;
+package com.trainings.servlet.command.get;
 
 import com.trainings.constant.Url;
 import com.trainings.model.entity.Role;
+import com.trainings.servlet.command.ServletCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -4,7 +4,7 @@ import com.trainings.constant.Url;
 import com.trainings.model.entity.Serve;
 import com.trainings.model.service.ServeService;
 import com.trainings.model.service.impl.ServeServiceImpl;
-import com.trainings.servlet.NoSuchRecordException;
+import com.trainings.servlet.util.NoSuchRecordException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

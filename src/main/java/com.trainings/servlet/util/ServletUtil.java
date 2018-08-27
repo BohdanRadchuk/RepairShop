@@ -1,4 +1,4 @@
-package com.trainings.servlet.command;
+package com.trainings.servlet.util;
 
 import com.trainings.model.entity.Role;
 
@@ -10,22 +10,22 @@ public class ServletUtil {
 
     public boolean checkUserLogged(HttpServletRequest req, String email) {
         HttpSession session = req.getSession();
-        boolean asd = false;
+        boolean blogged = false;
         @SuppressWarnings("unchecked")
         HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) session.getServletContext()
                 .getAttribute("logged_email");
         if (logged.containsKey(email)) {
             deleteUserFromContextAndSession(req);
-            asd = true;
+            blogged = true;
         }
         logged.put(email, session);
         req.getSession().getServletContext().setAttribute("logged_email", logged);
 
-        return asd;
+        return blogged;
 
     }
 
-    public void setUserEmailAndRole(HttpServletRequest req, Role role, String email) {
+    public void setUserEmailRoleToSession(HttpServletRequest req, Role role, String email) {
         HttpSession session = req.getSession();
 
         session.setAttribute("userEmail", email);
@@ -46,21 +46,7 @@ public class ServletUtil {
 
         String email = (String) req.getSession().getAttribute("userEmail");
         HttpSession session = req.getSession();
-        /*session.invalidate();*/
-        deleteUserFromContext(session, email);
 
-        /*if (email != null) {
-            deleteUserFromSession(session);
-            deleteUserFromContext(session, email);
-        }*/
-    }
-
-    private void deleteUserFromSession(HttpSession session) {
-        session.setAttribute("userEmail", null);
-        session.setAttribute("role", null);
-    }
-
-    private void deleteUserFromContext(HttpSession session, String email) {
         System.out.println(email + " delete context");
 
         HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) session.getServletContext().
@@ -69,10 +55,23 @@ public class ServletUtil {
         System.out.println("sesion before invalidate" + session);
 
         if (logged.containsKey(email)) {
-            logged.get(email).invalidate();
+            try {
+                logged.get(email).invalidate();
+            }catch (IllegalStateException e){
+                System.out.println("session has been already invalidated");
+            }
             logged.remove(email);
             session.getServletContext().setAttribute("logged_email", logged);
-            session.getServletContext().getAttribute("logged_email");
+            //session.getServletContext().getAttribute("logged_email");
         }
+    }
+
+    private void deleteUserFromSession(HttpSession session) {
+        session.setAttribute("userEmail", null);
+        session.setAttribute("role", null);
+    }
+
+    private void deleteUserFromContext(HttpSession session, String email) {
+
     }
 }

@@ -9,5 +9,5 @@ public interface UserService extends Service {
 
     Optional<User> findUserByEmail(String email);
 
-    void insertNewUser(User user);
+    void createNewUser(User user);
 }

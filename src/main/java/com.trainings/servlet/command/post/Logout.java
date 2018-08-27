@@ -1,7 +1,7 @@
 package com.trainings.servlet.command.post;
 
 import com.trainings.servlet.command.ServletCommand;
-import com.trainings.servlet.command.ServletUtil;
+import com.trainings.servlet.util.ServletUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

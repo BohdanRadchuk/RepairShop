@@ -6,8 +6,9 @@ import java.util.Arrays;
 
 public enum Role {
     GUEST(Url.HOME, new String[]{"/", "asd"}),
-    USER(Url.USER_HOME, new String[]{Url.LOGOUT, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM,"/in/user/menu", ""}),
-    MANAGER("home", new String[]{"asd", "asd"}),
+    USER(Url.USER_HOME, new String[]{Url.LOGOUT, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM, Url.USERS_ORDERS,
+            Url.USER_SEND_COMMENT}),
+    MANAGER(Url.MANAGER_HOME, new String[]{Url.LOGOUT, "asd"}),
     MASTER("home", new String[]{"asd", "asd"}),
     ADMIN("home", new String[]{"asd", "asd"});
 

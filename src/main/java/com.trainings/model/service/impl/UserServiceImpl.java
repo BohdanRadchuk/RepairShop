@@ -7,22 +7,38 @@ import com.trainings.model.service.UserService;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    UserDao dao = daoFactory.createUserDao();
+
 
     @Override
     public boolean userWithEmailExist(String email) {
-        return dao.findByEmail(email).isPresent();
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.findByEmail(email).isPresent();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
     }
 
     @Override
     public Optional<User> findUserByEmail(String email) {
-
-        return dao.findByEmail(email);
+        Optional<User> user = Optional.empty();
+        try (UserDao dao = daoFactory.createUserDao()) {
+            user = dao.findByEmail(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
-    public void insertNewUser(User user) {
+    public void createNewUser(User user) {
         System.out.println(user.getPassword() + " Hashed password ");
-        dao.create(user);
+        try (UserDao dao = daoFactory.createUserDao()) {
+            dao.create(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -120,4 +120,12 @@ public class JDBCServeDao implements ServeDao {
         return ps;
     }
 
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

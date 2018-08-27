@@ -1,12 +1,13 @@
 package com.trainings.servlet.command.post;
 
 
+import com.trainings.constant.Url;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
-import com.trainings.servlet.NoSuchRecordException;
 import com.trainings.servlet.command.ServletCommand;
-import com.trainings.servlet.command.ServletUtil;
+import com.trainings.servlet.util.NoSuchRecordException;
+import com.trainings.servlet.util.ServletUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,17 +42,14 @@ public class LoginConfirm implements ServletCommand {
             return "redirect:/login?err=pass";
         }
 
-        servletUtil.setUserEmailAndRole(req, user.getRole(), user.getEmail());
+        servletUtil.setUserEmailRoleToSession(req, user.getRole(), user.getEmail());
 
-        String successLoginUrl = "redirect:" + user.getRole().homePage();
+        String successLoginUrl = Url.REDIRECT + user.getRole().homePage();
         if (servletUtil.checkUserLogged(req, email)) {
-            successLoginUrl+="?logged=true";
+            successLoginUrl += "?logged=true";
         }
 
         return successLoginUrl;         //successful login
-        /*}else {
-            return "redirect:/login?err=logout";
-        }*/
 
     }
 }
