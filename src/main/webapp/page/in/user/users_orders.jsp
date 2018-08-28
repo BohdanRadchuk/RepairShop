@@ -22,11 +22,15 @@
         <th>
             <fmt:message key="price"/>
         </th>
+        <th>
+            <fmt:message key="commentary"/>
+        </th>
 
 
         <c:forEach items="${orders}" var="item">
+            <tr>
             <div class="container">
-                <tr>
+
 
                     <td><c:if test="${language=='en'}">
                         ${item.typeEn}
@@ -44,21 +48,24 @@
                     <td>${item.commentary}
                         <c:if test="${item.commentary==null && item.status=='DONE'}">
 
-                            <form method="post" action="/in/user/send_comment">
-                                    <%--  <div class="form-group">--%>
-                                    <%-- <input type="text" name="commentary" id="commentary" 2500 class="form-control input-sm" placeholder="Last Name">--%>
-                                <input type="hidden" name="orderId" value="${item.idOrder}">
-                                <label for="comment"></label>
-                                <textarea class="form-control" rows="3" cols="10"
-                                          name="comment" id="comment" placeholder="Enter your commit here"
-                                          required></textarea>
-                                <input type="submit" value="<fmt:message key="submit"/>"
-                                       class="btn btn-success btn-block">
-                                    <%--</div>--%>
-                            </form>
+                        <form method="post" action="/in/user/send_comment">
+                                <%--  <div class="form-group">--%>
+                                <%-- <input type="text" name="commentary" id="commentary" 2500 class="form-control input-sm" placeholder="Last Name">--%>
+                            <input type="hidden" name="orderId" value="${item.idOrder}">
+                            <label for="comment"></label>
+                            <textarea class="form-control" rows="3" cols="10"
+                                      name="comment" id="comment" placeholder="Enter your commit here"
+                                      required></textarea>
+                            <input type="submit" value="<fmt:message key="submit"/>"
+                                   class="btn btn-success btn-block">
+                                <%--</div>--%>
+                        </form>
                         </c:if>
-                    </td>
 
+                    </td>
+                    <c:if test="${item.refuseReason!=null && item.status=='REFUSE'}">
+                        <td>${item.refuseReason}</td>
+                    </c:if>
 
                         <%--<c:otherwise>
                             <td>0</td>

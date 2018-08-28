@@ -1,7 +1,7 @@
 .menu
 {
-    background-color: #00547E;
-    border-bottom: 4px solid #04A3ED;
+    background-color: #10697e;
+    border-bottom: 4px solid #6ccaed;
     width:100%;
     height: auto;
     padding: 0 10px;
@@ -12,7 +12,7 @@
 
 .menu  .navbar-nav > .active > a
 {
-    background-color : #04A3ED;
+    background-color : #6ccaed;
     color: white;
     font-weight: bold;
 }
@@ -26,7 +26,7 @@
 }
 .menu  .navbar-nav >  li >  a:hover
 {
-    background-color: #04A3ED;
+    background-color: #6ccaed;
 }
 
 .navbar-header > a
@@ -42,5 +42,5 @@
 .navbar-header > a:hover
 {
     text-decoration: none;
-    color: #04A3ED;
+    color: #6ccaed;
 }

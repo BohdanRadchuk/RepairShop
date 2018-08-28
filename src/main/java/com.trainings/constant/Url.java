@@ -17,6 +17,8 @@ public interface Url {
     String USER_SEND_COMMENT = "/in/user/send_comment";
 
     String MANAGER_HOME = "/in/manager/manager_menu";
+    String MANAGER_CONFIRM_ORDER = "/in/manager/confirm";
+    String MANAGER_REFUSE_ORDER = "/in/manager/refuse";
 
     String JSP = ".jsp";
     String PAGE = "/page";

@@ -64,22 +64,24 @@ public class JDBCUserDao implements UserDao {
     public boolean update(final User entity) {
         try (PreparedStatement ps = updateUserPrepareStatement(entity)) {
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
+
     }
 
     @Override
     public boolean delete(final Integer id) {
         try (PreparedStatement ps = deleteUserPrepareStatement(id)) {
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
+
     }
 
     @Override

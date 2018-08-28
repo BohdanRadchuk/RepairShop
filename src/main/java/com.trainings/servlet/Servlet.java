@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 @WebServlet(urlPatterns = {Url.HOME, Url.LOGIN, Url.LOGIN_CONFIRM, Url.LOGOUT, Url.REGISTRATION,
         Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM, Url.USERS_ORDERS,
-        Url.USER_SEND_COMMENT, Url.MANAGER_HOME})
+        Url.USER_SEND_COMMENT, Url.MANAGER_HOME, Url.MANAGER_CONFIRM_ORDER, Url.MANAGER_REFUSE_ORDER})
 public class Servlet extends HttpServlet {
 
     private Map<String, ServletCommand> command = new HashMap<>();
@@ -44,6 +45,8 @@ public class Servlet extends HttpServlet {
         command.put(Url.USERS_ORDERS, new UsersOrders());
         command.put(Url.USER_SEND_COMMENT, new UserSendComment());
         command.put(Url.MANAGER_HOME, new ManagerMenu());
+        command.put(Url.MANAGER_CONFIRM_ORDER, new ManagerConfirmOrder());
+        command.put(Url.MANAGER_REFUSE_ORDER, new ManagerRefuseOrder());
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

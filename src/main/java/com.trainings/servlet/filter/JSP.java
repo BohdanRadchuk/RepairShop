@@ -1,5 +1,7 @@
 package com.trainings.servlet.filter;
 
+import com.trainings.constant.Url;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +19,7 @@ public class JSP implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         System.err.println("filter .jsp in work!");
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        resp.sendRedirect("/home");
+        resp.sendRedirect(Url.HOME);
     }
 
     @Override
