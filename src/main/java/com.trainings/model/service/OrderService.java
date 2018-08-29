@@ -13,4 +13,5 @@ public interface OrderService extends Service{
     boolean createNewOrder (Order order);
     Optional<Order> findOrderById (int id);
     void updateOrder (Order order);
+    List<Order> findConfirmOrders(int id);
 }

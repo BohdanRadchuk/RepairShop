@@ -14,28 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 public class UsersOrders implements ServletCommand {
+    private static final String ORDERS = "orders";
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        System.out.println("ALL USERS ORDERS");
 
         OrderService orderService = new OrderServiceImpl();
-        UserService userService = new UserServiceImpl();
         ServletUtil servletUtil = new ServletUtil();
-        int id  = userService
-                .findUserByEmail(servletUtil.getSessionEmail(req)).get().getId();
-        System.out.println(id);
-        System.out.println(orderService.findAllUsersOrders(id));
-
         try {
-            req.setAttribute("orders", orderService.findAllUsersOrders(userService
-                    .findUserByEmail(servletUtil.getSessionEmail(req))
-                    .orElseThrow(NoSuchRecordException::new).getId()));
-
-
+            req.setAttribute(ORDERS, orderService.findAllUsersOrders(servletUtil.getLoggedUserId(req)));
         } catch (NoSuchRecordException e) {
             e.printStackTrace();
         }
-
         return Url.USERS_ORDERS + Url.JSP;
     }
 }

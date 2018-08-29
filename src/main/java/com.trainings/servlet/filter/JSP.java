@@ -12,18 +12,15 @@ public class JSP implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.err.println("filter .jsp in work!");
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         resp.sendRedirect(Url.HOME);
     }
 
     @Override
     public void destroy() {
-
     }
 }

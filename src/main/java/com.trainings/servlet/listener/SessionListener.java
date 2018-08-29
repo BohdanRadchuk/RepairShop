@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashMap;
-import java.util.HashSet;
 
 
 public class SessionListener implements HttpSessionListener {
@@ -15,7 +14,8 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-           HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) httpSessionEvent
+        @SuppressWarnings("unchecked")
+        HashMap<String, HttpSession> logged = (HashMap<String, HttpSession>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute("logged_email");
         String userName = (String) httpSessionEvent.getSession()

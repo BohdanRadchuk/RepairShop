@@ -28,12 +28,11 @@ public class UserSendComment implements com.trainings.servlet.command.ServletCom
         String commentary =  req.getParameter("comment");
 
         Order order;
-        User user;
+
         try {
             order = orderService.findOrderById(Integer.valueOf(req.getParameter("orderId")))
                     .orElseThrow(NoSuchRecordException::new);
-            user = userService.findUserByEmail(util.getSessionEmail(req)).orElseThrow(NoSuchRecordException::new);
-            if (order.getIdUser() == user.getId() && !commentary.isEmpty()){
+            if (order.getIdUser() == util.getLoggedUserId(req) && !commentary.isEmpty()){
                 commentService.createNewComment(new Comment(order.getIdOrder(), commentary));
             }
             else {

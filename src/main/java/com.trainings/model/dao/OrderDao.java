@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface OrderDao extends GenericDAO<Order, Integer> {
     List<UserOrderDTO> findUsersOrders(int idUser);
-
     List<ManagerOrderDTO> findNewCutOrders();
+    List<Order> findConfirmInWorkMasterOrders(int idMaster);
 }

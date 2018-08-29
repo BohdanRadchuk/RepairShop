@@ -18,7 +18,6 @@ public class Authentication implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -34,14 +33,8 @@ public class Authentication implements Filter {
 
         String reqUri = req.getRequestURI();
 
-        System.out.println("filter" + (session != null) + "- sess " + (email != null) + " - email " + (role != null) + "-role");
-
         if (session != null && email != null && role != null) {
-
-            System.err.println("AUTHENTICATION SERVLENT IN WORK Role = " + role + " email = " + email);
-
             if (role.homePage().equals(reqUri) || Arrays.asList(role.allowedPages()).contains(reqUri)) {
-                System.out.println("CONTAIN !!!!!");
                 chain.doFilter(req, resp);
             } else {
                 resp.sendRedirect(role.homePage());
@@ -49,11 +42,9 @@ public class Authentication implements Filter {
         } else {
             resp.sendRedirect(Url.LOGIN);
         }
-
     }
 
     @Override
     public void destroy() {
-
     }
 }

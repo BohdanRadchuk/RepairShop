@@ -1,5 +1,6 @@
 package com.trainings.servlet.command.post;
 
+import com.trainings.constant.Url;
 import com.trainings.model.entity.Role;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
@@ -12,17 +13,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 public class RegConfirm implements ServletCommand {
+    private final static String FIRST_NAME = "first_name";
+    private final static String LAST_NAME = "last_name";
+    private final static String EMAIL = "email";
+    private final static String PASSWORD = "password";
+    private final static String PASSWORD_CONFIRM = "password_confirmation";
+
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         UserService service = new UserServiceImpl();
 
-        String name = req.getParameter("first_name");
-        String surname = req.getParameter("last_name");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String password_confirmation = req.getParameter("password_confirmation");
+        String name = req.getParameter(FIRST_NAME);
+        String surname = req.getParameter(LAST_NAME);
+        String email = req.getParameter(EMAIL);
+        String password = req.getParameter(PASSWORD);
+        String password_confirmation = req.getParameter(PASSWORD_CONFIRM);
 
-        if (password.equals(password_confirmation) && !service.findUserByEmail(email).isPresent()){
+        if (password.equals(password_confirmation) && !service.findUserByEmail(email).isPresent()) {
             //BCrypt crypt = new BCrypt();
             String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
             User user = new User.UserBuilder()
@@ -35,14 +43,9 @@ public class RegConfirm implements ServletCommand {
 
             service.createNewUser(user);
 
-            System.out.println(user);
-            System.out.println(name + surname + email + password + password_confirmation);
 
-
-            return "redirect:/home";
-        }else return "/registration";
-
-        //TODO check email and pass confirm make notification about creation
-
+            return Url.REDIRECT + Url.HOME;
+        } else return Url.REGISTRATION;
+        //TODO make notification about creation
     }
 }

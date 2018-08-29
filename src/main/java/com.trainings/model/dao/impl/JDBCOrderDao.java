@@ -33,12 +33,11 @@ public class JDBCOrderDao implements OrderDao {
         return true;
     }
 
-
     @Override
     public Optional<Order> findById(Integer id) {
         Optional<Order> order = Optional.empty();
-
-        try (PreparedStatement ps = findByIDPrepareStatement(id);
+        String sqlQuery = SqlQuery.ORDER_GET_BY_ID;
+        try (PreparedStatement ps = getIntPreparedStatement(id, sqlQuery);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 order = Optional.ofNullable(orderMapper.extractFromResultSet(rs));
@@ -54,9 +53,23 @@ public class JDBCOrderDao implements OrderDao {
     public List<Order> findAll() {
         String sqlQuery = SqlQuery.ORDER_GET_ALL;
         List<Order> orders = new ArrayList<>();
-
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sqlQuery)) {
+            while (rs.next()) {
+                orders.add(orderMapper.extractFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> findConfirmInWorkMasterOrders(int idMaster) {
+        String sqlQuery = SqlQuery.ORDER_GET_ALL_CONFIRM;
+        List<Order> orders = new ArrayList<>();
+        try (PreparedStatement ps = getIntPreparedStatement(idMaster, sqlQuery);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 orders.add(orderMapper.extractFromResultSet(rs));
             }
@@ -76,21 +89,7 @@ public class JDBCOrderDao implements OrderDao {
             e.printStackTrace();
             return false;
         }
-
-
     }
-
-    private PreparedStatement updateOrderPrepareStatement(Order order) throws SQLException {
-        String sqlQuery = SqlQuery.ORDER_UPDATE;
-        return setAllFieldsNotExceptIdPreparedStatement(order, sqlQuery) ;
-    }
-    private PreparedStatement createNewOrderPrepareStatement(Order order) throws SQLException {
-        String sqlQuery = SqlQuery.ORDER_CREATE;
-        PreparedStatement ps = setAllFieldsNotExceptIdPreparedStatement(order, sqlQuery);
-        ps.setInt(order.getIdOrder(),11);
-        return ps;
-    }
-
 
 
     @Override
@@ -98,9 +97,11 @@ public class JDBCOrderDao implements OrderDao {
         return false;
     }
 
+    @Override
     public List<UserOrderDTO> findUsersOrders(int idUser) {
         List<UserOrderDTO> orders = new ArrayList<>();
-        try (PreparedStatement ps = UsersOrdersPrepareStatement(idUser);
+        String sqlQuery = SqlQuery.GET_ALL_USERS_ORDERS;
+        try (PreparedStatement ps = getIntPreparedStatement(idUser, sqlQuery);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -129,32 +130,35 @@ public class JDBCOrderDao implements OrderDao {
         return orders;
     }
 
+
+
+    private PreparedStatement createNewOrderPrepareStatement(Order order) throws SQLException {
+        String sqlQuery = SqlQuery.ORDER_CREATE;
+        return setAllFieldsNotExceptIdPreparedStatement(order, sqlQuery);
+    }
+
+    private PreparedStatement updateOrderPrepareStatement(Order order) throws SQLException {
+        String sqlQuery = SqlQuery.ORDER_UPDATE;
+        PreparedStatement ps = setAllFieldsNotExceptIdPreparedStatement(order, sqlQuery);
+        ps.setInt(11, order.getIdOrder());
+        return ps;
+    }
+
     private PreparedStatement setAllFieldsNotExceptIdPreparedStatement(Order order, String sqlQuery) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-
         ps.setInt(1, order.getIdUser());
         ps.setInt(2, order.getIdServe());
         ps.setString(3, order.getStatus().name());
         ps.setBigDecimal(4, order.getPrice());
-        prepareStatementSetIdOrNull(order.getIdManager(), ps, 5);
-        prepareStatementSetDateOrNull(order.getConsiderationDate(), ps, 6);
+        prepareStatementSetIdOrNull(5, order.getIdManager(), ps);
+        prepareStatementSetDateOrNull(6, order.getConsiderationDate(), ps);
         ps.setString(7, order.getRefuseReason());
-        prepareStatementSetIdOrNull(order.getIdMaster(), ps, 8);
-        prepareStatementSetDateOrNull(order.getInWorkDate(), ps, 9);
-        prepareStatementSetDateOrNull(order.getDoneDate(), ps, 10);
+        prepareStatementSetIdOrNull(8, order.getIdMaster(), ps);
+        prepareStatementSetDateOrNull(9, order.getInWorkDate(), ps);
+        prepareStatementSetDateOrNull(10, order.getDoneDate(), ps);
         return ps;
     }
 
-
-    private PreparedStatement findByIDPrepareStatement(int id) throws SQLException {
-        String sqlQuery = SqlQuery.ORDER_GET_BY_ID;
-        return getIntPreparedStatement(id, sqlQuery);
-    }
-
-    private PreparedStatement UsersOrdersPrepareStatement(int id) throws SQLException {
-        String sqlQuery = SqlQuery.GET_ALL_USERS_ORDERS;
-        return getIntPreparedStatement(id, sqlQuery);
-    }
 
     private PreparedStatement getIntPreparedStatement(int id, String sqlQuery) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
@@ -162,7 +166,7 @@ public class JDBCOrderDao implements OrderDao {
         return ps;
     }
 
-    private void prepareStatementSetIdOrNull(Integer id, PreparedStatement ps, int index) throws SQLException {
+    private void prepareStatementSetIdOrNull(int index, Integer id, PreparedStatement ps) throws SQLException {
         if (id == null) {
             ps.setNull(index, java.sql.Types.INTEGER);
         } else {
@@ -170,7 +174,7 @@ public class JDBCOrderDao implements OrderDao {
         }
     }
 
-    private void prepareStatementSetDateOrNull(LocalDateTime date, PreparedStatement ps, int index) throws SQLException {
+    private void prepareStatementSetDateOrNull(int index, LocalDateTime date, PreparedStatement ps) throws SQLException {
         if (date == null) {
             ps.setNull(index, java.sql.Types.DATE);
         } else {

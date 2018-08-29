@@ -15,41 +15,31 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginConfirm implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-
         UserService service = new UserServiceImpl();
         ServletUtil servletUtil = new ServletUtil();
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        System.out.println(req.getSession().getServletContext().getAttribute("logged_email"));
 
         if (email == null || password == null) {
-            return "redirect:/login?err=empty";
+            return Url.REDIRECT + Url.LOGIN + "?err=empty";
         }
-
-
         final User user;
         try {
             user = service.findUserByEmail(email).orElseThrow(NoSuchRecordException::new);
         } catch (NoSuchRecordException e) {
-            System.out.println("catch find by email in servlet here");
-            return "redirect:/login?err=email";
+            return Url.REDIRECT + Url.LOGIN + "?err=email";
         }
-//        System.out.println( password + " password equal " + user.getPassword() + BCrypt.checkpw(password, user.getPassword()) );
         //if (!BCrypt.checkpw(password, user.getPassword())){
         if (!user.getPassword().equals(password)) {
-            return "redirect:/login?err=pass";
+            return Url.REDIRECT + Url.LOGIN + "?err=pass";
         }
 
         servletUtil.setUserEmailRoleToSession(req, user.getRole(), user.getEmail());
+        servletUtil.addToContext(req, email);
 
-        String successLoginUrl = Url.REDIRECT + user.getRole().homePage();
-        if (servletUtil.checkUserLogged(req, email)) {
-            successLoginUrl += "?logged=true";
-        }
-
-        return successLoginUrl;         //successful login
+        return Url.REDIRECT + user.getRole().homePage();         //successful login
 
     }
 }

@@ -34,6 +34,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findConfirmOrders(int idMaster) {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.findConfirmInWorkMasterOrders(idMaster);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } return null;
+    }
+
+    @Override
     public boolean createNewOrder(Order order) {
 
         try (OrderDao dao = daoFactory.createOrderDao()) {
@@ -63,4 +72,6 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
     }
+
+
 }

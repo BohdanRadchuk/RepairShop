@@ -8,14 +8,17 @@
 </head>
 <body>
 
-<c:forEach items="${sessionScope.userEmail} " var="item"  >
+<c:forEach items="${sessionScope.userEmail} " var="item">
     ${item}
 </c:forEach>
 <c:out value="${sessionScope.role}"></c:out>
 <div class="menu">
     <div class="container-fluid">
         <div class="navbar-header">
+
+            <img src="../image/logo.png">
             <a href="/home"><fmt:message key="repair_shop"/></a>
+
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
@@ -25,10 +28,14 @@
                 <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login"/></a></li>
                 <li>
                     <form>
-                        <input name="language" type="image" value="en"
-                        ${language=='en' ? 'selected' : '' } src = "../image/flag_en.png" style="height: 24px; width: 32px;">
-                        <input name="language" type="image" value="ua"
-                        ${language=='ua' ? 'selected' : '' } src = "../image/flag_ua.png" style="height: 24px; width: 32px;">
+                        <div class="mt-5">
+                            <input name="language" type="image" value="en"
+                            ${language=='en' ? 'selected' : '' } src="../image/flag_en.png"
+                                   style="height: 24px; width: 32px; margin: 8px 0 0 0;">
+                            <input name="language" type="image" value="ua"
+                            ${language=='ua' ? 'selected' : '' } src="../image/flag_ua.png"
+                                   style="height: 24px; width: 32px; margin: 8px 0 0 0;">
+                        </div>
                     </form>
                 </li>
             </ul>

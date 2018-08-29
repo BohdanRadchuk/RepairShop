@@ -23,9 +23,14 @@ public interface SqlQuery {
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     String ORDER_GET_BY_ID = "SELECT * FROM watch_repair.`order` WHERE id_order=?";
     String ORDER_GET_ALL = "SELECT * FROM watch_repair.`order`;";
-    String ORDER_UPDATE = "UPDATE `watch_repair`.`order` SET `id_user`=?, `id_service`=?, `status`=?, `price`=?, `" +
-            "id_manager`=?, `consideration_date`=?, `refuse_reason`=?, `id_master`=?, `in_work_date`=?, " +
-            "`done_date`='?' WHERE `id_order`='?';";
+   /* SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR `status`='IN_WORK' and id_master=1 ORDER BY status desc, consideration_date;
+    "SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR `status`='IN_WORK';"*/
+
+    String ORDER_GET_ALL_CONFIRM = "SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR " +
+            "`status`='IN_WORK' and id_master=? ORDER BY status DESC, consideration_date;" ;
+    String ORDER_UPDATE = "UPDATE `watch_repair`.`order` SET `id_user`=?, `id_service`=?, `status`=?, `price`=?, " +
+            "`id_manager`=?, `consideration_date`=?, `refuse_reason`=?, `id_master`=?, `in_work_date`=?, " +
+            "`done_date`=? WHERE `id_order`=?;";
 
    /* String GET_ALL_USERS_ORDERS = "SELECT id_order, id_user, id_service, status, price " +
             "FROM watch_repair.order WHERE id_user=?;";

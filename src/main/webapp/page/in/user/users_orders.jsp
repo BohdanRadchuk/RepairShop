@@ -28,25 +28,25 @@
 
 
         <c:forEach items="${orders}" var="item">
-            <tr>
+        <tr>
             <div class="container">
 
 
-                    <td><c:if test="${language=='en'}">
-                        ${item.typeEn}
+                <td><c:if test="${language=='en'}">
+                    ${item.typeEn}
+                </c:if>
+                    <c:if test="${language=='ua'}">
+                        ${item.typeUa}
                     </c:if>
-                        <c:if test="${language=='ua'}">
-                            ${item.typeUa}
-                        </c:if>
-                    </td>
-                    <td>${item.status}</td>
-                        <%-- <c:if test="${item!=null}">--%>
-                    <td>${item.price}</td>
-                        <%-- </c:if>--%>
+                </td>
+                <td>${item.status}</td>
+                    <%-- <c:if test="${item!=null}">--%>
+                <td>${item.price}</td>
+                    <%-- </c:if>--%>
 
 
-                    <td>${item.commentary}
-                        <c:if test="${item.commentary==null && item.status=='DONE'}">
+                <td>${item.commentary}
+                    <c:if test="${item.commentary==null && item.status=='DONE'}">
 
                         <form method="post" action="/in/user/send_comment">
                                 <%--  <div class="form-group">--%>
@@ -60,24 +60,24 @@
                                    class="btn btn-success btn-block">
                                 <%--</div>--%>
                         </form>
-                        </c:if>
-
-                    </td>
-                    <c:if test="${item.refuseReason!=null && item.status=='REFUSE'}">
-                        <td>${item.refuseReason}</td>
                     </c:if>
+                    <c:if test="${item.status =='REFUSE'}">
+                        ${item.refuseReason}
+                    </c:if>
+                </td>
+                    <%--${item.refuseReason!=null &&--%>
 
-                        <%--<c:otherwise>
-                            <td>0</td>
-                        </c:otherwise>--%>
+                    <%--<c:otherwise>
+                        <td>0</td>
+                    </c:otherwise>--%>
 
-                </tr>
-            </div>
-        </c:forEach>
-    </table>
-    <div>
-        <a href="/home" class="button btn-info"><fmt:message key="back"/></a>
-    </div>
+        </tr>
+</div>
+</c:forEach>
+</table>
+<div>
+    <a href="/home" class="button btn-info"><fmt:message key="back"/></a>
+</div>
 </div>
 </body>
 </html>

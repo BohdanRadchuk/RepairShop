@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 public class Home implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("home here");
         Role role = (Role) req.getSession().getAttribute("role");
         if (role != null) {
-            return "redirect:" + role.homePage();
+            return Url.REDIRECT + role.homePage();
         } else {
             return Url.HOME + Url.JSP;
         }

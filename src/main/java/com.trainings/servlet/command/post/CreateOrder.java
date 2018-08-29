@@ -11,17 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 public class CreateOrder implements com.trainings.servlet.command.ServletCommand {
+    private static final String SERVICE_DESCRIPTION = "service_description";
+    private static final String SERVICE_ID = "serveId";
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        System.out.println("createOrder");
-        String serveId = req.getParameter("serveId");
-        System.out.println("serve id = " + serveId);
+        String serveId = req.getParameter(SERVICE_ID);
         ServeService service = new ServeServiceImpl();
-
         try {
             Serve serve = service.findById(Integer.valueOf(serveId)).orElseThrow(NoSuchRecordException::new);
-            System.out.println("service= " + serve);
-            req.setAttribute("service_description", serve);
+            req.setAttribute(SERVICE_DESCRIPTION, serve);
             return Url.USER_NEW_ORDER + Url.JSP;
         } catch (NoSuchRecordException e) {
             e.printStackTrace();

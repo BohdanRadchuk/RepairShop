@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 public class UserMenu implements ServletCommand {
+    private static final String SERVICES = "services";
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        System.out.println("USER MENU HERE");
         ServeService service = new ServeServiceImpl();
-
-        req.setAttribute("services", service.getAllServs());
+        req.setAttribute(SERVICES, service.getAllServs());
         return Url.USER_HOME + Url.JSP;
 
     }

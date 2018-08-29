@@ -15,20 +15,29 @@
 <div class="container">
     <table class="table table-hover ">
         <th>
+            <fmt:message key="id_order"/>
+        </th>
+        <th>
+            <fmt:message key="id_user"/>
+        </th>
+        <th>
             <fmt:message key="service_type"/>
         </th>
         <th>
             <fmt:message key="status"/>
-        </th>
-        <th>
-            <fmt:message key="price"/>
         </th>
 
         <c:forEach items="${orders}" var="item">
         <tr>
             <td>${item.idOrder}</td>
             <td>${item.idUser}</td>
-            <td>${item.idServe}</td>
+            <td><c:if test="${language=='en'}">
+                ${item.typeEn}
+            </c:if>
+                <c:if test="${language=='ua'}">
+                    ${item.typeUa}
+                </c:if>
+            </td>
             <td>${item.status}
             <td>${item.price}</td>
 
@@ -65,36 +74,6 @@
     --%>
         </tr>
         </c:forEach>
-        <%-- <td><c:if test="${language=='en'}">
-             ${item.typeEn}
-         </c:if>
-             <c:if test="${language=='ua'}">
-                 ${item.typeUa}
-             </c:if>
-         </td>
-         </td>--%>
-
-        <%-- <c:if test="${item!=null}">
-    </c:if>--%>
-
-
-        <%-- <td>${item.commentary}
-             <c:if test="${item.commentary==null && item.status=='DONE'}">
-
-                 <form method="post" action="/in/user/send_comment">
-                         &lt;%&ndash;  <div class="form-group">&ndash;%&gt;
-                         &lt;%&ndash; <input type="text" name="commentary" id="commentary" 2500 class="form-control input-sm" placeholder="Last Name">&ndash;%&gt;
-                     <input type="hidden" name="orderId" value="${item.idOrder}">
-                     <label for="comment"></label>
-                     <textarea class="form-control" rows="3" cols="10"
-                               name="comment" id="comment" placeholder="Enter your commit here"
-                               required></textarea>
-                     <input type="submit" value="<fmt:message key="submit"/>"
-                            class="btn btn-success btn-block">
-                         &lt;%&ndash;</div>&ndash;%&gt;
-                 </form>
-             </c:if>
-         </td>--%>
 
 </body>
 </html>
