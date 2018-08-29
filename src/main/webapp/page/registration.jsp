@@ -11,7 +11,6 @@
 <body>
 <jsp:include page="/page/header_unreg.jsp"/>
 
-
 <div class="container">
     <div class="row centered-form">
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
@@ -55,7 +54,12 @@
                                 </div>
                             </div>
                         </div>
-
+                        <c:if test="${param.err == 'pass'}">
+                            <p style="background-color:Tomato;"><fmt:message key="err_pass_mismatch"/></p>
+                        </c:if>
+                        <c:if test="${param.err == 'login'}">
+                            <p style="background-color:Tomato;"><fmt:message key="err_email_exist"/></p>
+                        </c:if>
                         <input type="submit" value="Register" class="btn btn-info btn-block">
                         <a href="/home" class="btn btn-info btn-block">Back</a>
                     </form>

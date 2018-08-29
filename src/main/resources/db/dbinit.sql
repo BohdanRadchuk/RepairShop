@@ -1,8 +1,8 @@
 INSERT INTO `user` (`name`, `surname`, `email`, `password`, `role`)
-VALUES ('Reinaldos', 'Benna', 'Rbenna@example.com', 'rb123', 'MASTER'),
+VALUES ('Reinaldos', 'Benna', 'Rbenna@example.com', '3', 'MASTER'),
   ('Leontine', 'Corrado', 'Lcorrado@example.com', 'pass223', 'MANAGER'),
-  ('Marcelo', 'Hooley', 'MHooley@example.com', '1', 'USER'),
-  ('Mildrid', 'Karf', 'MKarf@example.com', 'MILLpass1', 'MANAGER'),
+  ('Marcelo', 'Hooley', 'MHooley@example.com', '2', 'MANAGER'),
+  ('Mildrid', 'Karf', 'MKarf@example.com', 'MILLpass1', 'USER'),
   ('1','1','1@example.com','1','USER');
 
 INSERT INTO `service` (`type_en`, `type_ua`, `description_en`, `description_ua`, `price`)

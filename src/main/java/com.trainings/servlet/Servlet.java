@@ -26,12 +26,12 @@ import java.util.Map;
         Url.MASTER_TO_WORK, Url.MASTER_DONE})
 public class Servlet extends HttpServlet {
 
+    private static final String EMPTY = "";
     private Map<String, ServletCommand> command = new HashMap<>();
 
     public void init(ServletConfig config) {
         config.getServletContext()
                 .setAttribute("logged_email", new HashMap<String, HttpSession>());
-
 
         command.put(Url.HOME, new Home());
         command.put(Url.REGISTRATION_CONFIRM, new RegConfirm());
@@ -65,7 +65,7 @@ public class Servlet extends HttpServlet {
         ServletCommand servletCommand = command.getOrDefault(path, (r, q) -> Url.HOME);
         String page = servletCommand.execute(req, resp);
         if (page.contains(Url.REDIRECT)) {
-                      resp.sendRedirect(page.replace(Url.REDIRECT, ""));
+                      resp.sendRedirect(page.replace(Url.REDIRECT, EMPTY));
         } else {
             req.getRequestDispatcher(Url.PAGE + page).forward(req, resp);
         }

@@ -25,6 +25,5 @@ public class CreateOrder implements com.trainings.servlet.command.ServletCommand
             e.printStackTrace();
             return Url.REDIRECT + Url.USER_NEW_ORDER;
         }
-
     }
 }

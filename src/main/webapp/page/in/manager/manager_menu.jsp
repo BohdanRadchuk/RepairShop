@@ -8,10 +8,10 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
-
 <jsp:include page="/page/in/header_reg.jsp"/>
-
-
+<c:if test="${param.err == 'price'}">
+    <p style="background-color:Tomato;"><fmt:message key="err_price"/></p>
+</c:if>
 <div class="container">
     <table class="table table-hover ">
         <th>
@@ -38,7 +38,7 @@
                     ${item.typeUa}
                 </c:if>
             </td>
-            <td>${item.status}
+            <td>${item.status}</td>
             <td>${item.price}</td>
 
             <td>

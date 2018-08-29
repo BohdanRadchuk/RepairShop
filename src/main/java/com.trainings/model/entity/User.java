@@ -90,7 +90,6 @@ public class User {
         public User build() {
             return new User(nestedId, nestedName, nestedSurname, nestedEmail, nestedPassword, nestedRole);
         }
-
     }
 
     @Override

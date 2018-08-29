@@ -18,7 +18,8 @@ public class RegConfirm implements ServletCommand {
     private final static String EMAIL = "email";
     private final static String PASSWORD = "password";
     private final static String PASSWORD_CONFIRM = "password_confirmation";
-
+    private final static String ERR_LOGIN = "?err=login";
+    private final static String ERR_PASSWORD = "?err=pass";
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
@@ -30,8 +31,12 @@ public class RegConfirm implements ServletCommand {
         String password = req.getParameter(PASSWORD);
         String password_confirmation = req.getParameter(PASSWORD_CONFIRM);
 
-        if (password.equals(password_confirmation) && !service.findUserByEmail(email).isPresent()) {
-            //BCrypt crypt = new BCrypt();
+        if(service.findUserByEmail(email).isPresent()){
+
+            return Url.REDIRECT + Url.REGISTRATION + ERR_LOGIN;
+        }
+
+        if (password.equals(password_confirmation)) {
             String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
             User user = new User.UserBuilder()
                     .name(name)
@@ -40,12 +45,8 @@ public class RegConfirm implements ServletCommand {
                     .password(pw_hash)
                     .role(Role.USER)
                     .build();
-
             service.createNewUser(user);
-
-
             return Url.REDIRECT + Url.HOME;
-        } else return Url.REGISTRATION;
-        //TODO make notification about creation
+        } else return Url.REDIRECT + Url.REGISTRATION + ERR_PASSWORD;
     }
 }

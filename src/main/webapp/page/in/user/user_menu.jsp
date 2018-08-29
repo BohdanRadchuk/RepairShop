@@ -9,13 +9,9 @@
 </head>
 <body>
 <jsp:include page="/page/in/header_reg.jsp"/>
-
-
 <div class="container">
-
     <table class="table table-hover ">
         <th><fmt:message key="serve_type"/></th>
-        <%--  <th><fmt:message key="serve_description"/></th>--%>
         <th><fmt:message key="serve_price"/></th>
         <c:forEach items="${requestScope.services}" var="serve">
         <div class="container">
@@ -36,7 +32,6 @@
             </c:forEach>
         </div>
     </table>
-    <%--<div class="href">--%>
     <a href="/in/user/users_orders" class="button btn-info"><fmt:message key="users_orders"/></a>
 </div>
 </body>

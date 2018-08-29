@@ -9,8 +9,6 @@
 </head>
 <body>
 <jsp:include page="/page/in/header_reg.jsp"/>
-
-
 <div class="container">
     <table class="table table-hover ">
         <th>
@@ -25,13 +23,9 @@
         <th>
             <fmt:message key="commentary"/>
         </th>
-
-
         <c:forEach items="${orders}" var="item">
         <tr>
             <div class="container">
-
-
                 <td><c:if test="${language=='en'}">
                     ${item.typeEn}
                 </c:if>
@@ -40,14 +34,9 @@
                     </c:if>
                 </td>
                 <td>${item.status}</td>
-                    <%-- <c:if test="${item!=null}">--%>
                 <td>${item.price}</td>
-                    <%-- </c:if>--%>
-
-
                 <td>${item.commentary}
                     <c:if test="${item.commentary==null && item.status=='DONE'}">
-
                         <form method="post" action="/in/user/send_comment">
                                 <%--  <div class="form-group">--%>
                                 <%-- <input type="text" name="commentary" id="commentary" 2500 class="form-control input-sm" placeholder="Last Name">--%>

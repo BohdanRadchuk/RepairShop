@@ -1,12 +1,5 @@
 <%@ include file="util/init.jsp" %>
-<%--
 
-
-<c:set var="language" value="${not empty param.language ? param.language : not empty sessionScope.language ?
-        sessionScope.language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="bundle"/>
---%>
 <html lang="${language}">
 
 <head>
@@ -20,12 +13,10 @@
 
 <div class="container">
     <div class="row centered-form">
-
-            <h1>WELCOME TO WATCH REPAIR</h1>
-
-            <h2>Hello World!</h2>
-        </div>
+        <h1>WELCOME TO WATCH REPAIR</h1>
+        <h2>Hello World!</h2>
     </div>
+</div>
 </div>
 </body>
 </html>

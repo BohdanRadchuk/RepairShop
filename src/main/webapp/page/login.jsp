@@ -30,13 +30,11 @@
                         <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>
                     </form>
 
-                    <c:if test="${param.err != null}">
-                        <c:if test="${param.err == 'email'}">
-                            <fmt:message key="err_email"/>
-                        </c:if>
-                        <c:if test="${param.err == 'pass'}">
-                            <fmt:message key="err_pass"/>
-                        </c:if>
+                    <c:if test="${param.err == 'email'}">
+                        <p style="background-color:Tomato;"><fmt:message key="err_email"/></p>
+                    </c:if>
+                    <c:if test="${param.err == 'pass'}">
+                        <p style="background-color:Tomato;"><fmt:message key="err_pass"/></p>
                     </c:if>
                 </div>
             </div>

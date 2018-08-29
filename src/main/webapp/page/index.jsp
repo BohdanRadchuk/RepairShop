@@ -1,12 +1,4 @@
-<%@ include file="util/init.jsp"%>
-<%--
-
-
-<c:set var="language" value="${not empty param.language ? param.language : not empty sessionScope.language ?
-        sessionScope.language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="bundle"/>
---%>
+<%@ include file="util/init.jsp" %>
 <html lang="${language}">
 
 <head>
@@ -14,6 +6,6 @@
     <title>index</title>
 </head>
 <body>
-
+Nothing interesting here
 </body>
 </html>

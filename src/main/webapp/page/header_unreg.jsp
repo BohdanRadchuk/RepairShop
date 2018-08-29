@@ -8,21 +8,14 @@
 </head>
 <body>
 
-<c:forEach items="${sessionScope.userEmail} " var="item">
-    ${item}
-</c:forEach>
-<c:out value="${sessionScope.role}"></c:out>
 <div class="menu">
     <div class="container-fluid">
         <div class="navbar-header">
-
             <img src="../image/logo.png">
             <a href="/home"><fmt:message key="repair_shop"/></a>
-
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-
                 <li><a href="registration"><span class="glyphicon glyphicon-user"></span>
                     <fmt:message key="register"/></a></li>
                 <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login"/></a></li>

@@ -9,22 +9,7 @@
 </head>
 <body>
 <jsp:include page="/page/in/header_reg.jsp"/>
-<%--
-<c:forEach items="${sessionScope.userEmail}" var="itemSession">
-    ${itemSession}
-</c:forEach>--%>
-<%--<c:out value="${sessionScope.role}"></c:out>--%>
-
 <div class="container">
-    <%-- <c:forEach items="${applicationScope['logged_email']}" var="itemLogged">
-         <table>
-             <tr>
-                     ${itemLogged}
-             </tr>
-         </table>
-     </c:forEach>
- --%>
-
     <c:if test="${language=='en'}">
         ${service_description.descriptionEn}
     </c:if>
@@ -37,19 +22,6 @@
         <input type="submit" class="button btn-success" value="<fmt:message key="send_order"/>">
     </form>
     <a href="/home" class="button btn-info"><fmt:message key="back"/></a>
-
-    <%-- <td>
-                  <form method="post" action="/neworder">
-                      <input type="hidden" id="orderId" name="orderId" value="${serve.idServe}">--%>
-    <%-- <td> <a href="/neworder?o=${serve.idServe}">${serve.typeEn}</a></td>--%>
-    <%--  <td>--%>
-
-
-    <%--    <td>${serve.typeUa}</td>
-        <td></td>
- --%>
-
 </div>
-
 </body>
 </html>
