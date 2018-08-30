@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+}
+
+.ulSide {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 240px;
+    background-color: #acced8;
+    position: fixed;
+    height: 100%;
+
+    overflow: auto;
+}
+
+.liSide a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+.liSide a.active {
+    background-color: #5d69af;
+    color: white;
+}
+
+.liSide a:hover:not(.active) {
+    background-color: #0d0f55;
+    color: white;
+}
+DIV.table
+{
+    display:table;
+}
+FORM.tr, DIV.tr
+{
+    display:table-row;
+}
+SPAN.td
+{
+    display:table-cell;
+}

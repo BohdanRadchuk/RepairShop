@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class UserMapper implements ObjectMapper<User> {
     @Override
-    public User extractFromResultSet(ResultSet rs) throws SQLException {
+    public User extractOrderFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt(ColumnName.USER_ID);
         String name = rs.getString(ColumnName.USER_NAME);
         String surname = rs.getString(ColumnName.USER_SURNAME);

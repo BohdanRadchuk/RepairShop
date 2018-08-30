@@ -39,9 +39,9 @@ public class RegConfirm implements ServletCommand {
         if (password.equals(password_confirmation)) {
             String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
             User user = new User.UserBuilder()
-                    .name(name)
-                    .surname(surname)
-                    .email(email)
+                    .name(name.trim())
+                    .surname(surname.trim())
+                    .email(email.trim())
                     .password(pw_hash)
                     .role(Role.USER)
                     .build();

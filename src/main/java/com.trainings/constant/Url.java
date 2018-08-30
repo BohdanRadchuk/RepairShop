@@ -7,8 +7,6 @@ public interface Url {
     String LOGOUT = "/logout";
     String REGISTRATION = "/registration";
     String REGISTRATION_CONFIRM = "/registration_confirm";
-//    String  = "";
-//    String  = "";
 
     String USER_HOME = "/in/user/user_menu";
     String USER_NEW_ORDER = "/in/user/new_order";
@@ -28,5 +26,8 @@ public interface Url {
     String PAGE = "/page";
     String REDIRECT = "redirect:";
 
-
+    String ADMIN_HOME = "/in/admin/admin_menu";
+    String ADMIN_USERS_MENU = "/in/admin/users_menu";
+    String ADMIN_EDIT_USER = "/in/admin/user_update";
+    String ADMIN_DELETE_USER = "/in/admin/user_delete";
 }

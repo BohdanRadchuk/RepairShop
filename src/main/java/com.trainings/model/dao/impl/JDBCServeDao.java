@@ -15,7 +15,7 @@ public class JDBCServeDao implements ServeDao {
     private ServiceMapper serviceMapper = new ServiceMapper();
 
 
-    public JDBCServeDao(Connection connection) {
+    JDBCServeDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -37,7 +37,7 @@ public class JDBCServeDao implements ServeDao {
         try (PreparedStatement ps = findByIDPrepareStatement(id);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                service = Optional.ofNullable(serviceMapper.extractFromResultSet(rs));
+                service = Optional.ofNullable(serviceMapper.extractOrderFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class JDBCServeDao implements ServeDao {
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sqlQuery)) {
             while (rs.next()) {
-                services.add(serviceMapper.extractFromResultSet(rs));
+                services.add(serviceMapper.extractOrderFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();

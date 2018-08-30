@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDao implements UserDao {
+
+
     private Connection connection;
     private UserMapper userMapper = new UserMapper();
 
-    public JDBCUserDao(Connection connection) {
+    JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -36,7 +38,7 @@ public class JDBCUserDao implements UserDao {
         try (PreparedStatement ps = findByUniqueParamPrepareStatement(id);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                user = Optional.ofNullable(userMapper.extractFromResultSet(rs));
+                user = Optional.ofNullable(userMapper.extractOrderFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +54,7 @@ public class JDBCUserDao implements UserDao {
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sqlQuery)) {
             while (rs.next()) {
-                users.add(userMapper.extractFromResultSet(rs));
+                users.add(userMapper.extractOrderFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,8 +63,9 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public boolean update(final User entity) {
-        try (PreparedStatement ps = updateUserPrepareStatement(entity)) {
+    public boolean update(final User user) {
+        System.out.println(user);
+        try (PreparedStatement ps = updateUserPrepareStatement(user)) {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -91,7 +94,7 @@ public class JDBCUserDao implements UserDao {
         try (PreparedStatement ps = findByUniqueParamPrepareStatement(email);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                user = Optional.ofNullable(userMapper.extractFromResultSet(rs));
+                user = Optional.ofNullable(userMapper.extractOrderFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,7 +121,7 @@ public class JDBCUserDao implements UserDao {
         String sqlQuery = SqlQuery.USER_CREATE;
 
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        setUserWithoutId(user, ps);
+        setUserToPreparedStatementWithoutId(user, ps);
         return ps;
     }
 
@@ -126,12 +129,12 @@ public class JDBCUserDao implements UserDao {
     private PreparedStatement updateUserPrepareStatement(final User user) throws SQLException {
         String sqlQuery = SqlQuery.USER_UPDATE;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        setUserWithoutId(user, ps);
+        setUserToPreparedStatementWithoutId(user, ps);
         ps.setInt(6, user.getId());
         return ps;
     }
 
-    private void setUserWithoutId(User user, PreparedStatement ps) throws SQLException {
+    private void setUserToPreparedStatementWithoutId(final User user, PreparedStatement ps) throws SQLException {
         ps.setString(1, user.getName());
         ps.setString(2, user.getSurname());
         ps.setString(3, user.getEmail());

@@ -1,6 +1,7 @@
 package com.trainings.servlet;
 
 import com.trainings.constant.Url;
+import com.trainings.model.service.ScheduledService.SimpleTriggerRunner;
 import com.trainings.servlet.command.get.Home;
 import com.trainings.servlet.command.ServletCommand;
 import com.trainings.servlet.command.get.*;
@@ -23,7 +24,8 @@ import java.util.Map;
 @WebServlet(urlPatterns = {Url.HOME, Url.LOGIN, Url.LOGIN_CONFIRM, Url.LOGOUT, Url.REGISTRATION,
         Url.REGISTRATION_CONFIRM, Url.USER_HOME, Url.USER_NEW_ORDER, Url.USER_NEW_ORDER_CONFIRM, Url.USERS_ORDERS,
         Url.USER_SEND_COMMENT, Url.MANAGER_HOME, Url.MANAGER_CONFIRM_ORDER, Url.MANAGER_REFUSE_ORDER, Url.MASTER_HOME,
-        Url.MASTER_TO_WORK, Url.MASTER_DONE})
+        Url.MASTER_TO_WORK, Url.MASTER_DONE, Url.ADMIN_HOME, Url.ADMIN_USERS_MENU, Url.ADMIN_EDIT_USER,
+        Url.ADMIN_DELETE_USER})
 public class Servlet extends HttpServlet {
 
     private static final String EMPTY = "";
@@ -50,6 +52,13 @@ public class Servlet extends HttpServlet {
         command.put(Url.MASTER_HOME, new MasterMenu());
         command.put(Url.MASTER_TO_WORK, new MasterToWork());
         command.put(Url.MASTER_DONE, new MasterDone());
+        command.put(Url.ADMIN_HOME, new AdminMenu());
+        command.put(Url.ADMIN_USERS_MENU, new AdminUsersMenu());
+        command.put(Url.ADMIN_EDIT_USER, new AdminEditUser());
+        command.put(Url.ADMIN_DELETE_USER, new AdminDeleteUser());
+
+        SimpleTriggerRunner runner = new SimpleTriggerRunner();
+        runner.startScheduleTask();
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

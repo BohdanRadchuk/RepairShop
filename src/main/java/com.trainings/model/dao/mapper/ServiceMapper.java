@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ServiceMapper implements ObjectMapper<Serve> {
     @Override
-    public Serve extractFromResultSet(ResultSet rs) throws SQLException {
+    public Serve extractOrderFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt(ColumnName.SERVE_ID);
         String typeEn = rs.getString(ColumnName.SERVE_TYPE_EN);
         String typeUa = rs.getString(ColumnName.SERVE_TYPE_UA);

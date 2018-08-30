@@ -2,5 +2,5 @@ package com.trainings.model.dao;
 
 import com.trainings.model.entity.Serve;
 
-public interface ServeDao extends GenericDAO<Serve, Integer> {
+public interface ServeDao extends GenericDao<Serve, Integer> {
 }

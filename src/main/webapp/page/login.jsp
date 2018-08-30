@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Registration</title>
     <link href="..//css/style.css" rel="stylesheet" type="text/css">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
 <jsp:include page="/page/header_unreg.jsp"/>
@@ -17,7 +17,6 @@
                 </div>
                 <div class="panel-body">
                     <form method="post" action="/login_confirm">
-
                         <div class="form-group">
                             <input type="email" name="email" id="email" class="form-control input-sm"
                                    placeholder="Email Address">

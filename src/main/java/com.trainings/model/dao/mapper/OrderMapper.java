@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class OrderMapper implements ObjectMapper<Order> {
     @Override
-    public Order extractFromResultSet(ResultSet rs) throws SQLException {
+    public Order extractOrderFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt(ColumnName.ORDER_ID);
         int idUser = rs.getInt(ColumnName.ORDER_ID_USER);
         int idServe = rs.getInt(ColumnName.ORDER_ID_SERVE);

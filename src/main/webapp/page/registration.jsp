@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <title>Registration</title>
-    <link href="..//css/style.css" rel="stylesheet" type="text/css">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
 <jsp:include page="/page/header_unreg.jsp"/>
@@ -60,8 +60,8 @@
                         <c:if test="${param.err == 'login'}">
                             <p style="background-color:Tomato;"><fmt:message key="err_email_exist"/></p>
                         </c:if>
-                        <input type="submit" value="Register" class="btn btn-info btn-block">
-                        <a href="/home" class="btn btn-info btn-block">Back</a>
+                        <input type="submit" value=<fmt:message key="register"/> class="btn btn-info btn-block">
+                        <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>
                     </form>
                 </div>
             </div>

@@ -2,7 +2,6 @@ package com.trainings.model.dao.impl;
 
 import com.trainings.constant.SqlQuery;
 import com.trainings.model.dao.CommentDao;
-import com.trainings.model.dao.mapper.CommentMapper;
 import com.trainings.model.entity.Comment;
 
 import java.sql.Connection;
@@ -13,9 +12,9 @@ import java.util.Optional;
 
 public class JDBCCommentDao implements CommentDao {
     private Connection connection;
-    private CommentMapper commentMapper= new CommentMapper();
 
-    public JDBCCommentDao(Connection connection) {
+
+    JDBCCommentDao(Connection connection) {
         this.connection = connection;
     }
     @Override

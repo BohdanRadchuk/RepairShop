@@ -55,6 +55,9 @@ label.label-floatlabel {
     color: #46b8da;
     font-size: 11px;
 }
-
+.caret.caret-up {
+    border-top-width: 0;
+    border-bottom: 4px solid #fff;
+}
 
 

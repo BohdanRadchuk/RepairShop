@@ -64,5 +64,9 @@ public class ServletUtil {
                 .orElseThrow(NoSuchRecordException::new).getId();
     }
 
+    //TODO regex
+    public boolean checkInputSutisfyRegex (String input, String regex){
+        return false;
+    }
 
 }

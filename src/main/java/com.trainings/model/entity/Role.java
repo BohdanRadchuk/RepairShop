@@ -9,7 +9,7 @@ public enum Role {
             Url.USER_SEND_COMMENT}),
     MANAGER(Url.MANAGER_HOME, new String[]{Url.LOGOUT, Url.MANAGER_CONFIRM_ORDER, Url.MANAGER_REFUSE_ORDER}),
     MASTER(Url.MASTER_HOME, new String[]{Url.MASTER_TO_WORK, Url.MASTER_DONE}),
-    ADMIN("home", new String[]{"asd", "asd"});
+    ADMIN(Url.ADMIN_HOME, new String[]{Url.ADMIN_USERS_MENU, Url.ADMIN_EDIT_USER, Url.ADMIN_DELETE_USER});
 
     private String homePage;
     private String[] allowedPages;

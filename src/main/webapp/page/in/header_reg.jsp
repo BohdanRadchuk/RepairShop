@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link href="../../css/header_style.css" rel="stylesheet" type="text/css">
+    <link href="../../css/bootstrap.min.css.css" rel="stylesheet" type="text/css">
     <title>header</title>
 </head>
 <body>
