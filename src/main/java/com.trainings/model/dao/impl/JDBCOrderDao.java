@@ -19,7 +19,6 @@ public class JDBCOrderDao implements OrderDao {
     private Connection connection;
     private OrderMapper orderMapper = new OrderMapper();
 
-
     JDBCOrderDao(Connection connection) {
         this.connection = connection;
     }
@@ -49,7 +48,6 @@ public class JDBCOrderDao implements OrderDao {
         }
         return order;
     }
-
 
     @Override
     public List<Order> findAll() {
@@ -81,36 +79,30 @@ public class JDBCOrderDao implements OrderDao {
         return orders;
     }
 
-
-
     @Override
     public void archiveOldDoneRecords(LocalDateTime localDateTime) {
-        List<Order> orders =  findOldOrders(localDateTime);
-        List<OrderArchive> oldOrders = new ArrayList<>();
+        List<Order> orders = findOldOrders(localDateTime);
         System.out.println(orders);
-
         try (PreparedStatement archiveStatement = connection.prepareStatement(SqlQuery.ORDER_ARCHIVE_ADD);
-                PreparedStatement deleteStatement = connection.prepareStatement(SqlQuery.ORDER_DELETE)){
+             PreparedStatement deleteStatement = connection.prepareStatement(SqlQuery.ORDER_DELETE)) {
             connection.setAutoCommit(false);
 
-            for (Order order: orders) {
+            for (Order order : orders) {
                 int idWorker;
                 LocalDateTime closeDate;
-                if (order.getStatus().equals(Status.REFUSE)){
+                if (order.getStatus().equals(Status.REFUSE)) {
                     idWorker = order.getIdManager();
                     closeDate = order.getConsiderationDate();
                 } else {
                     idWorker = order.getIdMaster();
                     closeDate = order.getDoneDate();
                 }
-
-
                 OrderArchive oa = new OrderArchive(order.getIdOrder(), order.getIdUser(), order.getIdServe(),
                         order.getStatus(), order.getPrice(), idWorker, closeDate);
                 archiveStatement.setInt(1, order.getIdOrder());
                 archiveStatement.setInt(2, order.getIdUser());
                 archiveStatement.setInt(3, order.getIdServe());
-                archiveStatement.setString(4,  order.getStatus().name());
+                archiveStatement.setString(4, order.getStatus().name());
                 archiveStatement.setBigDecimal(5, order.getPrice());
                 archiveStatement.setInt(6, idWorker);
                 archiveStatement.setTimestamp(7, Timestamp.valueOf(closeDate));
@@ -124,16 +116,12 @@ public class JDBCOrderDao implements OrderDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private List<Order> findOldOrders(LocalDateTime localDateTime) {
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement ps = oldOrdersPrepareStatement(localDateTime);
              ResultSet rs = ps.executeQuery()) {
-
-
             while (rs.next()) {
                 orders.add(orderMapper.extractOrderFromResultSet(rs));
             }
@@ -167,7 +155,6 @@ public class JDBCOrderDao implements OrderDao {
         String sqlQuery = SqlQuery.GET_ALL_USERS_ORDERS;
         try (PreparedStatement ps = getIntPreparedStatement(idUser, sqlQuery);
              ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 orders.add(orderMapper.extractUserOrderDTOFromResultSet(rs));
             }
@@ -184,7 +171,6 @@ public class JDBCOrderDao implements OrderDao {
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sqlQuery)) {
-
             while (rs.next()) {
                 orders.add(orderMapper.extractManagerOrderDTOFromResultSet(rs));
             }
