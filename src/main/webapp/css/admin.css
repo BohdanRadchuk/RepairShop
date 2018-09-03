@@ -2,13 +2,35 @@ body {
     margin: 0;
 }
 
+.cont-pad{
+    position: relative;
+    padding: 5rem;
+    margin-left: 22rem;
+}
+.admin_form {
+    padding-top: 5rem;
+    margin-left: 24rem;
+    width: 75vw;
+    position: relative;
+}
+
+.admin_form .td {
+    width:0.1%;
+}
+
+.admin_table {
+    display: inline-block;
+}
+
 .ulSide {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 240px;
-    background-color: #acced8;
     position: fixed;
+    margin: 0;
+    padding-left:0;
+    padding-top: 3rem;
+    width: 24rem;
+    background-color: #acced8;
+    z-index: 90;
     height: 100%;
 
     overflow: auto;
@@ -30,15 +52,17 @@ body {
     background-color: #0d0f55;
     color: white;
 }
-DIV.table
-{
-    display:table;
+
+DIV.table {
+    display: table;
 }
-FORM.tr, DIV.tr
-{
-    display:table-row;
+
+FORM.tr, DIV.tr {
+    display: inline-block;
+    width: 90vw;
 }
-SPAN.td
-{
-    display:table-cell;
+
+SPAN.td {
+    display: inline-block;
+    min-width: 5vw;
 }

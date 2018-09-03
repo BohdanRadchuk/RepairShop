@@ -17,11 +17,6 @@ public class Order{
     private LocalDateTime inWorkDate;
     private LocalDateTime doneDate;
 
-    public Order(int idUser, int idServe, Status status) {
-        this.idUser = idUser;
-        this.idServe = idServe;
-        this.status = status;
-    }
 
     public Order(int idOrder, int idUser, int idServe, Status status, BigDecimal price, Integer idManager, LocalDateTime
             considerationDate, String refuseReason, Integer idMaster, LocalDateTime inWorkDate, LocalDateTime doneDate) {

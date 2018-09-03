@@ -1,4 +1,4 @@
-<%@ include file="util/init.jsp" %>
+
 <html lang="${language}">
 
 <head>

@@ -4,7 +4,7 @@ import com.trainings.model.dao.impl.JDBCDaoFactory;
 
 public abstract class DaoFactory {
 
-    private static DaoFactory daoFactory;
+    private static volatile DaoFactory daoFactory;
 
     public abstract UserDao createUserDao();
     public abstract ServeDao createServeDao();

@@ -31,9 +31,4 @@ public class ServiceMapper implements ObjectMapper<Serve> {
                 .build();
     }
 
-
-    @Override
-    public Serve makeUnique(Map<Integer, Serve> cache, Serve serve) {
-        return null;
-    }
 }

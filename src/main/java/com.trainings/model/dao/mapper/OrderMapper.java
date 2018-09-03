@@ -4,6 +4,7 @@ import com.trainings.constant.ColumnName;
 import com.trainings.model.dto.ManagerOrderDTO;
 import com.trainings.model.dto.UserOrderDTO;
 import com.trainings.model.entity.Order;
+import com.trainings.model.entity.OrderBuilder;
 import com.trainings.model.entity.Status;
 
 import java.math.BigDecimal;
@@ -28,7 +29,7 @@ public class OrderMapper implements ObjectMapper<Order> {
         Integer idMaster = getIntegerOrNull(rs, ColumnName.ORDER_ID_MASTER);
         LocalDateTime inWorkDate = getDateOrNull(rs, ColumnName.ORDER_IN_WORK_DATE);
         LocalDateTime doneDate = getDateOrNull(rs, ColumnName.ORDER_DONE_DATE);
-        return new Order(id, idUser, idServe, status, price, idManager, considerDate, refuseReason, idMaster, inWorkDate, doneDate);
+        return new OrderBuilder().setIdOrder(id).setIdUser(idUser).setIdServe(idServe).setStatus(status).setPrice(price).setIdManager(idManager).setConsiderationDate(considerDate).setRefuseReason(refuseReason).setIdMaster(idMaster).setInWorkDate(inWorkDate).setDoneDate(doneDate).createOrder();
     }
 
 
@@ -59,11 +60,6 @@ public class OrderMapper implements ObjectMapper<Order> {
         return new ManagerOrderDTO(id, idUser, idServe, typeEn, typeUa, status, idManager, considerDate, price, refuseReason);
     }
 
-
-    @Override
-    public Order makeUnique(Map<Integer, Order> cache, Order teacher) {
-        return null;
-    }
 
     private LocalDateTime getDateOrNull(ResultSet rs, String columnName) throws SQLException {
         return Optional.ofNullable(rs.getTimestamp(columnName))

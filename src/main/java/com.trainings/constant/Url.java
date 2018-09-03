@@ -22,6 +22,7 @@ public interface Url {
     String MASTER_TO_WORK = "/in/master/to_work";
     String MASTER_DONE = "/in/master/done";
 
+    String WEBINF = "/WEB-INF/page/";
     String JSP = ".jsp";
     String PAGE = "/page";
     String REDIRECT = "redirect:";

@@ -14,7 +14,7 @@ public class UserMapper implements ObjectMapper<User> {
         int id = rs.getInt(ColumnName.USER_ID);
         String name = rs.getString(ColumnName.USER_NAME);
         String surname = rs.getString(ColumnName.USER_SURNAME);
-        String email =  rs.getString(ColumnName.USER_EMAIL);
+        String email = rs.getString(ColumnName.USER_EMAIL);
         String password = rs.getString(ColumnName.USER_PASSWORD);
         Role role = Role.valueOf(rs.getString(ColumnName.USER_ROLE));
 
@@ -26,10 +26,5 @@ public class UserMapper implements ObjectMapper<User> {
                 .password(password)
                 .role(role)
                 .build();
-    }
-
-    @Override
-    public User makeUnique(Map<Integer, User> cache, User teacher) {
-        return null;
     }
 }

@@ -1,6 +1,6 @@
-.container {
-    width: 20%;
-    margin: 0 auto;
+.cont-pad{
+    position: relative;
+    padding: 5rem;
 }
 
 .button {
