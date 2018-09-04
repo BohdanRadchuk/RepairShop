@@ -24,9 +24,10 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<ManagerOrderDTO> findNewOrders() {
+    public List<ManagerOrderDTO> findNewOrders(int currentPage) {
+        System.out.println(currentPage);
         try (OrderDao dao = daoFactory.createOrderDao()) {
-            return dao.findNewCutOrders();
+            return dao.findNewManagersOrders(currentPage);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -39,7 +40,19 @@ public class OrderServiceImpl implements OrderService {
             return dao.findConfirmInWorkMasterOrders(idMaster);
         } catch (Exception e) {
             e.printStackTrace();
-        } return null;
+            return null;
+        }
+    }
+
+    @Override
+    public int getNumberOfOrderRows() {
+        int rows = 0;
+        try (OrderDao dao = daoFactory.createOrderDao()){
+            rows = dao.getNumberOfOrderRows();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rows;
     }
 
     @Override

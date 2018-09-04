@@ -27,21 +27,22 @@ public interface SqlQuery {
     "SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR `status`='IN_WORK';"*/
 
     String ORDER_GET_ALL_CONFIRM = "SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR " +
-            "`status`='IN_WORK' and id_master=? ORDER BY status DESC, consideration_date;" ;
+            "`status`='IN_WORK' and id_master=? ORDER BY status DESC, consideration_date;";
     String ORDER_UPDATE = "UPDATE `watch_repair`.`order` SET `id_user`=?, `id_service`=?, `status`=?, `price`=?, " +
             "`id_manager`=?, `consideration_date`=?, `refuse_reason`=?, `id_master`=?, `in_work_date`=?, " +
             "`done_date`=? WHERE `id_order`=?;";
-    String ORDER_DELETE = "DELETE from `order` where id_order=?;" ;
-   /* String GET_ALL_USERS_ORDERS = "SELECT id_order, id_user, id_service, status, price " +
-            "FROM watch_repair.order WHERE id_user=?;";
-*/
+    String ORDER_DELETE = "DELETE from `order` where id_order=?;";
+    /* String GET_ALL_USERS_ORDERS = "SELECT id_order, id_user, id_service, status, price " +
+             "FROM watch_repair.order WHERE id_user=?;";
+ */
     String GET_ALL_USERS_ORDERS = "SELECT o.id_order, o.id_user, s.id_service, s.type_en, s.type_ua, o.status, " +
-           "o.price, o.refuse_reason, c.commentary FROM watch_repair.order o " +
-           "LEFT JOIN watch_repair.service s ON o.id_service = s.id_service " +
-           "LEFT JOIN`comment` c ON o.id_order = c.id_order WHERE id_user=? ORDER BY o.status DESC, o.id_order;";
+            "o.price, o.refuse_reason, c.commentary FROM watch_repair.order o " +
+            "LEFT JOIN watch_repair.service s ON o.id_service = s.id_service " +
+            "LEFT JOIN`comment` c ON o.id_order = c.id_order WHERE id_user=? ORDER BY o.status DESC, o.id_order;";
     String ORDER_GET_ALL_NEW_MANAGER_ORDERS = "SELECT o.id_order, o.id_user, s.id_service, s.type_en, s.type_ua, " +
-            "o.status, o.id_manager, o.price, o.refuse_reason, o.consideration_date FROM watch_repair.order o " +
-            "LEFT JOIN watch_repair.service s ON o.id_service = s.id_service WHERE o.status='NEW' ORDER BY o.id_order;";
+            "o.status, o.id_manager, o.price, o.refuse_reason, o.consideration_date FROM watch_repair.order AS o " +
+            "LEFT JOIN watch_repair.service AS s ON o.id_service = s.id_service WHERE o.status='NEW' " +
+            "ORDER BY o.id_order LIMIT ?, ?;";
 
     String ORDER_GET_OLDER_THAN = "SELECT * FROM `order` WHERE done_date<? OR consideration_date<? and status='REFUSE' " +
             "ORDER BY done_date, consideration_date;";
@@ -52,5 +53,8 @@ public interface SqlQuery {
 
     String ORDER_ARCHIVE_ADD = "INSERT INTO `watch_repair`.`order_archive` (`id_archive_order`, `id_user`, " +
             "`id_service`, `status`, `price`, `id_worker`, `done_date`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+    String ORDERS_GET_COUNT = "SELECT COUNT(id_order) C FROM `order` WHERE status = 'NEW';";
+    String ORDERS = "SELECT * FROM Countries LIMIT ?, ?";
 
 }

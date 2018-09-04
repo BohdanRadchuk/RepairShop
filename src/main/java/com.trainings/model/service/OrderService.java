@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public interface OrderService extends Service{
     List<UserOrderDTO> findAllUsersOrders(int idUser);
-    List<ManagerOrderDTO> findNewOrders ();
+    List<ManagerOrderDTO> findNewOrders (int currentPage);
     boolean createNewOrder (Order order);
     Optional<Order> findOrderById (int id);
     void updateOrder (Order order);
     List<Order> findConfirmOrders(int id);
+
+    int getNumberOfOrderRows();
 }

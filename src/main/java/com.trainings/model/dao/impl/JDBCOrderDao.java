@@ -1,12 +1,12 @@
 package com.trainings.model.dao.impl;
 
+import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.SqlQuery;
 import com.trainings.model.dao.OrderDao;
 import com.trainings.model.dao.mapper.OrderMapper;
 import com.trainings.model.dto.ManagerOrderDTO;
 import com.trainings.model.dto.UserOrderDTO;
 import com.trainings.model.entity.Order;
-import com.trainings.model.entity.OrderArchive;
 import com.trainings.model.entity.Status;
 
 import java.sql.*;
@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCOrderDao implements OrderDao {
+    private static final String COUNT_ROWS_COLUMN_NAME = "C";
+
     private Connection connection;
     private OrderMapper orderMapper = new OrderMapper();
 
@@ -38,7 +40,7 @@ public class JDBCOrderDao implements OrderDao {
     public Optional<Order> findById(Integer id) {
         Optional<Order> order = Optional.empty();
         String sqlQuery = SqlQuery.ORDER_GET_BY_ID;
-        try (PreparedStatement ps = getIntPreparedStatement(id, sqlQuery);
+        try (PreparedStatement ps = setOneIntPreparedStatement(id, sqlQuery);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 order = Optional.ofNullable(orderMapper.extractOrderFromResultSet(rs));
@@ -68,7 +70,7 @@ public class JDBCOrderDao implements OrderDao {
     public List<Order> findConfirmInWorkMasterOrders(int idMaster) {
         String sqlQuery = SqlQuery.ORDER_GET_ALL_CONFIRM;
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement ps = getIntPreparedStatement(idMaster, sqlQuery);
+        try (PreparedStatement ps = setOneIntPreparedStatement(idMaster, sqlQuery);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 orders.add(orderMapper.extractOrderFromResultSet(rs));
@@ -79,9 +81,11 @@ public class JDBCOrderDao implements OrderDao {
         return orders;
     }
 
+
+    //TODO REFACTOR
     @Override
-    public void archiveOldDoneRecords(LocalDateTime localDateTime) {
-        List<Order> orders = findOldOrders(localDateTime);
+    public void archiveOldDoneOrders(LocalDateTime olderThanDate) {
+        List<Order> orders = findOldOrders(olderThanDate);
         System.out.println(orders);
         try (PreparedStatement archiveStatement = connection.prepareStatement(SqlQuery.ORDER_ARCHIVE_ADD);
              PreparedStatement deleteStatement = connection.prepareStatement(SqlQuery.ORDER_DELETE)) {
@@ -97,8 +101,8 @@ public class JDBCOrderDao implements OrderDao {
                     idWorker = order.getIdMaster();
                     closeDate = order.getDoneDate();
                 }
-                OrderArchive oa = new OrderArchive(order.getIdOrder(), order.getIdUser(), order.getIdServe(),
-                        order.getStatus(), order.getPrice(), idWorker, closeDate);
+             /*   OrderArchive oa = new OrderArchive(order.getIdOrder(), order.getIdUser(), order.getIdServe(),
+                        order.getStatus(), order.getPrice(), idWorker, closeDate);*/
                 archiveStatement.setInt(1, order.getIdOrder());
                 archiveStatement.setInt(2, order.getIdUser());
                 archiveStatement.setInt(3, order.getIdServe());
@@ -118,9 +122,24 @@ public class JDBCOrderDao implements OrderDao {
         }
     }
 
-    private List<Order> findOldOrders(LocalDateTime localDateTime) {
+    @Override
+    public int getNumberOfOrderRows() {
+        String sqlQuery = SqlQuery.ORDERS_GET_COUNT;
+        int count = 0;
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(sqlQuery)) {
+            if (rs.next()) {
+                count = rs.getInt(COUNT_ROWS_COLUMN_NAME);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    private List<Order> findOldOrders(LocalDateTime olderThanDate) {
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement ps = oldOrdersPrepareStatement(localDateTime);
+        try (PreparedStatement ps = oldOrdersPrepareStatement(olderThanDate);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 orders.add(orderMapper.extractOrderFromResultSet(rs));
@@ -153,7 +172,7 @@ public class JDBCOrderDao implements OrderDao {
     public List<UserOrderDTO> findUsersOrders(int idUser) {
         List<UserOrderDTO> orders = new ArrayList<>();
         String sqlQuery = SqlQuery.GET_ALL_USERS_ORDERS;
-        try (PreparedStatement ps = getIntPreparedStatement(idUser, sqlQuery);
+        try (PreparedStatement ps = setOneIntPreparedStatement(idUser, sqlQuery);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 orders.add(orderMapper.extractUserOrderDTOFromResultSet(rs));
@@ -165,12 +184,13 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public List<ManagerOrderDTO> findNewCutOrders() {
+    public List<ManagerOrderDTO> findNewManagersOrders(int currentPage) {
         String sqlQuery = SqlQuery.ORDER_GET_ALL_NEW_MANAGER_ORDERS;
         List<ManagerOrderDTO> orders = new ArrayList<>();
 
-        try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(sqlQuery)) {
+
+        try (PreparedStatement ps = setManagerOrdersPrepareStatement(currentPage, sqlQuery);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 orders.add(orderMapper.extractManagerOrderDTOFromResultSet(rs));
             }
@@ -178,17 +198,27 @@ public class JDBCOrderDao implements OrderDao {
             e.printStackTrace();
         }
         return orders;
+
+    }
+
+    private PreparedStatement setManagerOrdersPrepareStatement(int currentPage, String sqlQuery) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        int limitStart = (currentPage-1) * GlobalConstants.MANAGER_ROWS_PER_PAGE;
+        ps.setInt(1, limitStart);
+        ps.setInt(2, GlobalConstants.MANAGER_ROWS_PER_PAGE);
+        System.out.println(ps);
+        return ps;
     }
 
 
     private PreparedStatement createNewOrderPrepareStatement(Order order) throws SQLException {
         String sqlQuery = SqlQuery.ORDER_CREATE;
-        return setAllFieldsNotExceptIdPreparedStatement(order, sqlQuery);
+        return setAllFieldsExceptIdPreparedStatement(order, sqlQuery);
     }
 
     private PreparedStatement updateOrderPrepareStatement(Order order) throws SQLException {
         String sqlQuery = SqlQuery.ORDER_UPDATE;
-        PreparedStatement ps = setAllFieldsNotExceptIdPreparedStatement(order, sqlQuery);
+        PreparedStatement ps = setAllFieldsExceptIdPreparedStatement(order, sqlQuery);
         ps.setInt(11, order.getIdOrder());
         return ps;
     }
@@ -196,12 +226,13 @@ public class JDBCOrderDao implements OrderDao {
     private PreparedStatement oldOrdersPrepareStatement(LocalDateTime localDateTime) throws SQLException {
         String sqlQuery = SqlQuery.ORDER_GET_OLDER_THAN;
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        //done or refused day bigger than date
         prepareStatementSetDateOrNull(1, localDateTime, ps);
         prepareStatementSetDateOrNull(2, localDateTime, ps);
         return ps;
     }
 
-    private PreparedStatement setAllFieldsNotExceptIdPreparedStatement(Order order, String sqlQuery) throws SQLException {
+    private PreparedStatement setAllFieldsExceptIdPreparedStatement(Order order, String sqlQuery) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setInt(1, order.getIdUser());
         ps.setInt(2, order.getIdServe());
@@ -217,7 +248,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
 
-    private PreparedStatement getIntPreparedStatement(int id, String sqlQuery) throws SQLException {
+    private PreparedStatement setOneIntPreparedStatement(int id, String sqlQuery) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
         ps.setInt(1, id);
         return ps;

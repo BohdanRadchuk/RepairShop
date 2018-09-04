@@ -54,7 +54,7 @@ public class OrderMapper implements ObjectMapper<Order> {
         String typeEn = rs.getString(ColumnName.SERVE_TYPE_EN);
         String typeUa = rs.getString(ColumnName.SERVE_TYPE_UA);
         BigDecimal price = rs.getBigDecimal(ColumnName.ORDER_PRICE);
-        Integer idManager = rs.getInt(ColumnName.ORDER_ID_MANAGER);
+        Integer idManager = getIntegerOrNull(rs, ColumnName.ORDER_ID_MANAGER);
         LocalDateTime considerDate = getDateOrNull(rs, ColumnName.ORDER_CONSIDER_DATE);
         String refuseReason = rs.getString(ColumnName.ORDER_REFUSE_REASON);
         return new ManagerOrderDTO(id, idUser, idServe, typeEn, typeUa, status, idManager, considerDate, price, refuseReason);

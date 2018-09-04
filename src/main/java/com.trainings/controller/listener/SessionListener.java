@@ -16,7 +16,6 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
         @SuppressWarnings("unchecked")
-        //TODO sneaky throws lombok
         Map<String, HttpSession> logged = (HashMap<String, HttpSession>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute("logged_email");

@@ -24,35 +24,5 @@ public class SimpleTriggerRunner {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-
-
-        /*  try {
-            JobDetail job = JobBuilder.newJob(ScheduledExecutor.class).withIdentity("myjob").build();
-
-            Trigger trigger = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(30).repeatForever()).build();
-
-            SchedulerFactory schFactory = new StdSchedulerFactory();
-            Scheduler scheduler = schFactory.getScheduler();
-
-            scheduler.start();
-            scheduler.scheduleJob(job, trigger);
-
-
-            CronTrigger cronTrigger = newTrigger
-                    new CronTrigger("cronTrigger", "triggerGroup2");
-            try {
-                // Устанавливаем CronExpression
-                CronExpression cexp = new CronExpression("0/5 * * * * ?");
-                // Присваиваем CronExpression CronTrigger'у
-                cronTrigger.setCronExpression(cexp);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }catch (SchedulerException e) {
-
-            e.printStackTrace();
-        }*/
     }
 }

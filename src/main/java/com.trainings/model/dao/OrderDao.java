@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface OrderDao extends GenericDao<Order, Integer> {
     List<UserOrderDTO> findUsersOrders(int idUser);
-    List<ManagerOrderDTO> findNewCutOrders();
+    List<ManagerOrderDTO> findNewManagersOrders(int currentPage);
     List<Order> findConfirmInWorkMasterOrders(int idMaster);
 
-    void archiveOldDoneRecords(LocalDateTime localDateTime);
+    void archiveOldDoneOrders(LocalDateTime localDateTime);
+
+    int getNumberOfOrderRows();
 }

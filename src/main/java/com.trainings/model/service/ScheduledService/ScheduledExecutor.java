@@ -14,8 +14,8 @@ public class ScheduledExecutor implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         System.out.println("task triggered ");
         try (OrderDao dao = daoFactory.createOrderDao()) {
-            LocalDateTime localDateTime = LocalDateTime.now().minusDays(30);     //30 days
-            dao.archiveOldDoneRecords(localDateTime);
+            LocalDateTime localDateTime = LocalDateTime.now().minusDays(30);
+            dao.archiveOldDoneOrders(localDateTime);                                //archive older than 30 days
         } catch (Exception e) {
             e.printStackTrace();
         }
