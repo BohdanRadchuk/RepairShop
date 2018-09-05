@@ -16,7 +16,7 @@ public class SimpleTriggerRunner {
 
             CronTrigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity("trigger1", "group1")
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0 0 * * ?"))       //30 sec   "0/30 * * * * ?"      0 0 0 * * ?   -every day 0:00
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?"))       //30 sec   "0/30 * * * * ?"      0 0 0 * * ?   -every day 0:00
                     .build();
 
             sched.scheduleJob(job, trigger);
