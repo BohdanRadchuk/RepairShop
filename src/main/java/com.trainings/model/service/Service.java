@@ -1,8 +1,8 @@
 package com.trainings.model.service;
 
-import com.trainings.model.dao.DaoFactory;
+import com.trainings.model.dao.factory.DaoFactory;
 
 public interface Service {
-    DaoFactory daoFactory = DaoFactory.getInstance();
 
+    DaoFactory daoFactory = DaoFactory.getInstance();
 }

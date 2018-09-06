@@ -25,7 +25,7 @@
         <input type="submit" class="button btn-success" value="<fmt:message key="send_order"/>">
     </form>
     <a href="/home" class="button btn-info"><fmt:message key="back"/></a>
-    </div>
+</div>
 </div>
 </body>
 </html>

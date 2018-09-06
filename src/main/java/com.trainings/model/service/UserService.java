@@ -1,12 +1,16 @@
 package com.trainings.model.service;
 
 import com.trainings.model.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends Service {
-    List<User> findAll ();
+    Logger logger = LogManager.getLogger(UserService.class);
+
+    List<User> findAll();
 
     boolean userWithEmailExist(String email);
 

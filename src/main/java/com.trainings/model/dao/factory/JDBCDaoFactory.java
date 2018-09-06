@@ -1,7 +1,10 @@
-package com.trainings.model.dao.impl;
+package com.trainings.model.dao.factory;
 
 import com.trainings.model.dao.*;
-
+import com.trainings.model.dao.impl.JDBCCommentDao;
+import com.trainings.model.dao.impl.JDBCOrderDao;
+import com.trainings.model.dao.impl.JDBCServeDao;
+import com.trainings.model.dao.impl.JDBCUserDao;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -31,9 +34,9 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCCommentDao(getConnection());
     }
 
-    private Connection getConnection(){
+    private Connection getConnection() {
         try {
-           return dataSource.getConnection();
+            return dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException();

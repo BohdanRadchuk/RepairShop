@@ -16,7 +16,7 @@ public class JDBCUserDao implements UserDao {
     private Connection connection;
     private UserMapper userMapper = new UserMapper();
 
-    JDBCUserDao(Connection connection) {
+    public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -64,7 +64,6 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public boolean update(final User user) {
-        System.out.println(user);
         try (PreparedStatement ps = updateUserPrepareStatement(user)) {
             ps.executeUpdate();
             return true;
@@ -150,11 +149,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void close() throws SQLException {
+        connection.close();
     }
 }

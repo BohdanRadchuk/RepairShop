@@ -2,11 +2,12 @@ body {
     margin: 0;
 }
 
-.cont-pad{
+.cont-pad {
     position: relative;
     padding: 5rem;
     margin-left: 22rem;
 }
+
 .admin_form {
     padding-top: 5rem;
     margin-left: 24rem;
@@ -15,7 +16,7 @@ body {
 }
 
 .admin_form .td {
-    width:0.1%;
+    width: 0.1%;
 }
 
 .admin_table {
@@ -26,7 +27,7 @@ body {
     list-style-type: none;
     position: fixed;
     margin: 0;
-    padding-left:0;
+    padding-left: 0;
     padding-top: 3rem;
     width: 24rem;
     background-color: #acced8;

@@ -2,62 +2,64 @@ package com.trainings.model.dao.mapper;
 
 import com.trainings.constant.ColumnName;
 import com.trainings.model.dto.ManagerOrderDTO;
+import com.trainings.model.dto.ManagerOrderDTOBuilder;
 import com.trainings.model.dto.UserOrderDTO;
+import com.trainings.model.dto.UserOrderDTOBuilder;
 import com.trainings.model.entity.Order;
 import com.trainings.model.entity.OrderBuilder;
 import com.trainings.model.entity.Status;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Optional;
 
 public class OrderMapper implements ObjectMapper<Order> {
     @Override
     public Order extractOrderFromResultSet(ResultSet rs) throws SQLException {
-        int id = rs.getInt(ColumnName.ORDER_ID);
-        int idUser = rs.getInt(ColumnName.ORDER_ID_USER);
-        int idServe = rs.getInt(ColumnName.ORDER_ID_SERVE);
-        Status status = Status.valueOf(rs.getString(ColumnName.ORDER_STATUS));
-        BigDecimal price = rs.getBigDecimal(ColumnName.ORDER_PRICE);
-        Integer idManager =getIntegerOrNull(rs, ColumnName.ORDER_ID_MANAGER);
-        LocalDateTime considerDate = getDateOrNull(rs, ColumnName.ORDER_CONSIDER_DATE);
-        String refuseReason = rs.getString(ColumnName.ORDER_REFUSE_REASON);
-        Integer idMaster = getIntegerOrNull(rs, ColumnName.ORDER_ID_MASTER);
-        LocalDateTime inWorkDate = getDateOrNull(rs, ColumnName.ORDER_IN_WORK_DATE);
-        LocalDateTime doneDate = getDateOrNull(rs, ColumnName.ORDER_DONE_DATE);
-        return new OrderBuilder().setIdOrder(id).setIdUser(idUser).setIdServe(idServe).setStatus(status).setPrice(price).setIdManager(idManager).setConsiderationDate(considerDate).setRefuseReason(refuseReason).setIdMaster(idMaster).setInWorkDate(inWorkDate).setDoneDate(doneDate).createOrder();
+        return new OrderBuilder().setIdOrder(rs.getInt(ColumnName.ORDER_ID))
+                .setIdUser(rs.getInt(ColumnName.ORDER_ID_USER))
+                .setIdServe(rs.getInt(ColumnName.ORDER_ID_SERVE))
+                .setStatus(Status.valueOf(rs.getString(ColumnName.ORDER_STATUS)))
+                .setPrice(rs.getBigDecimal(ColumnName.ORDER_PRICE))
+                .setIdManager(getIntegerOrNull(rs, ColumnName.ORDER_ID_MANAGER))
+                .setConsiderationDate(getDateOrNull(rs, ColumnName.ORDER_CONSIDER_DATE))
+                .setRefuseReason(rs.getString(ColumnName.ORDER_REFUSE_REASON))
+                .setIdMaster(getIntegerOrNull(rs, ColumnName.ORDER_ID_MASTER))
+                .setInWorkDate(getDateOrNull(rs, ColumnName.ORDER_IN_WORK_DATE))
+                .setDoneDate(getDateOrNull(rs, ColumnName.ORDER_DONE_DATE))
+                .createOrder();
     }
 
 
     public UserOrderDTO extractUserOrderDTOFromResultSet(ResultSet rs) throws SQLException {
-        int id = rs.getInt(ColumnName.ORDER_ID);
-        int idUser = rs.getInt(ColumnName.ORDER_ID_USER);
-        int idServe = rs.getInt(ColumnName.ORDER_ID_SERVE);
-        Status status = Status.valueOf(rs.getString(ColumnName.ORDER_STATUS));
-        String typeEn = rs.getString(ColumnName.SERVE_TYPE_EN);
-        String typeUa = rs.getString(ColumnName.SERVE_TYPE_UA);
-        BigDecimal price = rs.getBigDecimal(ColumnName.ORDER_PRICE);
-        String refuseReason = rs.getString(ColumnName.ORDER_REFUSE_REASON);
-        String commentary = rs.getString(ColumnName.COMMENT_COMMENTARY);
-        return new UserOrderDTO(id, idUser, idServe, typeEn, typeUa, status, price, refuseReason, commentary);
+        return new UserOrderDTOBuilder()
+                .setIdOrder(rs.getInt(ColumnName.ORDER_ID))
+                .setIdUser(rs.getInt(ColumnName.ORDER_ID_USER))
+                .setIdServe(rs.getInt(ColumnName.ORDER_ID_SERVE))
+                .setTypeEn(rs.getString(ColumnName.SERVE_TYPE_EN))
+                .setTypeUa(rs.getString(ColumnName.SERVE_TYPE_UA))
+                .setStatus(Status.valueOf(rs.getString(ColumnName.ORDER_STATUS)))
+                .setPrice(rs.getBigDecimal(ColumnName.ORDER_PRICE))
+                .setRefuseReason(rs.getString(ColumnName.ORDER_REFUSE_REASON))
+                .setCommentary(rs.getString(ColumnName.COMMENT_COMMENTARY))
+                .createUserOrderDTO();
     }
 
     public ManagerOrderDTO extractManagerOrderDTOFromResultSet(ResultSet rs) throws SQLException {
-        int id = rs.getInt(ColumnName.ORDER_ID);
-        int idUser = rs.getInt(ColumnName.ORDER_ID_USER);
-        int idServe = rs.getInt(ColumnName.ORDER_ID_SERVE);
-        Status status = Status.valueOf(rs.getString(ColumnName.ORDER_STATUS));
-        String typeEn = rs.getString(ColumnName.SERVE_TYPE_EN);
-        String typeUa = rs.getString(ColumnName.SERVE_TYPE_UA);
-        BigDecimal price = rs.getBigDecimal(ColumnName.ORDER_PRICE);
-        Integer idManager = getIntegerOrNull(rs, ColumnName.ORDER_ID_MANAGER);
-        LocalDateTime considerDate = getDateOrNull(rs, ColumnName.ORDER_CONSIDER_DATE);
-        String refuseReason = rs.getString(ColumnName.ORDER_REFUSE_REASON);
-        return new ManagerOrderDTO(id, idUser, idServe, typeEn, typeUa, status, idManager, considerDate, price, refuseReason);
+        return new ManagerOrderDTOBuilder()
+                .setIdOrder(rs.getInt(ColumnName.ORDER_ID))
+                .setIdUser(rs.getInt(ColumnName.ORDER_ID_USER))
+                .setIdServe(rs.getInt(ColumnName.ORDER_ID_SERVE))
+                .setTypeEn(rs.getString(ColumnName.SERVE_TYPE_EN))
+                .setTypeUa(rs.getString(ColumnName.SERVE_TYPE_UA))
+                .setStatus(Status.valueOf(rs.getString(ColumnName.ORDER_STATUS)))
+                .setId_manager(getIntegerOrNull(rs, ColumnName.ORDER_ID_MANAGER))
+                .setConsideration_date(getDateOrNull(rs, ColumnName.ORDER_CONSIDER_DATE))
+                .setPrice(rs.getBigDecimal(ColumnName.ORDER_PRICE))
+                .setRefuseReason(rs.getString(ColumnName.ORDER_REFUSE_REASON))
+                .createManagerOrderDTO();
     }
 
 

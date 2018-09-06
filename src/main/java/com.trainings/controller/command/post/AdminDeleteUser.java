@@ -1,5 +1,6 @@
 package com.trainings.controller.command.post;
 
+import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.Url;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
@@ -11,11 +12,12 @@ import java.io.UnsupportedEncodingException;
 public class AdminDeleteUser implements com.trainings.controller.command.ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        UserService us = new UserServiceImpl();
-        System.out.println("delete");
-        System.out.println(req.getParameter("id_delete"));
-        us.deleteUser(Integer.valueOf(req.getParameter("id_delete")));
-
+        deleteUser(req);
         return Url.REDIRECT + Url.ADMIN_USERS_MENU;
+    }
+
+    private void deleteUser(HttpServletRequest req) {
+        UserService us = new UserServiceImpl();
+        us.deleteUser(Integer.valueOf(req.getParameter(GlobalConstants.ID_DELETE)));
     }
 }

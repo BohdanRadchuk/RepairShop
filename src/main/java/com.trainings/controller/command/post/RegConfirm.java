@@ -1,11 +1,13 @@
 package com.trainings.controller.command.post;
 
+import com.trainings.constant.GlobalConstants;
+import com.trainings.constant.Regex;
 import com.trainings.constant.Url;
+import com.trainings.controller.command.ServletCommand;
 import com.trainings.model.entity.Role;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
-import com.trainings.controller.command.ServletCommand;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,40 +15,44 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 public class RegConfirm implements ServletCommand {
-    private final static String FIRST_NAME = "first_name";
-    private final static String LAST_NAME = "last_name";
-    private final static String EMAIL = "email";
-    private final static String PASSWORD = "password";
-    private final static String PASSWORD_CONFIRM = "password_confirmation";
-    private final static String ERR_LOGIN = "?err=login";
-    private final static String ERR_PASSWORD = "?err=pass";
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         UserService service = new UserServiceImpl();
+        String name = req.getParameter(GlobalConstants.FIRST_NAME);
+        String surname = req.getParameter(GlobalConstants.LAST_NAME);
+        String email = req.getParameter(GlobalConstants.EMAIL);
+        String password = req.getParameter(GlobalConstants.PASSWORD);
+        String password_confirmation = req.getParameter(GlobalConstants.PASSWORD_CONFIRM);
 
-        String name = req.getParameter(FIRST_NAME);
-        String surname = req.getParameter(LAST_NAME);
-        String email = req.getParameter(EMAIL);
-        String password = req.getParameter(PASSWORD);
-        String password_confirmation = req.getParameter(PASSWORD_CONFIRM);
-
-        if(service.findUserByEmail(email).isPresent()){
-
-            return Url.REDIRECT + Url.REGISTRATION + ERR_LOGIN;
+        if (!checkRegex(name, surname, password)){
+            return Url.REDIRECT + Url.REGISTRATION + Url.ERR_REGEX;
         }
 
-        if (password.equals(password_confirmation)) {
-            String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
-            User user = new User.UserBuilder()
-                    .name(name.trim())
-                    .surname(surname.trim())
-                    .email(email.trim())
-                    .password(pw_hash)
-                    .role(Role.USER)
-                    .build();
-            service.createNewUser(user);
+        if (service.findUserByEmail(email).isPresent()) {
+            return Url.REDIRECT + Url.REGISTRATION + Url.ERR_LOGIN;
+        }
+        if (!password.equals(password_confirmation)) {
+            return Url.REDIRECT + Url.REGISTRATION + Url.ERR_PASSWORD;
+        } else {
+            createNewUser(service, name, surname, email, password);
             return Url.REDIRECT + Url.HOME;
-        } else return Url.REDIRECT + Url.REGISTRATION + ERR_PASSWORD;
+        }
+    }
+
+    private boolean checkRegex(String name, String surname, String password) {
+        return name.matches(Regex.REG_NAME) && surname.matches(Regex.REG_NAME) && password.matches(Regex.REG_PASS);
+    }
+
+    private void createNewUser(UserService service, String name, String surname, String email, String password) {
+        String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
+        User user = new User.UserBuilder()
+                .name(name.trim())
+                .surname(surname.trim())
+                .email(email.trim())
+                .password(pw_hash)
+                .role(Role.USER)
+                .build();
+        service.createNewUser(user);
     }
 }

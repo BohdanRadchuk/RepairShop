@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 public class Login implements ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        checkClearSession(req);
+        return Url.WEBINF + Url.LOGIN + Url.JSP;
+    }
+
+    private void checkClearSession(HttpServletRequest req) {
         ServletUtil servletUtil = new ServletUtil();
-        if (servletUtil.getSessionEmail(req)!=null){
+        if (servletUtil.getSessionEmail(req) != null) {
             servletUtil.deleteUserFromContextAndSession(req);
         }
-        return Url.WEBINF + Url.LOGIN + Url.JSP;
     }
 }

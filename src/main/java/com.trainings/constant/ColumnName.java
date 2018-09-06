@@ -15,7 +15,7 @@ public interface ColumnName {
     String SERVE_DESC_UA = "description_ua";
     String SERVE_PRICE = "price";
 
-    String ORDER_ID ="id_order";
+    String ORDER_ID = "id_order";
     String ORDER_ID_USER = "id_user";
     String ORDER_ID_SERVE = "id_service";
     String ORDER_STATUS = "status";

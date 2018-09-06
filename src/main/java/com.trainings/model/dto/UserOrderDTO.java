@@ -15,8 +15,8 @@ public class UserOrderDTO {
     private String refuseReason;
     private String commentary;
 
-    public UserOrderDTO(int idOrder, int idUser, int idServe, String typeEn, String typeUa, Status status,
-                        BigDecimal price, String refuseReason, String commentary) {
+    UserOrderDTO(int idOrder, int idUser, int idServe, String typeEn, String typeUa, Status status,
+                 BigDecimal price, String refuseReason, String commentary) {
         this.idOrder = idOrder;
         this.idUser = idUser;
         this.idServe = idServe;

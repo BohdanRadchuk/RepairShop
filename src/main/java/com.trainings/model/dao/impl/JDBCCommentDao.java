@@ -14,9 +14,10 @@ public class JDBCCommentDao implements CommentDao {
     private Connection connection;
 
 
-    JDBCCommentDao(Connection connection) {
+    public JDBCCommentDao(Connection connection) {
         this.connection = connection;
     }
+
     @Override
     public boolean create(Comment comment) {
         try (PreparedStatement ps = newCommentPrepareStatement(comment)) {
@@ -60,11 +61,7 @@ public class JDBCCommentDao implements CommentDao {
     }
 
     @Override
-    public void close() throws Exception {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void close() throws SQLException {
+        connection.close();
     }
 }

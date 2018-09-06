@@ -1,4 +1,3 @@
-
 <html lang="${language}">
 
 <head>

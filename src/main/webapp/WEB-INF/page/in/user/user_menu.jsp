@@ -28,7 +28,7 @@
                 </td>
                 <td>${serve.price}</td>
             </tr>
-            </c:forEach>
+        </c:forEach>
     </table>
     <a href="/in/user/users_orders" class="button btn-info"><fmt:message key="users_orders"/></a>
 </div>

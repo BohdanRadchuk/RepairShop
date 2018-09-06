@@ -9,12 +9,13 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/page/in/header_reg.jsp"/>
-<c:if test="${param.err == 'price'}">
-    <p style="background-color:Tomato;"><fmt:message key="err_price"/></p>
-</c:if>
-
 
 <div class="container cont-pad">
+
+    <c:if test="${param.err == 'price'}">
+        <p style="background-color:Tomato;"><fmt:message key="err_price"/></p>
+    </c:if>
+
     <table class="table table-hover ">
         <th>
             <fmt:message key="id_order"/>
@@ -30,40 +31,42 @@
         </th>
 
         <c:forEach items="${orders}" var="item">
-        <tr>
-            <td>${item.idOrder}</td>
-            <td>${item.idUser}</td>
-            <td><c:if test="${language=='en'}">
-                ${item.typeEn}
-            </c:if>
-                <c:if test="${language=='ua'}">
-                    ${item.typeUa}
+            <tr>
+                <td>${item.idOrder}</td>
+                <td>${item.idUser}</td>
+                <td><c:if test="${language=='en'}">
+                    ${item.typeEn}
                 </c:if>
-            </td>
-            <td>${item.status}</td>
-            <td>${item.price}</td>
+                    <c:if test="${language=='ua'}">
+                        ${item.typeUa}
+                    </c:if>
+                </td>
+                <td>${item.status}</td>
+                <td>${item.price}</td>
 
-            <td>
-                <form method="post" action="/in/manager/confirm">
+                <td>
+                    <form method="post" action="/in/manager/confirm">
 
-                    <input type="hidden" name="orderId" value="${item.idOrder}">
+                        <input type="hidden" name="orderId" value="${item.idOrder}">
 
-                    <input type="text" name="price" placeholder="Price">
-                    <input type="submit" value="<fmt:message key="confirm"/>" class="btn btn-success">
+                        <input type="text" name="price" placeholder="Price" required>
 
-                </form>
-            </td>
-            <td>
-                <form method="post" action="/in/manager/refuse">
+                        <input type="submit" value="<fmt:message key="confirm"/>" class="btn btn-success">
 
-                    <input type="hidden" name="orderId" value="${item.idOrder}">
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/in/manager/refuse">
 
-                    <input type="text" name="reason" placeholder="Reason">
-                    <input type="submit" value="<fmt:message key="refuse"/>" class="btn btn-danger">
+                        <input type="hidden" name="orderId" value="${item.idOrder}">
 
-                </form>
-            </td>
-        </tr>
+                        <input type="text" name="reason" placeholder="Reason" required>
+
+                        <input type="submit" value="<fmt:message key="refuse"/>" class="btn btn-danger">
+
+                    </form>
+                </td>
+            </tr>
         </c:forEach>
 
     </table>
@@ -73,7 +76,7 @@
     <ul class="pagination">
         <c:if test="${currentPage != 1}">
             <li class="page-item"><a class="page-link"
-                                     href="/in/manager/manager_menu?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                     href="/in/manager/manager_menu?currentPage=${currentPage-1}">Previous</a>
             </li>
         </c:if>
 
@@ -86,7 +89,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item"><a class="page-link"
-                                             href="/in/manager/manager_menu?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                             href="/in/manager/manager_menu?currentPage=${i}">${i}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -94,7 +97,7 @@
 
         <c:if test="${currentPage lt noOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="/in/manager/manager_menu?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                     href="/in/manager/manager_menu?currentPage=${currentPage+1}">Next</a>
             </li>
         </c:if>
     </ul>
@@ -103,8 +106,6 @@
 <script src="../../../../js/jquery-3.1.1.slim.min.js"></script>
 <script src="../../../../js/tether.min.js"></script>
 <script src="../../../../js/bootstrap.min.js"></script>
-
-
 
 
 </body>

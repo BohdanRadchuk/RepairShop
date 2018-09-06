@@ -1,9 +1,8 @@
-.menu
-{
+.menu {
     background-color: #10697e;
     border-bottom: 4px solid #6ccaed;
     position: fixed;
-    width:100%;
+    width: 100%;
     height: 5rem;
     padding: 0 10px;
     margin: 0px;
@@ -11,27 +10,24 @@
     opacity: 1;
 }
 
-.menu  .navbar-nav > .active > a
-{
-    background-color : #6ccaed;
+.menu .navbar-nav > .active > a {
+    background-color: #6ccaed;
     color: white;
     font-weight: bold;
 }
 
-.menu  .navbar-nav >  li >  a
-{
+.menu .navbar-nav > li > a {
     font-size: 13px;
     color: white;
     padding: 10px 35px;
 
 }
-.menu  .navbar-nav >  li >  a:hover
-{
+
+.menu .navbar-nav > li > a:hover {
     background-color: #6ccaed;
 }
 
-.navbar-header > a
-{
+.navbar-header > a {
     font-family: 'Ubuntu Condensed', sans-serif;
     padding: 0px;
     margin: 0px;
@@ -40,8 +36,8 @@
     font-size: 25px;
     padding: 5px 30px;
 }
-.navbar-header > a:hover
-{
+
+.navbar-header > a:hover {
     text-decoration: none;
     color: #6ccaed;
 }

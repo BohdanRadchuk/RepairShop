@@ -1,4 +1,4 @@
-.cont-pad{
+.cont-pad {
     position: relative;
     padding: 5rem;
 }
@@ -26,9 +26,9 @@
     color: white;
 }
 
-body{
+body {
     /* Safari 4-5, Chrome 1-9 */
-    background: -webkit-gradient(radial,0% 50%, 0, 50% 50%, 460, from(#acced8), to(#8c8d90));
+    background: -webkit-gradient(radial, 0% 50%, 0, 50% 50%, 460, from(#acced8), to(#8c8d90));
 
     /* Safari 5.1+, Chrome 10+ */
     background: -webkit-radial-gradient(circle, #acced8, #8c8d90);
@@ -38,14 +38,14 @@ body{
 
     /* IE 10 */
     background: -ms-radial-gradient(circle, #acced8, #8c8d90);
-    height:600px;
+    height: 600px;
 }
 
-.centered-form{
+.centered-form {
     margin-top: 60px;
 }
 
-.centered-form .panel{
+.centered-form .panel {
     background: rgba(255, 255, 255, 0.8);
     box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
 }
@@ -55,6 +55,7 @@ label.label-floatlabel {
     color: #46b8da;
     font-size: 11px;
 }
+
 .caret.caret-up {
     border-top-width: 0;
     border-bottom: 4px solid #fff;

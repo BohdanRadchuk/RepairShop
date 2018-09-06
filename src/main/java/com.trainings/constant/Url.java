@@ -10,8 +10,8 @@ public interface Url {
 
     String USER_HOME = "/in/user/user_menu";
     String USER_NEW_ORDER = "/in/user/new_order";
-    String USER_NEW_ORDER_CONFIRM = "/in/user/new_order_confirm" ;
-    String USERS_ORDERS= "/in/user/users_orders";
+    String USER_NEW_ORDER_CONFIRM = "/in/user/new_order_confirm";
+    String USERS_ORDERS = "/in/user/users_orders";
     String USER_SEND_COMMENT = "/in/user/send_comment";
 
     String MANAGER_HOME = "/in/manager/manager_menu";
@@ -31,4 +31,11 @@ public interface Url {
     String ADMIN_USERS_MENU = "/in/admin/users_menu";
     String ADMIN_EDIT_USER = "/in/admin/user_update";
     String ADMIN_DELETE_USER = "/in/admin/user_delete";
+
+    String ERR_LOGIN = "?err=login";
+    String ERR_PASSWORD = "?err=pass";
+    String ERR_PRICE = "?err=price";
+    String ERR_REGEX = "?err=regex";
+    String ERR_EMPTY = "?err=empty";
+    String ERR_EMAIL = "?err=email";
 }

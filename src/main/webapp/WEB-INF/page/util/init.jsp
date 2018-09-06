@@ -5,6 +5,6 @@
 
 <c:set var="language" value="${not empty param.language
                                         ? param.language : not empty language
-                                        ? language : 'en'}" scope="session" />
+                                        ? language : 'en'}" scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="bundle"/>

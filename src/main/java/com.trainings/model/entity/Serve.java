@@ -84,7 +84,7 @@ public class Serve {
             return this;
         }
 
-        public Serve build(){
+        public Serve build() {
             return new Serve(nestedIdServe, nestedTypeEn, nestedTypeUa, nestedDescriptionEn, nestedDescriptionUa, nestedPrice);
         }
     }

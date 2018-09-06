@@ -1,11 +1,11 @@
 package com.trainings.model.service;
 
 import com.trainings.model.entity.Comment;
-import com.trainings.model.entity.Serve;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.Optional;
+public interface CommentService extends Service {
+    Logger logger = LogManager.getLogger(CommentService.class);
 
-public interface CommentService extends Service{
-    boolean createNewComment (Comment comment);
-    Optional<Serve> findById(int id);
+    boolean createNewComment(Comment comment);
 }

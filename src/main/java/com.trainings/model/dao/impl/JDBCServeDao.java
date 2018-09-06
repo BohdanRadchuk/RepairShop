@@ -15,7 +15,7 @@ public class JDBCServeDao implements ServeDao {
     private ServiceMapper serviceMapper = new ServiceMapper();
 
 
-    JDBCServeDao(Connection connection) {
+    public JDBCServeDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -121,11 +121,7 @@ public class JDBCServeDao implements ServeDao {
     }
 
     @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void close() throws SQLException {
+        connection.close();
     }
 }

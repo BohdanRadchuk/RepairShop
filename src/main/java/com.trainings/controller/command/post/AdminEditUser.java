@@ -1,5 +1,6 @@
 package com.trainings.controller.command.post;
 
+import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.Url;
 import com.trainings.model.entity.Role;
 import com.trainings.model.entity.User;
@@ -13,17 +14,20 @@ import java.io.UnsupportedEncodingException;
 public class AdminEditUser implements com.trainings.controller.command.ServletCommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+        updateUser(req);
+        return Url.REDIRECT + Url.ADMIN_USERS_MENU;
+    }
+
+    private void updateUser(HttpServletRequest req) {
         UserService us = new UserServiceImpl();
 
         us.updateUser(new User.UserBuilder()
-                .userId(Integer.valueOf(req.getParameter("id")))
-                .name(req.getParameter("name"))
-                .surname(req.getParameter("surname"))
-                .email(req.getParameter("email"))
-                .password(req.getParameter("password"))
-                .role(Role.valueOf(req.getParameter("role")))
+                .userId(Integer.valueOf(req.getParameter(GlobalConstants.ID)))
+                .name(req.getParameter(GlobalConstants.NAME))
+                .surname(req.getParameter(GlobalConstants.SURNAME))
+                .email(req.getParameter(GlobalConstants.EMAIL))
+                .password(req.getParameter(GlobalConstants.PASSWORD))
+                .role(Role.valueOf(req.getParameter(GlobalConstants.ROLE)))
                 .build());
-
-        return Url.REDIRECT + Url.ADMIN_USERS_MENU;
     }
 }

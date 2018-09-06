@@ -21,7 +21,7 @@ public class JDBCOrderDao implements OrderDao {
     private Connection connection;
     private OrderMapper orderMapper = new OrderMapper();
 
-    JDBCOrderDao(Connection connection) {
+    public JDBCOrderDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -82,45 +82,20 @@ public class JDBCOrderDao implements OrderDao {
     }
 
 
-    //TODO REFACTOR
     @Override
     public void archiveOldDoneOrders(LocalDateTime olderThanDate) {
         List<Order> orders = findOldOrders(olderThanDate);
-        System.out.println(orders);
         try (PreparedStatement archiveStatement = connection.prepareStatement(SqlQuery.ORDER_ARCHIVE_ADD);
              PreparedStatement deleteStatement = connection.prepareStatement(SqlQuery.ORDER_DELETE)) {
             connection.setAutoCommit(false);
 
-            for (Order order : orders) {
-                int idWorker;
-                LocalDateTime closeDate;
-                if (order.getStatus().equals(Status.REFUSE)) {
-                    idWorker = order.getIdManager();
-                    closeDate = order.getConsiderationDate();
-                } else {
-                    idWorker = order.getIdMaster();
-                    closeDate = order.getDoneDate();
-                }
-             /*   OrderArchive oa = new OrderArchive(order.getIdOrder(), order.getIdUser(), order.getIdServe(),
-                        order.getStatus(), order.getPrice(), idWorker, closeDate);*/
-                archiveStatement.setInt(1, order.getIdOrder());
-                archiveStatement.setInt(2, order.getIdUser());
-                archiveStatement.setInt(3, order.getIdServe());
-                archiveStatement.setString(4, order.getStatus().name());
-                archiveStatement.setBigDecimal(5, order.getPrice());
-                archiveStatement.setInt(6, idWorker);
-                archiveStatement.setTimestamp(7, Timestamp.valueOf(closeDate));
-                archiveStatement.addBatch();
-                deleteStatement.setInt(1, order.getIdOrder());
-                deleteStatement.addBatch();
-            }
-            archiveStatement.executeBatch();
-            deleteStatement.executeBatch();
+            archiveAndDeleteOldOrders(orders, archiveStatement, deleteStatement);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public int getNumberOfOrderRows() {
@@ -201,12 +176,45 @@ public class JDBCOrderDao implements OrderDao {
 
     }
 
+    private void archiveAndDeleteOldOrders(List<Order> orders, PreparedStatement archiveStatement, PreparedStatement deleteStatement) throws SQLException {
+        for (Order order : orders) {
+            int idWorker;
+            LocalDateTime closeDate;
+            if (order.getStatus().equals(Status.REFUSE)) {
+                idWorker = order.getIdManager();
+                closeDate = order.getConsiderationDate();
+            } else {
+                idWorker = order.getIdMaster();
+                closeDate = order.getDoneDate();
+            }
+            addArchiveStatementBatch(archiveStatement, order, idWorker, closeDate);
+            addDeleteStatementBatch(deleteStatement, order);
+        }
+        archiveStatement.executeBatch();
+        deleteStatement.executeBatch();
+    }
+
+    private void addDeleteStatementBatch(PreparedStatement deleteStatement, Order order) throws SQLException {
+        deleteStatement.setInt(1, order.getIdOrder());
+        deleteStatement.addBatch();
+    }
+
+    private void addArchiveStatementBatch(PreparedStatement archiveStatement, Order order, int idWorker, LocalDateTime closeDate) throws SQLException {
+        archiveStatement.setInt(1, order.getIdOrder());
+        archiveStatement.setInt(2, order.getIdUser());
+        archiveStatement.setInt(3, order.getIdServe());
+        archiveStatement.setString(4, order.getStatus().name());
+        archiveStatement.setBigDecimal(5, order.getPrice());
+        archiveStatement.setInt(6, idWorker);
+        archiveStatement.setTimestamp(7, Timestamp.valueOf(closeDate));
+        archiveStatement.addBatch();
+    }
+
     private PreparedStatement setManagerOrdersPrepareStatement(int currentPage, String sqlQuery) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(sqlQuery);
-        int limitStart = (currentPage-1) * GlobalConstants.MANAGER_ROWS_PER_PAGE;
+        int limitStart = (currentPage - 1) * GlobalConstants.MANAGER_ROWS_PER_PAGE;
         ps.setInt(1, limitStart);
         ps.setInt(2, GlobalConstants.MANAGER_ROWS_PER_PAGE);
-        System.out.println(ps);
         return ps;
     }
 
@@ -271,11 +279,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void close() throws SQLException {
+        connection.close();
     }
 }

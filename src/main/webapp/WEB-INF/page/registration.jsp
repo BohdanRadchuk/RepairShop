@@ -1,9 +1,9 @@
 <%@ include file="util/init.jsp" %>
-
-
+<!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>Registration</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css">
     <link href="../../css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -24,33 +24,39 @@
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="first_name" id="first_name"
-                                           class="form-control input-sm floatlabel" required placeholder="First Name">
+                                           class="form-control input-sm floatlabel" placeholder="First Name"
+                                           required title="<fmt:message key="regex_name"/>">
                                 </div>
+
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="last_name" id="last_name" class="form-control input-sm"
-                                           placeholder="Last Name">
+                                           placeholder="Last Name"  required title="<fmt:message key="regex_name"/>">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <input type="email" name="email" id="email" class="form-control input-sm"
-                                   placeholder="Email Address">
+                                   placeholder="Email Address" required>
                         </div>
 
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" class="form-control input-sm"
-                                           placeholder="Password">
+                                           placeholder="Password"
+                                           required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
+                                           title="<fmt:message key="regex_password"/>">
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="password" name="password_confirmation" id="password_confirmation"
-                                           class="form-control input-sm" placeholder="Confirm Password">
+                                           class="form-control input-sm" placeholder="Confirm Password"
+                                           required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
+                                           title="<fmt:message key="regex_password"/>">
                                 </div>
                             </div>
                         </div>
@@ -60,7 +66,8 @@
                         <c:if test="${param.err == 'login'}">
                             <p style="background-color:Tomato;"><fmt:message key="err_email_exist"/></p>
                         </c:if>
-                        <input type="submit" value=<fmt:message key="register"/> class="btn btn-info btn-block">
+                        <input class="btn btn-info btn-block" type="submit" value=
+                        <fmt:message key="register"/> >
                         <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>
                     </form>
                 </div>

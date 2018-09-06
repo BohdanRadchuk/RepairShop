@@ -1,5 +1,6 @@
 package com.trainings.model.service.impl;
 
+import com.trainings.constant.LoggerMessage;
 import com.trainings.model.dao.OrderDao;
 import com.trainings.model.dto.ManagerOrderDTO;
 import com.trainings.model.dto.UserOrderDTO;
@@ -18,6 +19,7 @@ public class OrderServiceImpl implements OrderService {
             return dao.findUsersOrders(idUser);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_CREATE_USER);
             return null;
         }
     }
@@ -25,7 +27,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<ManagerOrderDTO> findNewOrders(int currentPage) {
-        System.out.println(currentPage);
         try (OrderDao dao = daoFactory.createOrderDao()) {
             return dao.findNewManagersOrders(currentPage);
         } catch (Exception e) {
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int getNumberOfOrderRows() {
         int rows = 0;
-        try (OrderDao dao = daoFactory.createOrderDao()){
+        try (OrderDao dao = daoFactory.createOrderDao()) {
             rows = dao.getNumberOfOrderRows();
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,6 +86,4 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
     }
-
-
 }

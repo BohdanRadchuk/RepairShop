@@ -1,11 +1,11 @@
 package com.trainings.controller;
 
+import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.Url;
-import com.trainings.model.service.ScheduledService.SimpleTriggerRunner;
-import com.trainings.controller.command.get.Home;
 import com.trainings.controller.command.ServletCommand;
 import com.trainings.controller.command.get.*;
 import com.trainings.controller.command.post.*;
+import com.trainings.model.service.ScheduledService.SimpleTriggerRunner;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -32,8 +32,9 @@ public class Servlet extends HttpServlet {
     private Map<String, ServletCommand> command = new HashMap<>();
 
     public void init(ServletConfig config) {
+
         config.getServletContext()
-                .setAttribute("logged_email", new HashMap<String, HttpSession>());
+                .setAttribute(GlobalConstants.LOGGED_EMAIL, new HashMap<String, HttpSession>());
 
         command.put(Url.HOME, new Home());
         command.put(Url.REGISTRATION_CONFIRM, new RegConfirm());
@@ -41,8 +42,7 @@ public class Servlet extends HttpServlet {
         command.put(Url.LOGIN, new Login());
         command.put(Url.LOGIN_CONFIRM, new LoginConfirm());
         command.put(Url.LOGOUT, new Logout());
-        command.put("/in/user/user_menu"
-                /*Url.USER_HOME*/, new UserMenu());
+        command.put(Url.USER_HOME, new UserMenu());
         command.put(Url.USER_NEW_ORDER, new CreateOrder());
         command.put(Url.USER_NEW_ORDER_CONFIRM, new OrderConfirm());
         command.put(Url.USERS_ORDERS, new UsersOrders());
@@ -75,9 +75,9 @@ public class Servlet extends HttpServlet {
         ServletCommand servletCommand = command.getOrDefault(path, (r, q) -> Url.HOME);
         String page = servletCommand.execute(req, resp);
         if (page.contains(Url.REDIRECT)) {
-                      resp.sendRedirect(page.replace(Url.REDIRECT, EMPTY));
+            resp.sendRedirect(page.replace(Url.REDIRECT, EMPTY));
         } else {
-            req.getRequestDispatcher(/*Url.PAGE + */page).forward(req, resp);
+            req.getRequestDispatcher(page).forward(req, resp);
         }
     }
 }

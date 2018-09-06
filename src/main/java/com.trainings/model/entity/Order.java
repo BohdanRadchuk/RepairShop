@@ -2,9 +2,8 @@ package com.trainings.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-public class Order{
+public class Order {
     private int idOrder;
     private int idUser;
     private int idServe;
@@ -18,7 +17,7 @@ public class Order{
     private LocalDateTime doneDate;
 
 
-    public Order(int idOrder, int idUser, int idServe, Status status, BigDecimal price, Integer idManager, LocalDateTime
+    Order(int idOrder, int idUser, int idServe, Status status, BigDecimal price, Integer idManager, LocalDateTime
             considerationDate, String refuseReason, Integer idMaster, LocalDateTime inWorkDate, LocalDateTime doneDate) {
         this.idOrder = idOrder;
         this.idUser = idUser;

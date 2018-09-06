@@ -8,12 +8,12 @@
 </head>
 <body>
 <div class="ulSide">
-<ul class="ulSide">
-    <li class="liSide"><a class="active" href="/in/admin/users_menu"><fmt:message key="users"/></a></li>
-    <li class="liSide"><a href="/orders_menu"><fmt:message key="orders"/></a></li>
-    <li class="liSide"><a href="/services_menu"><fmt:message key="services"/></a></li>
-    <li class="liSide"><a href="/statistic_menu"><fmt:message key="statistic"/></a></li>
-</ul>
+    <ul class="ulSide">
+        <li class="liSide"><a class="active" href="/in/admin/users_menu"><fmt:message key="users"/></a></li>
+        <li class="liSide"><a href="#"><fmt:message key="orders"/></a></li>
+        <li class="liSide"><a href="#"><fmt:message key="services"/></a></li>
+        <li class="liSide"><a href="#"><fmt:message key="statistic"/></a></li>
+    </ul>
 </div>
 </body>
 </html>

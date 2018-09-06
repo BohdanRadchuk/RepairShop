@@ -1,8 +1,8 @@
 package com.trainings.controller.filter;
 
 import com.trainings.constant.Url;
-import com.trainings.model.entity.Role;
 import com.trainings.controller.util.ServletUtil;
+import com.trainings.model.entity.Role;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

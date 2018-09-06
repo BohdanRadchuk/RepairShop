@@ -2,10 +2,10 @@ package com.trainings.controller.command.get;
 
 import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.Url;
+import com.trainings.controller.command.ServletCommand;
 import com.trainings.model.dto.ManagerOrderDTO;
 import com.trainings.model.service.OrderService;
 import com.trainings.model.service.impl.OrderServiceImpl;
-import com.trainings.controller.command.ServletCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,32 +14,25 @@ import java.util.List;
 import java.util.Optional;
 
 public class ManagerMenu implements ServletCommand {
-    private static final String ORDERS = "orders";
-
+    private final static String NO_OF_PAGES = "noOfPages";
+    private final static String CURRENT_PAGE = "currentPage";
+    private final static String RECORDS_PER_PAGE = "recordsPerPage";
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        pagination(req);
+        managerOrdersWithPagination(req);
         return Url.WEBINF + Url.MANAGER_HOME + Url.JSP;
     }
 
 
-    private void pagination(HttpServletRequest req){
-
-        Integer currentPage = Integer.valueOf(Optional.ofNullable(req.getParameter("currentPage"))
+    private void managerOrdersWithPagination(HttpServletRequest req) {
+        Integer currentPage = Integer.valueOf(Optional.ofNullable(req.getParameter(CURRENT_PAGE))
                 .orElse("1"));
-
-                OrderService orderService = new OrderServiceImpl();
-
-
+        OrderService orderService = new OrderServiceImpl();
         List<ManagerOrderDTO> orders = orderService.findNewOrders(currentPage);
-
-
-        req.setAttribute(ORDERS, orders);
-
+        req.setAttribute(GlobalConstants.ORDERS, orders);
 
         int rows = orderService.getNumberOfOrderRows();
-        System.out.println(rows);
 
         int nOfPages = rows / GlobalConstants.MANAGER_ROWS_PER_PAGE;
 
@@ -47,9 +40,12 @@ public class ManagerMenu implements ServletCommand {
             nOfPages++;
         }
 
-        req.setAttribute("noOfPages", nOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("recordsPerPage", GlobalConstants.MANAGER_ROWS_PER_PAGE);
-        req.setAttribute(ORDERS, orders);
+
+        req.setAttribute(NO_OF_PAGES, nOfPages);
+
+        req.setAttribute(CURRENT_PAGE, currentPage);
+
+        req.setAttribute(RECORDS_PER_PAGE, GlobalConstants.MANAGER_ROWS_PER_PAGE);
+        req.setAttribute(GlobalConstants.ORDERS, orders);
     }
 }

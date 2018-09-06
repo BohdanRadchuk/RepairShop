@@ -1,5 +1,6 @@
 package com.trainings.model.service.impl;
 
+import com.trainings.constant.LoggerMessage;
 import com.trainings.model.dao.ServeDao;
 import com.trainings.model.entity.Serve;
 import com.trainings.model.service.ServeService;
@@ -16,6 +17,7 @@ public class ServeServiceImpl implements ServeService {
             return dao.findAll();
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_SERVE_SERVICE_GET_ALL);
             return null;
         }
     }
@@ -27,6 +29,7 @@ public class ServeServiceImpl implements ServeService {
             serve = dao.findById(id);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_SERVE_SERVICE_FIND_BY_ID);
         }
         return serve;
     }

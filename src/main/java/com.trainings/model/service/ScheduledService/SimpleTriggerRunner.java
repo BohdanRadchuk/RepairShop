@@ -4,19 +4,26 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 public class SimpleTriggerRunner {
+    //every 30 sec - "0/30 * * * * ?"; every day 0:00 - "0 0 0 * * ?"
+    private final static String CRON_PATTERN = "0 0 0 * * ?";
+    private final static String JOB = "job1";
+    private final static String GROUP = "group1";
+    private final static String TRIGGER = "trigger1";
 
-   public void startScheduleTask(){
+    public void startScheduleTask() {
         SchedulerFactory sf = new StdSchedulerFactory();
         try {
             Scheduler sched = sf.getScheduler();
+
             JobDetail job = JobBuilder.newJob(ScheduledExecutor.class)
-                    .withIdentity("job1", "group1")
+                    .withIdentity(JOB, GROUP)
                     .build();
 
 
+
             CronTrigger trigger = TriggerBuilder.newTrigger()
-                    .withIdentity("trigger1", "group1")
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?"))       //30 sec   "0/30 * * * * ?"      0 0 0 * * ?   -every day 0:00
+                    .withIdentity(TRIGGER, GROUP)
+                    .withSchedule(CronScheduleBuilder.cronSchedule(CRON_PATTERN))
                     .build();
 
             sched.scheduleJob(job, trigger);

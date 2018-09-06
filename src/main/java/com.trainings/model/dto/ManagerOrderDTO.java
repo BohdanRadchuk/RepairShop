@@ -17,7 +17,8 @@ public class ManagerOrderDTO {
     private BigDecimal price;
     private String refuseReason;
 
-    public ManagerOrderDTO(int idOrder, int idUser, int idServe, String typeEn, String typeUa, Status status, Integer id_manager, LocalDateTime consideration_date, BigDecimal price, String refuseReason) {
+    ManagerOrderDTO(int idOrder, int idUser, int idServe, String typeEn, String typeUa, Status status,
+                    Integer id_manager, LocalDateTime consideration_date, BigDecimal price, String refuseReason) {
         this.idOrder = idOrder;
         this.idUser = idUser;
         this.idServe = idServe;

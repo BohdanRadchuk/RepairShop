@@ -1,5 +1,6 @@
 package com.trainings.model.service.impl;
 
+import com.trainings.constant.LoggerMessage;
 import com.trainings.model.dao.UserDao;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
             return dao.findAll();
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_FIND_ALL);
             return null;
         }
     }
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
             return dao.findByEmail(email).isPresent();
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_USER_EMAIL_EXIST);
             return false;
         }
 
@@ -39,6 +42,7 @@ public class UserServiceImpl implements UserService {
             user = dao.findByEmail(email);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_USER_FIND_EMAIL);
         }
         return user;
     }
@@ -49,16 +53,17 @@ public class UserServiceImpl implements UserService {
             dao.create(user);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_CREATE_USER);
         }
     }
 
     @Override
     public void updateUser(User user) {
         try (UserDao dao = daoFactory.createUserDao()) {
-            System.out.println(user);
             dao.update(user);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_UPDATE_USER);
         }
     }
 
@@ -68,6 +73,7 @@ public class UserServiceImpl implements UserService {
             dao.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_DELETE_USER);
         }
     }
 }
