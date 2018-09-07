@@ -1,5 +1,6 @@
 package com.trainings.model.service.impl;
 
+import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.LoggerMessage;
 import com.trainings.model.dao.OrderDao;
 import com.trainings.model.dto.ManagerOrderDTO;
@@ -54,6 +55,10 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
         return rows;
+    }
+
+    public boolean checkHasMoreRecordsOnPage() {
+        return getNumberOfOrderRows() % GlobalConstants.MANAGER_ROWS_PER_PAGE > 0;
     }
 
     @Override

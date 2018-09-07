@@ -14,19 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class ManagerRefuseOrder implements ServletCommand {
-
+    private OrderService orderService = new OrderServiceImpl();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+        Integer page = Integer.valueOf(Optional.ofNullable(req.getParameter(GlobalConstants.CURRENT_PAGE))
+                .orElse("1"));
+        if (!orderService.checkHasMoreRecordsOnPage() && page > 1) {
+            page--;
+        }
         refuseOrder(req);
-        return Url.REDIRECT + Url.MANAGER_HOME;
+        return Url.REDIRECT + Url.MANAGER_HOME + GlobalConstants.CURRENT_PAGE_PARAM + page;
     }
 
     private void refuseOrder(HttpServletRequest req) {
         ServletUtil util = new ServletUtil();
-        OrderService orderService = new OrderServiceImpl();
+
         try {
             Order order = orderService.findOrderById(Integer.valueOf(req.getParameter(GlobalConstants.ORDER_ID)))
                     .orElseThrow(NoSuchRecordException::new);

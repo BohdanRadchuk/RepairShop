@@ -6,6 +6,7 @@ import com.trainings.model.entity.Role;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,7 @@ public class AdminEditUser implements com.trainings.controller.command.ServletCo
                 .name(req.getParameter(GlobalConstants.NAME))
                 .surname(req.getParameter(GlobalConstants.SURNAME))
                 .email(req.getParameter(GlobalConstants.EMAIL))
-                .password(req.getParameter(GlobalConstants.PASSWORD))
+                .password(BCrypt.hashpw(req.getParameter(GlobalConstants.PASSWORD), BCrypt.gensalt()))
                 .role(Role.valueOf(req.getParameter(GlobalConstants.ROLE)))
                 .build());
     }

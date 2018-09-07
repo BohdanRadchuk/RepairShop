@@ -53,7 +53,7 @@
 <div class="container">
     <div class="row centered-form">
         <h1>WELCOME TO WATCH REPAIR</h1>
-        <h2>Hello World!</h2>
+        <h2><fmt:message key="greetings"/></h2>
     </div>
 </div>
 </body>

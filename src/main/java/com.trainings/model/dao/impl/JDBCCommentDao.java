@@ -40,8 +40,6 @@ public class JDBCCommentDao implements CommentDao {
 
     @Override
     public Optional<Comment> findById(Integer id) {
-
-
         return Optional.empty();
     }
 

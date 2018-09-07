@@ -25,4 +25,6 @@ public interface OrderService extends Service {
     List<Order> findConfirmOrders(int id);
 
     int getNumberOfOrderRows();
+
+    boolean checkHasMoreRecordsOnPage();
 }

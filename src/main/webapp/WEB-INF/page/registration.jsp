@@ -66,6 +66,9 @@
                         <c:if test="${param.err == 'login'}">
                             <p style="background-color:Tomato;"><fmt:message key="err_email_exist"/></p>
                         </c:if>
+                        <c:if test="${param.err == 'regex'}">
+                            <p style="background-color:Tomato;"><fmt:message key="regex_name"/></p>
+                        </c:if>
                         <input class="btn btn-info btn-block" type="submit" value=
                         <fmt:message key="register"/> >
                         <a href="/home" class="btn btn-info btn-block"><fmt:message key="back"/></a>

@@ -15,7 +15,6 @@ import java.util.Optional;
 
 public class ManagerMenu implements ServletCommand {
     private final static String NO_OF_PAGES = "noOfPages";
-    private final static String CURRENT_PAGE = "currentPage";
     private final static String RECORDS_PER_PAGE = "recordsPerPage";
 
     @Override
@@ -26,7 +25,7 @@ public class ManagerMenu implements ServletCommand {
 
 
     private void managerOrdersWithPagination(HttpServletRequest req) {
-        Integer currentPage = Integer.valueOf(Optional.ofNullable(req.getParameter(CURRENT_PAGE))
+        Integer currentPage = Integer.valueOf(Optional.ofNullable(req.getParameter(GlobalConstants.CURRENT_PAGE))
                 .orElse("1"));
         OrderService orderService = new OrderServiceImpl();
         List<ManagerOrderDTO> orders = orderService.findNewOrders(currentPage);
@@ -39,12 +38,8 @@ public class ManagerMenu implements ServletCommand {
         if (rows % GlobalConstants.MANAGER_ROWS_PER_PAGE > 0) {
             nOfPages++;
         }
-
-
         req.setAttribute(NO_OF_PAGES, nOfPages);
-
-        req.setAttribute(CURRENT_PAGE, currentPage);
-
+        req.setAttribute(GlobalConstants.CURRENT_PAGE, currentPage);
         req.setAttribute(RECORDS_PER_PAGE, GlobalConstants.MANAGER_ROWS_PER_PAGE);
         req.setAttribute(GlobalConstants.ORDERS, orders);
     }

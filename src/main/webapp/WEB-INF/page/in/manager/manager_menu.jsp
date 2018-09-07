@@ -46,7 +46,7 @@
 
                 <td>
                     <form method="post" action="/in/manager/confirm">
-
+<input type="hidden" name="currentPage" value="${currentPage}">
                         <input type="hidden" name="orderId" value="${item.idOrder}">
 
                         <input type="text" name="price" placeholder="Price" required>
@@ -73,7 +73,7 @@
 </div>
 
 <nav aria-label="Navigation for countries">
-    <ul class="pagination">
+    <ul class="pagination justify-content-end">
         <c:if test="${currentPage != 1}">
             <li class="page-item"><a class="page-link"
                                      href="/in/manager/manager_menu?currentPage=${currentPage-1}">Previous</a>

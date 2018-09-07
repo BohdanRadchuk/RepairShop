@@ -9,6 +9,7 @@ import com.trainings.controller.util.ServletUtil;
 import com.trainings.model.entity.User;
 import com.trainings.model.service.UserService;
 import com.trainings.model.service.impl.UserServiceImpl;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +36,8 @@ public class LoginConfirm implements ServletCommand {
         } catch (NoSuchRecordException e) {
             return Url.REDIRECT + Url.LOGIN + Url.ERR_EMAIL;
         }
-        //if (!BCrypt.checkpw(password, user.getPassword())){
-        if (!user.getPassword().equals(password)) {
+        if (!BCrypt.checkpw(password, user.getPassword())){
+        //if (!user.getPassword().equals(password)) {
             return Url.REDIRECT + Url.LOGIN + Url.ERR_PASSWORD;
         }
 

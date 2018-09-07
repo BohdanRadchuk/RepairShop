@@ -45,12 +45,11 @@ public class RegConfirm implements ServletCommand {
     }
 
     private void createNewUser(UserService service, String name, String surname, String email, String password) {
-        String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
         User user = new User.UserBuilder()
                 .name(name.trim())
                 .surname(surname.trim())
                 .email(email.trim())
-                .password(pw_hash)
+                .password(BCrypt.hashpw(password, BCrypt.gensalt()))
                 .role(Role.USER)
                 .build();
         service.createNewUser(user);

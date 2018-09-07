@@ -21,21 +21,28 @@ import java.util.Optional;
 public class ManagerConfirmOrder implements ServletCommand {
     private ServletUtil util = new ServletUtil();
     private OrderService orderService = new OrderServiceImpl();
-    private final static String CURRENT_PAGE = "currentPage";
+
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        //Integer currentPage = Integer.valueOf(req.getParameter(CURRENT_PAGE));
-            String page = req.getParameter(CURRENT_PAGE);
-        System.out.println( " " + page);
+
         String price = req.getParameter(GlobalConstants.PRICE);
+
+        Integer page = Integer.valueOf(Optional.ofNullable(req.getParameter(GlobalConstants.CURRENT_PAGE))
+                .orElse("1"));
+
         if (!StringUtils.isNumeric(price)) {                        // Apache Commons Lang here
             return Url.REDIRECT + Url.MANAGER_HOME + Url.ERR_PRICE;
         } else {
             updateOrder(req, price);
-            return Url.REDIRECT + Url.MANAGER_HOME + "?currentPage=2";
         }
+        if (!orderService.checkHasMoreRecordsOnPage() && page > 1) {
+            page--;
+        }
+        return Url.REDIRECT + Url.MANAGER_HOME + GlobalConstants.CURRENT_PAGE_PARAM + page;
     }
+
+
 
     private void updateOrder(HttpServletRequest req, String price) {
         try {

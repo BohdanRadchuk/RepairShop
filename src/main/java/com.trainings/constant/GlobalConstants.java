@@ -26,4 +26,7 @@ public interface GlobalConstants {
     String SERVICES = "services";
     String USERS = "users";
     String USER_EMAIL = "userEmail";
+
+    String CURRENT_PAGE = "currentPage";
+    String CURRENT_PAGE_PARAM = "?currentPage=";
 }
