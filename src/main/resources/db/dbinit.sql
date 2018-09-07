@@ -1,10 +1,10 @@
 INSERT INTO `user` (`name`, `surname`, `email`, `password`, `role`)
-VALUES ('Jez', 'Chen', 'Jchen@example.com', '123', 'ADMIN'),
-  ('Reinaldos', 'Benna', 'Rbenna@example.com', '$2a$10$ECm3HTlI1pLOcouLUxsn.eK6GvWyHZDMG8RHNoV6oiJR/da3KMy0K', 'MASTER'),
-  ('Leontine', 'Corrado', 'Lcorrado@example.com', 'pass223', 'MANAGER'),
-  ('Marcelo', 'Hooley', 'MHooley@example.com', '2', 'MANAGER'),
-  ('Mildrid', 'Karf', 'MKarf@example.com', 'MILLpass1', 'USER'),
-  ('Asher','Perry','APerry@example.com','1','USER');
+VALUES ('Jez', 'Chen', 'Jchen@example.com', '$2a$10$/M.JuSabAE4oyRtH0dW67u6gECcePJfSbmOODaF5EVpgN7HgucnPC', 'ADMIN'),
+  ('Reinaldos', 'Benna', 'Rbenna@example.com', '$2a$10$djT4vsba//A29kWZkadRnO1ulMVS2CjBU8Au7RcG.9UNIgKapOBLa', 'MASTER'),
+  ('Leontine', 'Corrado', 'Lcorrado@example.com', '$2a$10$qMgxmsudJ./D9le67y154eYoWCUhpiQsPxz/MDpyUG.yQje6adNy2', 'MANAGER'),
+  ('Marcelo', 'Hooley', 'MHooley@example.com', '$2a$10$kMJfE/iftgszVQnt5jWGhOQU7TSU0JYYUOJQ7MANI7PCZrnleIio6', 'MANAGER'),
+  ('Mildrid', 'Karf', 'MKarf@example.com', '$2a$10$WkF.fojEoNiSAxlriZJw0eouHJWfMbqXvHACz7UVnGoergeWX2FkW', 'USER'),
+  ('Asher','Perry','APerry@example.com','$2a$10$2irQcVs4mi0AX.NP0BPwVeAfwZn/t0Pctm/.h4Z2I5ymO0CyqGUUu','USER');
 
 INSERT INTO `service` (`type_en`, `type_ua`, `description_en`, `description_ua`, `price`)
 VALUES ('Preventive clockwork diagnostics and shell cleaning', 'Профілактична діагностика механізму і чищення корпусу',
@@ -59,7 +59,7 @@ INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, 
 VALUES (6, 2, 'DONE', 60, 3,'2018-08-22 10:12:13', 2, '2018-08-24 09:15:22', '2018-08-24 11:30:22');
 
 INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, consideration_date, id_master, in_work_date, done_date)
-VALUES (5, 1, 'DONE', 55, 4,'2018-08-23 14:24:11', 2, '2018-08-25 10:45:52', '2018-08-26 17:54:31');
+VALUES (6, 1, 'DONE', 55, 4,'2018-08-23 14:24:11', 2, '2018-08-25 10:45:52', '2018-08-26 17:54:31');
 
 INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, consideration_date, id_master, in_work_date)
 VALUES (6, 1, 'IN_WORK', 45, 3,'2018-08-24 10:12:13', 2, '2018-08-26 11:44:13');
