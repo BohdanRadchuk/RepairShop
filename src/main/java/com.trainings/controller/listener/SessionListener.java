@@ -1,5 +1,7 @@
 package com.trainings.controller.listener;
 
+import com.trainings.constant.GlobalConstants;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -10,7 +12,6 @@ import java.util.Map;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-
     }
 
     @Override
@@ -18,10 +19,10 @@ public class SessionListener implements HttpSessionListener {
         @SuppressWarnings("unchecked")
         Map<String, HttpSession> logged = (HashMap<String, HttpSession>) httpSessionEvent
                 .getSession().getServletContext()
-                .getAttribute("logged_email");
+                .getAttribute(GlobalConstants.LOGGED_EMAIL);
         String userName = (String) httpSessionEvent.getSession()
-                .getAttribute("email");
+                .getAttribute(GlobalConstants.EMAIL);
         logged.remove(userName);
-        httpSessionEvent.getSession().setAttribute("logged_email", logged);
+        httpSessionEvent.getSession().setAttribute(GlobalConstants.LOGGED_EMAIL, logged);
     }
 }

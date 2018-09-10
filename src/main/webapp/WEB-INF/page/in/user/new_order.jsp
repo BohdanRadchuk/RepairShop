@@ -13,11 +13,11 @@
 
 
     <c:if test="${language=='en'}">
-        ${service_description.descriptionEn}
+        <h2>${service_description.descriptionEn}</h2>
     </c:if>
 
     <c:if test="${language=='ua'}">
-        ${service_description.descriptionUa}
+        <h2>${service_description.descriptionUa}</h2>
     </c:if>
 
     <form method="post" action="/in/user/new_order_confirm">

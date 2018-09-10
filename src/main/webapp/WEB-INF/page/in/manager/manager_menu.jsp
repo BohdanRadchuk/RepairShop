@@ -47,7 +47,6 @@
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button"
-                                onclick="drop()"
                                 data-toggle="dropdown">Confirm
                             <span class="caret"></span></button>
 
@@ -64,19 +63,15 @@
                 </td>
                 <td>
                     <div class="dropdown">
-                    <button class="btn btn-danger dropdown-toggle" type="button"
-                            onclick="drop()"
-                            data-toggle="dropdown">Refuse
-                        <span class="caret"></span></button>
-                    <form class="dropdown-menu" method="post" action="/in/manager/refuse">
-
-                        <input type="hidden" name="orderId" value="${item.idOrder}">
-                        <textarea class="form-control" rows="5" cols="150" name="reason" placeholder="Reason" required></textarea>
-                    <%--    <input type="text" name="reason" placeholder="Reason" required>--%>
-
-                        <input type="submit" value="<fmt:message key="refuse"/>" class="btn btn-danger">
-
-                    </form>
+                        <button class="btn btn-danger dropdown-toggle" type="button"
+                                data-toggle="dropdown">Refuse
+                            <span class="caret"></span></button>
+                        <form class="dropdown-menu" method="post" action="/in/manager/refuse">
+                            <input type="hidden" name="orderId" value="${item.idOrder}">
+                            <textarea class="form-control" rows="5" cols="150" name="reason" placeholder="Reason"
+                                      required></textarea>
+                            <input type="submit" value="<fmt:message key="refuse"/>" class="btn btn-info">
+                        </form>
                     </div>
                 </td>
             </tr>

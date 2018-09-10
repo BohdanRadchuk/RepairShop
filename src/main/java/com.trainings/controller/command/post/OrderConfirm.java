@@ -19,7 +19,7 @@ public class OrderConfirm implements com.trainings.controller.command.ServletCom
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         createNewOrder(req);
-        return Url.REDIRECT + Url.USER_HOME;
+        return Url.REDIRECT + Url.USER_HOME + Url.OPERATION_SUCCESS;
     }
 
     private void createNewOrder(HttpServletRequest req) {

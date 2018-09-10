@@ -1,7 +1,7 @@
 package com.trainings.constant;
 
 public interface GlobalConstants {
-    int MANAGER_ROWS_PER_PAGE = 10;
+    int MANAGER_ROWS_PER_PAGE = 8;
     String PRICE = "price";
     String ORDER_ID = "orderId";
 

@@ -51,8 +51,12 @@
 </div>
 
 <div class="container">
+
     <div class="row centered-form">
-        <h1>WELCOME TO WATCH REPAIR</h1>
+        <c:if test="${param.success == 'true'}">
+            <p style="background-color:greenyellow;"><fmt:message key="reg_success"/></p>
+        </c:if>
+
         <h2><fmt:message key="greetings"/></h2>
     </div>
 </div>

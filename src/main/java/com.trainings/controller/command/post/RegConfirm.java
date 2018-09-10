@@ -32,7 +32,7 @@ public class RegConfirm implements ServletCommand {
             return Url.REDIRECT + Url.REGISTRATION + errorType;
         } else {
             userService.createNewUser(createNewUserEntity(name, surname, email, password));
-            return Url.REDIRECT + Url.HOME;
+            return Url.REDIRECT + Url.HOME + Url.OPERATION_SUCCESS;
         }
     }
 

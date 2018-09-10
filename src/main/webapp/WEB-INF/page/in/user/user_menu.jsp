@@ -10,6 +10,9 @@
 <body>
 <jsp:include page="/WEB-INF/page/in/header_reg.jsp"/>
 <div class="container cont-pad">
+    <c:if test="${param.success == 'true'}">
+        <p style="background-color:greenyellow;"><fmt:message key="order_success"/></p>
+    </c:if>
     <table class="table table-hover ">
         <th><fmt:message key="serve_type"/></th>
         <th><fmt:message key="serve_price"/></th>
