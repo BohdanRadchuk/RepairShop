@@ -29,31 +29,31 @@ VALUES ('Preventive clockwork diagnostics and shell cleaning', 'Профілак
    and transparent, and the additional protective spraying will help to protect the watch from daily friction and other minor mechanical impact for a long time.',
    'Наша майстерня надає широкий вибір годинникового скла різної міцності і різних цінових   категорій. У нас також можна відновити герметичність водонепроникних
    годинників, видалити дрібні відколи, подряпини, сліди фарби та інші пошкодження на склі. Сучасне ультразвукове чищення та полірування зроблять скло ідеально гладким
-   і прозорим, а додаткове захисне напилення допоможе надовго захистити годинник від щоденного тертя та інших дрібних механічних впливів.', 30),
+   і прозорим, а додаткове захисне напилення допоможе надовго захистити годинник від щоденного тертя та інших дрібних механічних впливів.', 60),
   ('Watchband and strap replacement and repair', 'Ремонт, подовження, вкорочення та заміна ремінців',
    'With us, you can restore your old watch strap or choose a worthy replacement of any material: metal, leather, fabric, rubber or caoutchouc. In our workshop you
    will find a wide selection of men\'s and women\'s straps of different length and width. If the strap does not suit you, our watchmakers will be able to measure
    your wrist and change the length of the strap in the right direction: to lengthen it or to shorten it.',
    'У нас ви можете реставрувати старий годинниковий ремінець або підібрати йому гідну заміну із будь-якого матеріалу: металу, шкіри, тканини, гуми або каучуку.
    У нашій майстерні ви знайдете великий вибір чоловічих та жіночих ремінців різної довжини і ширини. Якщо ремінець вам не підходить, наш майстер зможе заміряти
-   ваше зап’ястя і змінити довжину ремінця в потрібну сторону: подовжити або вкоротити.',  45),
+   ваше зап’ястя і змінити довжину ремінця в потрібну сторону: подовжити або вкоротити.',  25),
   ('Clockwork replacement and calibration', 'Заміна та налаштування механізму',
    'The clockwork is the most important part of any watch. We provide our customers the best clockwork repair services of various complexities. We can fix both
    the old and the new clockworks. If necessary, our watchmakers will be able to replace the broken or missing parts. In case of impossibility of repair or lack of
    necessary parts, the watchmakers will assemble your faulty watch for free.',
    'Годинниковий механізм - це найважливіша частина будь-якого годинника. Ми надаємо нашим клієнтам послуги з ремонту механізмів різного ступеня складності для
    годинників будь-якого року випуску. При необхідності майстер зможе замінити деталь, котра вийшла з ладу, аналогічною новою. У разі неможливості ремонту годинника
-   або відсутності необхідних деталей, майстер зробить збірку несправного годинника безкоштовно.', 30),
+   або відсутності необхідних деталей, майстер зробить збірку несправного годинника безкоштовно.', 130),
   ('Dial and hands restoration and replacement', 'Реставрація циферблату та стрілок',
    'Here you can place an order for repair or replacement of hour, minute and second hands, as well as numbers and divisions on the dial. We also accept orders for
    painting, polishing and updating old dials of different complexity.',
    'У нас ви можете оформити замовлення на лагодження або заміну годинної, хвилинної і секундної стрілок, а також цифр і поділів на циферблаті. Окрім того, ми
-   приймаємо замовлення на фарбування, полірування і оновлення старих годинникових циферблатів різних моделей.',  45),
+   приймаємо замовлення на фарбування, полірування і оновлення старих годинникових циферблатів різних моделей.',  145),
   ('Shell engraving', 'Гравіювання корпусу',
    'A beautiful laser shell engraving will make your wristwatch to be an exclusive memorable gift. According to your personal order, the watchmakers will engrave
    the initials, names or any other inscriptions on the back of the watch. Anyone, who places a wholesale order of 5 or more engravings, will get a 10% discount.',
    'Зробити з наручного годинника пам’ятний подарунок допоможе красиве лазерне гравіювання на корпусі. За вашим індивідуальним замовленням майстер вигравіює на
-   зворотному боці годинника ініціали, імена або будь-які інші написи. При оптовому замовленні гравіювань від 5 одиниць діє знижка 10%.', 30);
+   зворотному боці годинника ініціали, імена або будь-які інші написи. При оптовому замовленні гравіювань від 5 одиниць діє знижка 10%.', 50);
 
 INSERT INTO watch_repair.order (id_user, id_service, status, price, id_manager, consideration_date, id_master, in_work_date, done_date)
 VALUES (6, 2, 'DONE', 60, 3,'2018-08-22 10:12:13', 2, '2018-08-24 09:15:22', '2018-08-24 11:30:22');

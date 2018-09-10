@@ -23,20 +23,20 @@ public class AdminEditUser implements com.trainings.controller.command.ServletCo
     }
 
     private void updateUser(HttpServletRequest req) {
-        String email = req.getParameter(GlobalConstants.EMAIL);
+        int id = Integer.valueOf(req.getParameter(GlobalConstants.ID));
         us.updateUser(new User.UserBuilder()
-                .userId(Integer.valueOf(req.getParameter(GlobalConstants.ID)))
+                .userId(id)
                 .name(req.getParameter(GlobalConstants.NAME))
                 .surname(req.getParameter(GlobalConstants.SURNAME))
-                .email(email)
-                .password(setPassword(req.getParameter(GlobalConstants.PASSWORD), email))
+                .email(req.getParameter(GlobalConstants.EMAIL))
+                .password(setPassword(req.getParameter(GlobalConstants.PASSWORD), id))
                 .role(Role.valueOf(req.getParameter(GlobalConstants.ROLE)))
                 .build());
     }
 
-    private String setPassword (String password, String email){
+    private String setPassword (String password, int id){
         try {
-            return password.equals(us.findUserByEmail(email).orElseThrow(NoSuchRecordException::new).getPassword())
+            return password.equals(us.findById(id).orElseThrow(NoSuchRecordException::new).getPassword())
                     ? password : BCrypt.hashpw(password, BCrypt.gensalt());
         } catch (NoSuchRecordException e) {
             e.printStackTrace();

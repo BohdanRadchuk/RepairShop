@@ -45,19 +45,19 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`order` (
   CONSTRAINT `request_ibfk_1`
   FOREIGN KEY (`id_user`)
   REFERENCES `watch_repair`.`user` (`id_user`)
-    ON UPDATE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `request_ibfk_2`
   FOREIGN KEY (`id_manager`)
   REFERENCES `watch_repair`.`user` (`id_user`)
-    ON UPDATE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `request_ibfk_3`
   FOREIGN KEY (`id_master`)
   REFERENCES `watch_repair`.`user` (`id_user`)
-    ON UPDATE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `request_ibfk_4`
   FOREIGN KEY (`id_service`)
   REFERENCES `watch_repair`.`service` (`id_service`)
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE ON DELETE CASCADE)
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
@@ -88,14 +88,14 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`order_archive` (
   CONSTRAINT `request_ibfk_10`
   FOREIGN KEY (`id_user`)
   REFERENCES `watch_repair`.`user` (`id_user`)
-    ON UPDATE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `request_ibfk_20`
   FOREIGN KEY (`id_worker`)
   REFERENCES `watch_repair`.`user` (`id_user`)
-    ON UPDATE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `request_ibfk_40`
   FOREIGN KEY (`id_service`)
   REFERENCES `watch_repair`.`service` (`id_service`)
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE ON DELETE CASCADE)
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;

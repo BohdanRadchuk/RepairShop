@@ -67,6 +67,7 @@
                                 data-toggle="dropdown">Refuse
                             <span class="caret"></span></button>
                         <form class="dropdown-menu" method="post" action="/in/manager/refuse">
+                            <input type="hidden" name="currentPage" value="${currentPage}">
                             <input type="hidden" name="orderId" value="${item.idOrder}">
                             <textarea class="form-control" rows="5" cols="150" name="reason" placeholder="Reason"
                                       required></textarea>

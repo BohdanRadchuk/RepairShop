@@ -36,6 +36,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findById(int id) {
+        Optional<User> user = Optional.empty();
+        try (UserDao dao = daoFactory.createUserDao()) {
+            user = dao.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage() + LoggerMessage.ERR_USER_SERVICE_USER_FIND_EMAIL);
+        }
+        return user;
+    }
+
+    @Override
     public Optional<User> findUserByEmail(String email) {
         Optional<User> user = Optional.empty();
         try (UserDao dao = daoFactory.createUserDao()) {

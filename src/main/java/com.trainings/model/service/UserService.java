@@ -14,6 +14,8 @@ public interface UserService extends Service {
 
     boolean userWithEmailExist(String email);
 
+    Optional<User> findById (int id);
+
     Optional<User> findUserByEmail(String email);
 
     void createNewUser(User user);
