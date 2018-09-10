@@ -15,18 +15,20 @@
         <th><fmt:message key="serve_price"/></th>
         <c:forEach items="${requestScope.services}" var="serve">
             <tr>
+                <td><c:if test="${language=='en'}">
+                   ${serve.typeEn}
+                </c:if>
+                    <c:if test="${language=='ua'}">
+                        ${serve.typeUa}
+                    </c:if>
+                </td>
+                <td>${serve.price}</td>
                 <td>
                     <form method="post" action="/in/user/new_order">
                         <input type="hidden" id="serveId" name="serveId" value="${serve.idServe}">
-                        <c:if test="${language=='en'}">
-                            <input type="submit" class="button btn-success" value="${serve.typeEn}">
-                        </c:if>
-                        <c:if test="${language=='ua'}">
-                            <input type="submit" class="button btn-success" value="${serve.typeUa}">
-                        </c:if>
+                        <input type="submit" class="button btn-success" value="<fmt:message key="order"/>">
                     </form>
                 </td>
-                <td>${serve.price}</td>
             </tr>
         </c:forEach>
     </table>

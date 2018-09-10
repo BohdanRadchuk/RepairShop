@@ -3,6 +3,7 @@ package com.trainings.controller.command.post;
 import com.trainings.constant.GlobalConstants;
 import com.trainings.constant.Url;
 import com.trainings.controller.util.NoSuchRecordException;
+import com.trainings.controller.util.ServletUtil;
 import com.trainings.model.entity.Order;
 import com.trainings.model.entity.Status;
 import com.trainings.model.service.OrderService;
@@ -23,12 +24,15 @@ public class MasterDone implements com.trainings.controller.command.ServletComma
 
     private void changeOrderStatusDone(HttpServletRequest req) {
         OrderService orderService = new OrderServiceImpl();
+        ServletUtil servletUtil = new ServletUtil();
         try {
             Order order = orderService.findOrderById(Integer.valueOf(req.getParameter(GlobalConstants.ORDER_ID)))
                     .orElseThrow(NoSuchRecordException::new);
-            order.setStatus(Status.DONE);
-            order.setDoneDate(LocalDateTime.now());
-            orderService.updateOrder(order);
+            if (order.getStatus().equals(Status.IN_WORK) && servletUtil.getLoggedUserId(req) == order.getIdMaster()) {
+                order.setStatus(Status.DONE);
+                order.setDoneDate(LocalDateTime.now());
+                orderService.updateOrder(order);
+            }
         } catch (NoSuchRecordException e) {
             e.printStackTrace();
         }

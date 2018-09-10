@@ -16,7 +16,7 @@
         <p style="background-color:Tomato;"><fmt:message key="err_price"/></p>
     </c:if>
 
-    <table class="table table-hover ">
+    <table class="table table-hover">
         <th>
             <fmt:message key="id_order"/>
         </th>
@@ -45,26 +45,39 @@
                 <td>${item.price}</td>
 
                 <td>
-                    <form method="post" action="/in/manager/confirm">
-<input type="hidden" name="currentPage" value="${currentPage}">
-                        <input type="hidden" name="orderId" value="${item.idOrder}">
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button"
+                                onclick="drop()"
+                                data-toggle="dropdown">Confirm
+                            <span class="caret"></span></button>
 
-                        <input type="text" name="price" placeholder="Price" required>
+                        <form class="dropdown-menu" method="post" action="/in/manager/confirm">
+                            <input type="hidden" name="currentPage" value="${currentPage}">
+                            <input type="hidden" name="orderId" value="${item.idOrder}">
 
-                        <input type="submit" value="<fmt:message key="confirm"/>" class="btn btn-success">
+                            <input type="text" name="price" placeholder="Price" required>
 
-                    </form>
+                            <input type="submit" value="<fmt:message key="confirm"/>" class="btn btn-info">
+
+                        </form>
+                    </div>
                 </td>
                 <td>
-                    <form method="post" action="/in/manager/refuse">
+                    <div class="dropdown">
+                    <button class="btn btn-danger dropdown-toggle" type="button"
+                            onclick="drop()"
+                            data-toggle="dropdown">Refuse
+                        <span class="caret"></span></button>
+                    <form class="dropdown-menu" method="post" action="/in/manager/refuse">
 
                         <input type="hidden" name="orderId" value="${item.idOrder}">
-
-                        <input type="text" name="reason" placeholder="Reason" required>
+                        <textarea class="form-control" rows="5" cols="150" name="reason" placeholder="Reason" required></textarea>
+                    <%--    <input type="text" name="reason" placeholder="Reason" required>--%>
 
                         <input type="submit" value="<fmt:message key="refuse"/>" class="btn btn-danger">
 
                     </form>
+                    </div>
                 </td>
             </tr>
         </c:forEach>

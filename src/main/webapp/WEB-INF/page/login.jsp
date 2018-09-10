@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Registration</title>
+    <title>Login</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css">
     <link href="../../css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>

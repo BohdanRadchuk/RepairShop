@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `watch_repair`.`comment` (
   CONSTRAINT `fk_comment_order1`
   FOREIGN KEY (`id_order`)
   REFERENCES `watch_repair`.`order` (`id_order`)
-    ON DELETE cascade
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;

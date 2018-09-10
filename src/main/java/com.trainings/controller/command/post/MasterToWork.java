@@ -29,10 +29,12 @@ public class MasterToWork implements com.trainings.controller.command.ServletCom
         try {
             Order order = orderService.findOrderById(Integer.valueOf(req.getParameter(GlobalConstants.ORDER_ID)))
                     .orElseThrow(NoSuchRecordException::new);
-            order.setStatus(Status.IN_WORK);
-            order.setIdMaster(util.getLoggedUserId(req));
-            order.setInWorkDate(LocalDateTime.now());
-            orderService.updateOrder(order);
+            if (order.getStatus().equals(Status.CONFIRM)) {
+                order.setStatus(Status.IN_WORK);
+                order.setIdMaster(util.getLoggedUserId(req));
+                order.setInWorkDate(LocalDateTime.now());
+                orderService.updateOrder(order);
+            }
         } catch (NoSuchRecordException e) {
             e.printStackTrace();
         }

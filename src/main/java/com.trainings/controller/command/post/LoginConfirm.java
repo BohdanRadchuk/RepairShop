@@ -37,7 +37,6 @@ public class LoginConfirm implements ServletCommand {
             return Url.REDIRECT + Url.LOGIN + Url.ERR_EMAIL;
         }
         if (!BCrypt.checkpw(password, user.getPassword())){
-        //if (!user.getPassword().equals(password)) {
             return Url.REDIRECT + Url.LOGIN + Url.ERR_PASSWORD;
         }
 

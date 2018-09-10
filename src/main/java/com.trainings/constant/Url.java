@@ -38,4 +38,5 @@ public interface Url {
     String ERR_REGEX = "?err=regex";
     String ERR_EMPTY = "?err=empty";
     String ERR_EMAIL = "?err=email";
+    String ERR_PASSWORD_REGEX = "?err=pass_regex";
 }

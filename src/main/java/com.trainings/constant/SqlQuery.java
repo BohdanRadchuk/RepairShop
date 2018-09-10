@@ -23,18 +23,12 @@ public interface SqlQuery {
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     String ORDER_GET_BY_ID = "SELECT * FROM watch_repair.`order` WHERE id_order=?";
     String ORDER_GET_ALL = "SELECT * FROM watch_repair.`order`;";
-   /* SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR `status`='IN_WORK' and id_master=1 ORDER BY status desc, consideration_date;
-    "SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR `status`='IN_WORK';"*/
-
     String ORDER_GET_ALL_CONFIRM = "SELECT * FROM watch_repair.`order` WHERE `status`='CONFIRM' OR " +
             "`status`='IN_WORK' and id_master=? ORDER BY status DESC, consideration_date;";
     String ORDER_UPDATE = "UPDATE `watch_repair`.`order` SET `id_user`=?, `id_service`=?, `status`=?, `price`=?, " +
             "`id_manager`=?, `consideration_date`=?, `refuse_reason`=?, `id_master`=?, `in_work_date`=?, " +
             "`done_date`=? WHERE `id_order`=?;";
     String ORDER_DELETE = "DELETE from `order` where id_order=?;";
-    /* String GET_ALL_USERS_ORDERS = "SELECT id_order, id_user, id_service, status, price " +
-             "FROM watch_repair.order WHERE id_user=?;";
- */
     String GET_ALL_USERS_ORDERS = "SELECT o.id_order, o.id_user, s.id_service, s.type_en, s.type_ua, o.status, " +
             "o.price, o.refuse_reason, c.commentary FROM watch_repair.order o " +
             "LEFT JOIN watch_repair.service s ON o.id_service = s.id_service " +
@@ -43,18 +37,15 @@ public interface SqlQuery {
             "o.status, o.id_manager, o.price, o.refuse_reason, o.consideration_date FROM watch_repair.order AS o " +
             "LEFT JOIN watch_repair.service AS s ON o.id_service = s.id_service WHERE o.status='NEW' " +
             "ORDER BY o.id_order LIMIT ?, ?;";
-
+    String ORDER_ARCHIVE_ADD = "INSERT INTO `watch_repair`.`order_archive` (`id_archive_order`, `id_user`, " +
+            "`id_service`, `status`, `price`, `id_worker`, `done_date`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    String ORDERS_GET_COUNT = "SELECT COUNT(id_order) C FROM `order` WHERE status = 'NEW';";
     String ORDER_GET_OLDER_THAN = "SELECT * FROM `order` WHERE done_date<? OR consideration_date<? and status='REFUSE' " +
             "ORDER BY done_date, consideration_date;";
 
     String COMMENT_GET_ALL = "SELECT * FROM watch_repair.comment;";
     String COMMENT_GET_BY_ORDER_ID = "SELECT * FROM `watch_repair`.`comment` WHERE id_order=?;";
     String COMMENT_CREATE = "INSERT INTO `watch_repair`.`comment` (`id_order`, `commentary`) VALUES (?, ?);";
-
-    String ORDER_ARCHIVE_ADD = "INSERT INTO `watch_repair`.`order_archive` (`id_archive_order`, `id_user`, " +
-            "`id_service`, `status`, `price`, `id_worker`, `done_date`) VALUES (?, ?, ?, ?, ?, ?, ?);";
-
-    String ORDERS_GET_COUNT = "SELECT COUNT(id_order) C FROM `order` WHERE status = 'NEW';";
-    String ORDERS = "SELECT * FROM Countries LIMIT ?, ?";
-
+    String COMMENT_DELETE = "DELETE from `comment` where id_order=?;";
+    String COMMENT_UPDATE = "UPDATE `watch_repair`.`comment` SET `commentary`=? WHERE `id_order`=?";
 }

@@ -28,31 +28,37 @@ public class ManagerConfirmOrder implements ServletCommand {
 
         String price = req.getParameter(GlobalConstants.PRICE);
 
-        Integer page = Integer.valueOf(Optional.ofNullable(req.getParameter(GlobalConstants.CURRENT_PAGE))
-                .orElse("1"));
 
         if (!StringUtils.isNumeric(price)) {                        // Apache Commons Lang here
             return Url.REDIRECT + Url.MANAGER_HOME + Url.ERR_PRICE;
         } else {
             updateOrder(req, price);
         }
+
+        return Url.REDIRECT + Url.MANAGER_HOME + GlobalConstants.CURRENT_PAGE_PARAM + getCurrentOrderPaginationPage(req);
+    }
+
+    private Integer getCurrentOrderPaginationPage(HttpServletRequest req) {
+        Integer page = Integer.valueOf(Optional.ofNullable(req.getParameter(GlobalConstants.CURRENT_PAGE))
+                .orElse("1"));
         if (!orderService.checkHasMoreRecordsOnPage() && page > 1) {
             page--;
         }
-        return Url.REDIRECT + Url.MANAGER_HOME + GlobalConstants.CURRENT_PAGE_PARAM + page;
+        return page;
     }
-
 
 
     private void updateOrder(HttpServletRequest req, String price) {
         try {
             Order order = orderService.findOrderById(Integer.valueOf(req.getParameter(GlobalConstants.ORDER_ID)))
                     .orElseThrow(NoSuchRecordException::new);
-            order.setStatus(Status.CONFIRM);
-            order.setIdManager(util.getLoggedUserId(req));
-            order.setPrice(new BigDecimal(price));
-            order.setConsiderationDate(LocalDateTime.now());
-            orderService.updateOrder(order);
+            if (order.getStatus().equals(Status.NEW)) {
+                order.setStatus(Status.CONFIRM);
+                order.setIdManager(util.getLoggedUserId(req));
+                order.setPrice(new BigDecimal(price));
+                order.setConsiderationDate(LocalDateTime.now());
+                orderService.updateOrder(order);
+            }
         } catch (NoSuchRecordException e) {
             e.printStackTrace();
         }

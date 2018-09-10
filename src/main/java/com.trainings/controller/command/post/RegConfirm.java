@@ -15,43 +15,64 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 public class RegConfirm implements ServletCommand {
+    private UserService userService = new UserServiceImpl();
+    private String errorType;
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-        UserService service = new UserServiceImpl();
         String name = req.getParameter(GlobalConstants.FIRST_NAME);
         String surname = req.getParameter(GlobalConstants.LAST_NAME);
         String email = req.getParameter(GlobalConstants.EMAIL);
         String password = req.getParameter(GlobalConstants.PASSWORD);
-        String password_confirmation = req.getParameter(GlobalConstants.PASSWORD_CONFIRM);
+        String passwordConfirmation = req.getParameter(GlobalConstants.PASSWORD_CONFIRM);
 
-        if (!checkRegex(name, surname, password)){
-            return Url.REDIRECT + Url.REGISTRATION + Url.ERR_REGEX;
-        }
 
-        if (service.findUserByEmail(email).isPresent()) {
-            return Url.REDIRECT + Url.REGISTRATION + Url.ERR_LOGIN;
-        }
-        if (!password.equals(password_confirmation)) {
-            return Url.REDIRECT + Url.REGISTRATION + Url.ERR_PASSWORD;
+        if (checkNameSurnameRegex(name, surname) || checkPasswordConfirmMatch(password, passwordConfirmation)
+                || checkEmailAlreadyExist(email)) {
+            return Url.REDIRECT + Url.REGISTRATION + errorType;
         } else {
-            createNewUser(service, name, surname, email, password);
+            userService.createNewUser(createNewUserEntity(name, surname, email, password));
             return Url.REDIRECT + Url.HOME;
         }
     }
 
-    private boolean checkRegex(String name, String surname, String password) {
-        return name.matches(Regex.REG_NAME) && surname.matches(Regex.REG_NAME) && password.matches(Regex.REG_PASS);
+    private boolean checkPasswordConfirmMatch(String password, String passwordConfirmation) {
+        if (!password.matches(Regex.REG_PASS)) {
+            errorType = Url.ERR_PASSWORD_REGEX;
+            return true;
+        }
+        if (!password.equals(passwordConfirmation)) {
+            errorType = Url.ERR_PASSWORD;
+            return true;
+        }
+        return false;
     }
 
-    private void createNewUser(UserService service, String name, String surname, String email, String password) {
-        User user = new User.UserBuilder()
+    private boolean checkEmailAlreadyExist(String email) {
+        if (userService.findUserByEmail(email).isPresent()) {
+            errorType = Url.ERR_LOGIN;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkNameSurnameRegex(String name, String surname) {
+        if (!(name.matches(Regex.REG_NAME) && surname.matches(Regex.REG_NAME))) {
+            errorType = Url.ERR_REGEX;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private User createNewUserEntity(String name, String surname, String email, String password) {
+        return new User.UserBuilder()
                 .name(name.trim())
                 .surname(surname.trim())
                 .email(email.trim())
                 .password(BCrypt.hashpw(password, BCrypt.gensalt()))
                 .role(Role.USER)
                 .build();
-        service.createNewUser(user);
     }
 }

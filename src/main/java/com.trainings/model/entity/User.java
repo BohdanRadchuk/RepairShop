@@ -42,6 +42,8 @@ public class User {
     }
 
     /**
+     * Builder pattern implementation using inner class
+     * to create User entity
      *
      */
     public static class UserBuilder {

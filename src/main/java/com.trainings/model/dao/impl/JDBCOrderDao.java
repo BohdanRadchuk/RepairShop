@@ -67,6 +67,29 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
+    public boolean update(final Order order) {
+        try (PreparedStatement ps = updateOrderPrepareStatement(order)) {
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    @Override
+    public boolean delete(final Integer id) {
+        try (PreparedStatement ps = deleteOrderPrepareStatement(id)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public List<Order> findConfirmInWorkMasterOrders(int idMaster) {
         String sqlQuery = SqlQuery.ORDER_GET_ALL_CONFIRM;
         List<Order> orders = new ArrayList<>();
@@ -126,21 +149,12 @@ public class JDBCOrderDao implements OrderDao {
         return orders;
     }
 
-    @Override
-    public boolean update(final Order order) {
-        try (PreparedStatement ps = updateOrderPrepareStatement(order)) {
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    private PreparedStatement deleteOrderPrepareStatement(Integer id) throws SQLException {
+        String sqlQuery = SqlQuery.ORDER_DELETE;
+        PreparedStatement ps = connection.prepareStatement(sqlQuery);
+        ps.setInt(1, id);
+        return ps;
 
-
-    @Override
-    public boolean delete(final Integer id) {
-        return false;
     }
 
     @Override

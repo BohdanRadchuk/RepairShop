@@ -2,6 +2,7 @@ package com.trainings.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Order {
     private int idOrder;
@@ -135,5 +136,30 @@ public class Order {
                 ", inWorkDate=" + inWorkDate +
                 ", doneDate=" + doneDate +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return getIdOrder() == order.getIdOrder() &&
+                getIdUser() == order.getIdUser() &&
+                getIdServe() == order.getIdServe() &&
+                getStatus() == order.getStatus() &&
+                Objects.equals(getPrice(), order.getPrice()) &&
+                Objects.equals(getIdManager(), order.getIdManager()) &&
+                Objects.equals(getConsiderationDate(), order.getConsiderationDate()) &&
+                Objects.equals(getRefuseReason(), order.getRefuseReason()) &&
+                Objects.equals(getIdMaster(), order.getIdMaster()) &&
+                Objects.equals(getInWorkDate(), order.getInWorkDate()) &&
+                Objects.equals(getDoneDate(), order.getDoneDate());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getIdOrder(), getIdUser(), getIdServe(), getStatus(), getPrice(), getIdManager(), getConsiderationDate(), getRefuseReason(), getIdMaster(), getInWorkDate(), getDoneDate());
     }
 }

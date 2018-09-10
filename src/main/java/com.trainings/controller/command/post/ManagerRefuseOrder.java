@@ -21,13 +21,17 @@ public class ManagerRefuseOrder implements ServletCommand {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+        refuseOrder(req);
+        return Url.REDIRECT + Url.MANAGER_HOME + GlobalConstants.CURRENT_PAGE_PARAM + getCurrentOrderPaginationPage(req);
+    }
+
+    private Integer getCurrentOrderPaginationPage(HttpServletRequest req) {
         Integer page = Integer.valueOf(Optional.ofNullable(req.getParameter(GlobalConstants.CURRENT_PAGE))
                 .orElse("1"));
         if (!orderService.checkHasMoreRecordsOnPage() && page > 1) {
             page--;
         }
-        refuseOrder(req);
-        return Url.REDIRECT + Url.MANAGER_HOME + GlobalConstants.CURRENT_PAGE_PARAM + page;
+        return page;
     }
 
     private void refuseOrder(HttpServletRequest req) {
@@ -36,11 +40,13 @@ public class ManagerRefuseOrder implements ServletCommand {
         try {
             Order order = orderService.findOrderById(Integer.valueOf(req.getParameter(GlobalConstants.ORDER_ID)))
                     .orElseThrow(NoSuchRecordException::new);
-            order.setStatus(Status.REFUSE);
-            order.setIdManager(util.getLoggedUserId(req));
-            order.setRefuseReason(req.getParameter(GlobalConstants.REASON));
-            order.setConsiderationDate(LocalDateTime.now());
-            orderService.updateOrder(order);
+            if (order.getStatus().equals(Status.NEW)) {
+                order.setStatus(Status.REFUSE);
+                order.setIdManager(util.getLoggedUserId(req));
+                order.setRefuseReason(req.getParameter(GlobalConstants.REASON));
+                order.setConsiderationDate(LocalDateTime.now());
+                orderService.updateOrder(order);
+            }
         } catch (NoSuchRecordException e) {
             e.printStackTrace();
         }
